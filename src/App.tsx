@@ -19,7 +19,7 @@ import { FAQPage } from './pages/FAQ';
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={import.meta.env.BASE_URL}>
       <StarkProvider>
         <Routes>
           <Route path="/" element={<Layout />}>

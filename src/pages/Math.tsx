@@ -13,7 +13,7 @@ export function MathPage() {
             <div style={{ marginTop: '48px' }}>
                 <h2>Finite Fields</h2>
                 <p>
-                    STARKs don't operate on regular numbers (like 1, 2, 3.5). They operate on <strong>Finite Fields</strong>.
+                    STARKs don't operate on regular numbers (like 1, 2, 3.5). They operate on <a href="https://en.wikipedia.org/wiki/Finite_field" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)' }}>Finite Fields</a>.
                     A finite field is a set of numbers with a limited size (defined by a prime number <code>P</code>).
                     All arithmetic operations (addition, multiplication) are performed <strong>modulo P</strong>.
                 </p>

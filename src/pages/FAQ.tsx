@@ -53,7 +53,7 @@ export function FAQPage() {
                 </p>
 
                 <div style={{ marginTop: '16px', background: 'rgba(255,255,255,0.05)', padding: '16px', borderRadius: '8px' }}>
-                    <h4 style={{ color: 'var(--accent-secondary)', marginTop: 0 }}>The Fiat-Shamir Transform</h4>
+                    <h4 style={{ color: 'var(--accent-secondary)', marginTop: 0 }}>The <a href="https://en.wikipedia.org/wiki/Fiat%E2%80%93Shamir_heuristic" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>Fiat-Shamir Transform</a></h4>
                     <p style={{ fontSize: '0.9em' }}>
                         We use a cryptographic trick to turn the interactive conversation into a monologue.
                     </p>

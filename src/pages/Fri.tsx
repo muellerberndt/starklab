@@ -62,7 +62,7 @@ export function FriPage() {
         <div className="container" style={{ paddingBottom: '100px' }}>
             <h1>4. FRI Protocol</h1>
             <p>
-                <strong>Fast Reed-Solomon Interactive Oracle Proof of Proximity</strong> (FRI) is how we prove the polynomial has a "low degree" without sending the whole thing.
+                <strong>Fast <a href="https://en.wikipedia.org/wiki/Reed%E2%80%93Solomon_error_correction" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)' }}>Reed-Solomon</a> Interactive Oracle Proof of Proximity</strong> (FRI) is how we prove the polynomial has a "low degree" without sending the whole thing.
             </p>
 
             <Explainer title="The Folding Scheme">

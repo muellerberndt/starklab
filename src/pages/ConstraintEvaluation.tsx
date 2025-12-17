@@ -53,6 +53,23 @@ export function ConstraintEvaluationPage() {
             <p>
                 Let's zoom in on a single constraint to see how it's constructed from the trace polynomials.
             </p>
+
+            <div className="card" style={{ marginBottom: '32px', borderLeft: '4px solid var(--accent-primary)' }}>
+                <h3>What is a "Constraint"?</h3>
+                <p>
+                    A <strong>Constraint</strong> is just a mathematical rule that must equal <strong>Zero</strong> if the program ran correctly.
+                </p>
+                <div style={{ background: 'rgba(0,0,0,0.2)', padding: '12px', borderRadius: '4px', margin: '12px 0', fontFamily: 'monospace' }}>
+                    Next_Register_Value - (Current_Register_Value + 1) = 0
+                </div>
+                <p style={{ fontSize: '0.9em' }}>
+                    If this equation equals <code>0</code>, the step is valid. If it equals <code>5</code> (or anything else), someone cheated!
+                    <br />
+                    In STARKs, we convert these rules into <strong>Polynomials</strong>. If the polynomials evaluate to zero appropriately, the Proof holds.
+                </p>
+            </div>
+
+
             <p>
                 We'll look at the Fibonacci transition: <code>r1_next = r0 + r1</code>.
                 <br />

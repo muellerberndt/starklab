@@ -6,7 +6,12 @@ export function Home() {
         <div className="space-y-8">
             <div className="card glass">
                 <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>
-                    Welcome to <span style={{ color: 'var(--accent-secondary)' }}>STARK Lab</span>
+                    Welcome to <span style={{
+                        background: 'linear-gradient(to right, var(--accent-secondary), var(--accent-primary))',
+                        WebkitBackgroundClip: 'text',
+                        WebkitTextFillColor: 'transparent',
+                        display: 'inline-block'
+                    }}>STARK Lab</span>
                 </h1>
                 <p style={{ fontSize: '1.2rem', color: 'var(--text-primary)', marginBottom: '16px' }}>
                     An interactive, step-by-step tutorial to understand STARK proofs intuitively.

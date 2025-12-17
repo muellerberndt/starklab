@@ -5,7 +5,7 @@ export function ProtocolPage() {
         {
             actor: 'Prover',
             action: 'Commit to Trace',
-            desc: 'I have run the program. Here is the Merkle Root of the execution trace (blinded).',
+            desc: <span>I have run the program. Here is the <a href="https://en.wikipedia.org/wiki/Merkle_tree" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)', textDecoration: 'underline' }}>Merkle Root</a> of the execution trace (blinded).</span>,
             icon: Lock,
             data: 'Merkle Root (32 bytes)'
         },

@@ -40,7 +40,7 @@ export function PolynomialsPage() {
                 <p style={{ marginTop: '8px', fontSize: '0.9em' }}>
                     Unlike the simple examples in the Basics section, this is your <strong>actual program trace</strong>.
                     <br />
-                    We use a method called <strong>Lagrange Interpolation</strong> (or FFT) to find a unique polynomial that passes through every single one of these points.
+                    We use a method called <a href="https://en.wikipedia.org/wiki/Lagrange_polynomial" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)', textDecoration: 'underline' }}>Lagrange Interpolation</a> (or FFT) to find a unique polynomial that passes through every single one of these points.
                     <br /><br />
                     The resulting polynomial $T(x)$ captures the entire history of that register.
                 </p>
