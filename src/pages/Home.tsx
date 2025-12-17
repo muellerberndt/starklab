@@ -20,6 +20,9 @@ export function Home() {
                     You can write your own simple programs (or use the default Fibonacci example), generate an execution trace,
                     and walk through the core STARK ideas—from constraints to polynomials to Merkle/FRI-style checks.
                 </p>
+                <p style={{ color: 'var(--text-muted)', marginTop: '12px' }}>
+                    The current “Proof Check” page uses a toy verifier; full toy STARK proof verification (Fiat–Shamir + Merkle openings + FRI queries) is coming soon.
+                </p>
             </div>
 
             <div className="grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>

@@ -6,11 +6,11 @@ import { Explainer } from '../components/Explainer';
 export function VerifierPage() {
     const { trace, air, code, failures } = useStark();
     const [checks, setChecks] = useState<{ name: string; status: 'pending' | 'pass' | 'fail'; error?: string }[]>([
-        { name: 'Verify Trace Commitment (Merkle Root)', status: 'pending' },
-        { name: 'Verify Constraint Degree', status: 'pending' },
-        { name: 'Verify FRI Layer 0', status: 'pending' },
-        { name: 'Verify FRI Layer 1', status: 'pending' },
-        { name: 'Verify FRI Final Value', status: 'pending' },
+        { name: 'Concept: Trace Commitment (Merkle Root)', status: 'pending' },
+        { name: 'Actual: AIR Constraints on Trace', status: 'pending' },
+        { name: 'Concept: FRI Layer 0', status: 'pending' },
+        { name: 'Concept: FRI Layer 1', status: 'pending' },
+        { name: 'Concept: FRI Final Check', status: 'pending' },
     ]);
     const [isVerifying, setIsVerifying] = useState(false);
 
@@ -70,6 +70,22 @@ export function VerifierPage() {
                 You are now the <strong>Verifier</strong>. The Prover has sent you a proof.
                 It's time to check if it's valid!
             </p>
+
+            <Explainer title="Toy verifier">
+                <p>
+                    Right now, this verifier runs your program to generate the full execution trace, then evaluates all AIR constraints on that trace.
+                    If any constraint is non-zero, the proof is rejected.
+                </p>
+                <p style={{ marginTop: '12px' }}>
+                    Coming soon:
+                </p>
+                <ul>
+                    <li>Fiat–Shamir transcript: derive challenges by hashing commitments.</li>
+                    <li>Real commitments: Merkle roots + Merkle path verification for queried openings.</li>
+                    <li>Low-degree verification: build a low-degree extension, compute quotient/composition polynomials, and verify them via a real FRI query phase.</li>
+                    <li>Succinctness: verify using a few random queries instead of checking the entire trace.</li>
+                </ul>
+            </Explainer>
 
             <Explainer title="What is the Verifier doing?">
                 <p>
