@@ -7,7 +7,7 @@ export function ProtocolPage() {
             action: 'Commit to Trace',
             desc: <span>I have run the program. Here is the <a href="https://en.wikipedia.org/wiki/Merkle_tree" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)', textDecoration: 'underline' }}>Merkle Root</a> of the execution trace (blinded).</span>,
             icon: Lock,
-            data: 'Merkle Root (32 bytes)'
+            data: 'Merkle Root (demo hash)'
         },
         {
             actor: 'Verifier',
@@ -72,14 +72,14 @@ export function ProtocolPage() {
                         <p style={{ fontSize: '0.9em' }}>
                             We define the <strong>Algebraic Intermediate Representation</strong>. This is "stored" as:
                         </p>
-                        <ul style={{ paddingLeft: '20px', margin: '8px 0', fontSize: '0.9em' }}>
-                            <li style={{ marginBottom: '8px' }}>
-                                <strong>Constraint Equations:</strong> The mathematical formulas (e.g., $A(x) + B(x) = C(x)$).
-                            </li>
-                            <li>
-                                <strong>Selector Polynomials:</strong> Fixed polynomials (like {'$S_{add}(x)$'}, {'$S_{mul}(x)$'}) that encode the program instructions.
-                            </li>
-                        </ul>
+	                        <ul style={{ paddingLeft: '20px', margin: '8px 0', fontSize: '0.9em' }}>
+	                            <li style={{ marginBottom: '8px' }}>
+	                                <strong>Constraint Equations:</strong> The mathematical formulas (e.g., $A(x) + B(x) = C(x)$).
+	                            </li>
+	                            <li>
+	                                <strong>Constraint Activation:</strong> In production systems this is typically done with selector columns/polynomials; in this toy VM we generate a small set of per-step transition constraints directly.
+	                            </li>
+	                        </ul>
                         <p style={{ fontSize: '0.8em', color: 'var(--text-muted)' }}>
                             * Unlike the Trace, these are <strong>Public</strong> and fixed for the program.
                         </p>

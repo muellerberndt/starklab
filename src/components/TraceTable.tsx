@@ -3,9 +3,10 @@ import type { TraceRow } from '../core/vm';
 interface TraceTableProps {
     trace: TraceRow[];
     regNames: string[];
+    maskValues?: boolean;
 }
 
-export function TraceTable({ trace, regNames }: TraceTableProps) {
+export function TraceTable({ trace, regNames, maskValues = false }: TraceTableProps) {
     if (trace.length === 0) return null;
 
     return (
@@ -25,10 +26,10 @@ export function TraceTable({ trace, regNames }: TraceTableProps) {
                     {trace.map((row, i) => (
                         <tr key={i}>
                             <td>{i}</td>
-                            <td>{row.pc}</td>
-                            <td>{row.halted}</td>
+                            <td>{maskValues ? '•••' : row.pc}</td>
+                            <td>{maskValues ? '•••' : row.halted}</td>
                             {regNames.map((r) => (
-                                <td key={r}>{row.regs[r] ?? 0}</td>
+                                <td key={r}>{maskValues ? '•••' : (row.regs[r] ?? 0)}</td>
                             ))}
                         </tr>
                     ))}

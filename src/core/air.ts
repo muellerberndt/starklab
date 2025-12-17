@@ -121,8 +121,33 @@ export function buildAir(steps: Step[], rows: TraceRow[], p: number, regNames: s
 function prettyExpr(expr: Expr): string {
     if (expr.type === "lit") return String(expr.value);
     if (expr.type === "reg") return expr.name;
-    if (expr.type === "add") return expr.terms.map(prettyExpr).join(" + ");
-    return "?";
+    if (expr.type === "neg") {
+        const inner = expr.inner.type === "add" ? `(${prettyExpr(expr.inner)})` : prettyExpr(expr.inner);
+        return `-${inner}`;
+    }
+    if (expr.type === "mul") {
+        return expr.factors
+            .map((f) => {
+                if (f.type === "add" || f.type === "neg") return `(${prettyExpr(f)})`;
+                return prettyExpr(f);
+            })
+            .join(" * ");
+    }
+    if (expr.type === "add") {
+        if (expr.terms.length === 0) return "0";
+        let out = prettyExpr(expr.terms[0]);
+        for (const t of expr.terms.slice(1)) {
+            if (t.type === "neg") {
+                const inner = t.inner.type === "add" ? `(${prettyExpr(t.inner)})` : prettyExpr(t.inner);
+                out += ` - ${inner}`;
+            } else {
+                out += ` + ${prettyExpr(t)}`;
+            }
+        }
+        return out;
+    }
+    const _exhaustive: never = expr;
+    throw new Error(`Unknown expr type: ${String(_exhaustive)}`);
 }
 
 export function summarize(air: AirModel) {

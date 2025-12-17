@@ -143,7 +143,7 @@ export function VerifierPage() {
                 <div className="card" style={{ marginTop: '32px' }}>
                     <h3>Deep Dive: The Arithmetic</h3>
                     <p>
-                        Here is the actual check the Verifier performs. We check if the constraints ($C(x)$) are divisible by the vanishing polynomial ($Z(x)$).
+                        This is the core algebraic idea behind STARK verification: if the constraints vanish on the trace domain, then the constraint polynomial $C(x)$ is divisible by the vanishing polynomial $Z(x)$.
                     </p>
                     <div style={{
                         background: 'rgba(0,0,0,0.3)',
@@ -182,12 +182,12 @@ export function VerifierPage() {
 
                         {failures.length > 0 && (
                             <div style={{ marginTop: '16px', padding: '12px', background: 'rgba(255,0,0,0.1)', borderRadius: '4px', fontSize: '0.9em', color: 'var(--accent-error)' }}>
-                                <strong>Verification Failed:</strong> The constraint value is not zero ({failures[0].value}), so it's not divisible by Z(x). The result is a high-degree polynomial (garbage).
+                                <strong>Verification Failed:</strong> A non-zero constraint at some step (e.g. {failures[0].value}) means $C(x)$ does not vanish on the trace domain, so the divisibility check fails.
                             </div>
                         )}
                         {failures.length === 0 && (
                             <div style={{ marginTop: '16px', padding: '12px', background: 'rgba(0,255,0,0.1)', borderRadius: '4px', fontSize: '0.9em', color: 'var(--accent-success)' }}>
-                                <strong>Verification Passed:</strong> The constraint value is 0, so the division is clean. The result is a valid low-degree polynomial.
+                                <strong>Verification Passed:</strong> All constraints are 0 on the trace, so the division by $Z(x)$ is clean and the quotient is a valid low-degree polynomial.
                             </div>
                         )}
                     </div>

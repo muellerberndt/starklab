@@ -1,7 +1,5 @@
 
 import { PolynomialGraph } from '../components/PolynomialGraph';
-import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 export function ConstraintEvaluationPage() {
     // Use a static 8-step trace for the "Basics" section
@@ -157,16 +155,6 @@ export function ConstraintEvaluationPage() {
                 </div>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '48px' }}>
-                <Link to="/encoding" className="btn btn-ghost">
-                    <ArrowLeft size={16} style={{ marginRight: '8px' }} />
-                    Back to Basics II
-                </Link>
-                <Link to="/protocol" className="button">
-                    Next: Protocol Overview
-                    <ArrowRight size={16} style={{ marginLeft: '8px' }} />
-                </Link>
-            </div>
         </div>
     );
 }

@@ -1,5 +1,5 @@
 import { mod } from "./math";
-import type { Expr, Step } from "./dsl";
+import { MAX_REGISTER, type Expr, type Step } from "./dsl";
 
 export type TraceRow = {
     pc: number;
@@ -8,27 +8,46 @@ export type TraceRow = {
 };
 
 export function evalExpr(expr: Expr, regs: Record<string, number>, p: number): number {
-    if (expr.type === "lit") return mod(expr.value, p);
-    if (expr.type === "reg") return regs[expr.name] ?? 0;
-    if (expr.type === "add") {
-        const sum = expr.terms.reduce((acc, t) => acc + evalExpr(t, regs, p), 0);
-        return mod(sum, p);
+    switch (expr.type) {
+        case "lit":
+            return mod(expr.value, p);
+        case "reg":
+            if (!(expr.name in regs)) throw new Error(`Unknown register '${expr.name}'`);
+            return regs[expr.name];
+        case "neg":
+            return mod(-evalExpr(expr.inner, regs, p), p);
+        case "add": {
+            const sum = expr.terms.reduce((acc, t) => acc + evalExpr(t, regs, p), 0);
+            return mod(sum, p);
+        }
+        case "mul": {
+            let acc = 1;
+            for (const f of expr.factors) {
+                acc = mod(acc * evalExpr(f, regs, p), p);
+            }
+            return acc;
+        }
+        default: {
+            const _exhaustive: never = expr;
+            throw new Error(`Unknown expr type: ${String(_exhaustive)}`);
+        }
     }
-    throw new Error(`Unknown expr type '${(expr as any).type}'`);
 }
 
 export function collectRegisters(steps: Step[]): string[] {
     const names = new Set(["r0", "r1", "r2"]);
     function visitExpr(expr: Expr) {
         if (expr.type === "reg") names.add(expr.name);
+        if (expr.type === "neg") visitExpr(expr.inner);
         if (expr.type === "add") expr.terms.forEach(visitExpr);
+        if (expr.type === "mul") expr.factors.forEach(visitExpr);
     }
     for (const s of steps) {
         if (s.target) names.add(s.target);
         if (s.expr) visitExpr(s.expr);
     }
     const arr = [...names].sort((a, b) => Number(a.slice(1)) - Number(b.slice(1)));
-    const capped = arr.filter((r) => Number(r.slice(1)) >= 0 && Number(r.slice(1)) <= 7);
+    const capped = arr.filter((r) => Number(r.slice(1)) >= 0 && Number(r.slice(1)) <= MAX_REGISTER);
     return capped;
 }
 
@@ -57,7 +76,7 @@ export function execute(steps: Step[], p: number, regNames: string[]): TraceRow[
         } else {
             const target = step.target!;
             if (!regNames.includes(target)) {
-                throw new Error(`Line ${step.source.line}: unsupported register '${target}' (use r0..r7)`);
+                throw new Error(`Line ${step.source.line}: unsupported register '${target}' (use r0..r${MAX_REGISTER})`);
             }
             next.regs[target] = evalExpr(step.expr!, state.regs, p);
         }

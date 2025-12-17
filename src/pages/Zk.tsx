@@ -2,18 +2,10 @@ import { useState } from 'react';
 import { useStark } from '../contexts/StarkContext';
 import { Explainer } from '../components/Explainer';
 import { TraceTable } from '../components/TraceTable';
-import type { TraceRow } from '../core/vm';
 
 export function ZkPage() {
     const { trace, regNames } = useStark();
     const [isZkMode, setIsZkMode] = useState(false);
-
-    // Add random rows to the end of the trace
-    const zkTrace: TraceRow[] = isZkMode ? [
-        ...trace,
-        { pc: 99, halted: 0, regs: { r0: 12345, r1: 67890, r2: 13579 } },
-        { pc: 99, halted: 0, regs: { r0: 54321, r1: 98765, r2: 24680 } }
-    ] : trace;
 
     if (trace.length === 0) {
         return (
@@ -36,14 +28,13 @@ export function ZkPage() {
 
             <Explainer title="Blinding the Trace">
                 <p>
-                    We add a few rows of <strong>random garbage</strong> at the end of the execution trace.
+                    Real zero-knowledge STARKs don’t reveal the raw trace. Instead, the Prover commits to a <strong>masked low-degree extension</strong> of the trace columns.
                 </p>
                 <p>
-                    When the Verifier queries the trace, if they hit a random row, they just see noise.
-                    Because the polynomial interpolation includes these random points, the <strong>entire polynomial</strong> becomes randomized.
+                    Intuitively: each trace column polynomial is “blinded” by adding a random low-degree mask polynomial (and adjusting constraints accordingly), so openings look random while the constraints still verify.
                 </p>
                 <p>
-                    This ensures that querying the polynomial at any point reveals <strong>nothing</strong> about the original trace values.
+                    This page shows a <em>conceptual</em> “masked view” of the trace; the full masking construction isn’t implemented in this tutorial build.
                 </p>
             </Explainer>
 
@@ -78,36 +69,15 @@ export function ZkPage() {
                 </div>
 
                 <div style={{ position: 'relative' }}>
-                    <TraceTable trace={zkTrace} regNames={regNames} />
-
-                    {isZkMode && (
-                        <div style={{
-                            position: 'absolute',
-                            bottom: '0',
-                            left: '0',
-                            right: '0',
-                            height: '80px',
-                            background: 'linear-gradient(to bottom, transparent, rgba(112, 0, 255, 0.1))',
-                            borderBottom: '2px solid var(--accent-primary)',
-                            pointerEvents: 'none',
-                            display: 'flex',
-                            alignItems: 'flex-end',
-                            justifyContent: 'center',
-                            paddingBottom: '8px',
-                            color: 'var(--accent-primary)',
-                            fontWeight: 'bold'
-                        }}>
-                            + Blinding Rows (Random Noise)
-                        </div>
-                    )}
+                    <TraceTable trace={trace} regNames={regNames} maskValues={isZkMode} />
                 </div>
 
                 <div style={{ marginTop: '24px', textAlign: 'center' }}>
                     {isZkMode ? (
                         <p>
-                            Now the polynomial passes through these random points too.
+                            The Verifier learns structure (that a valid trace exists) without learning the trace values.
                             <br />
-                            <strong>The entire polynomial is now "blinded"!</strong>
+                            <strong>Openings are meant to look random.</strong>
                         </p>
                     ) : (
                         <p className="muted">

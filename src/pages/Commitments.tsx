@@ -1,14 +1,6 @@
 import { useStark } from '../contexts/StarkContext';
 import { Explainer } from '../components/Explainer';
-
-// Simple hash function for demo (same as in MerkleTreeExplainer)
-const hash = (s: string) => {
-    let h = 0xdeadbeef;
-    for (let i = 0; i < s.length; i++) {
-        h = Math.imul(h ^ s.charCodeAt(i), 2654435761);
-    }
-    return ((h ^ h >>> 16) >>> 0).toString(16).substring(0, 6);
-};
+import { demoHash, merkleRoot } from '../core/merkle';
 
 export function CommitmentsPage() {
     const { trace, regNames } = useStark();
@@ -28,33 +20,24 @@ export function CommitmentsPage() {
     // In a real STARK, we commit to all columns (often combined).
     const selectedReg = regNames[0] || 'r0';
     const columnValues = trace.map(row => row.regs[selectedReg] ?? 0);
-    const leaves = columnValues.map(v => hash(String(v)));
-
-    // Calculate root (simplified single column tree)
-    let current = leaves;
-    while (current.length > 1) {
-        const next = [];
-        for (let i = 0; i < current.length; i += 2) {
-            const left = current[i];
-            const right = i + 1 < current.length ? current[i + 1] : '';
-            next.push(hash(left + right));
-        }
-        current = next;
-    }
-    const root = current[0];
+    const leaves = columnValues.map((v) => demoHash(String(v)));
+    const root = merkleRoot(leaves);
 
     return (
         <div className="container" style={{ paddingBottom: '100px' }}>
             <h1>2. Commitments</h1>
             <p>
                 Now that we have an execution trace, the Prover needs to "commit" to it.
-                This means sending a cryptographic fingerprint (the <strong>Merkle Root</strong>) to the Verifier.
+                This means sending a commitment (the <strong>Merkle Root</strong>) to the Verifier.
             </p>
 
             <Explainer title="Why Commit?">
                 <p>
                     The trace might be huge (millions of steps). The Prover can't send the whole thing.
                     Instead, they put the trace into a Merkle Tree and send just the Root.
+                </p>
+                <p className="muted" style={{ fontSize: '0.9em' }}>
+                    This demo uses a tiny, non-cryptographic hash so you can follow the structure. Real STARKs use standard cryptographic hashes.
                 </p>
                 <p>
                     Later, when the Verifier asks "What was the value at step 100?", the Prover can provide

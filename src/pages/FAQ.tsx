@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { ShieldCheck, MessageSquare } from 'lucide-react';
 
 export function FAQPage() {
@@ -65,7 +64,7 @@ export function FAQPage() {
                         <br />
                         <em>Interactive:</em> Verifier sends random $\alpha$.
                         <br />
-                        <em>Non-Interactive:</em> Prover calculates {'$\\alpha = \\text{SHA256}(\\text{Merkle Root of Trace})$'}.
+                        <em>Non-Interactive:</em> Prover calculates {'$\\alpha = H(\\text{transcript})$'} (e.g., {'$\\alpha = \\text{SHA256}(\\text{MerkleRoot(trace)} \\|\\| \\text{MerkleRoot(quotient)} \\|\\| \\dots)$'}).
                     </p>
                     <p style={{ fontSize: '0.9em', marginTop: '8px' }}>
                         Since the Prover cannot predict the hash of their own work until they finish it, this is just as secure as a random number from an outsider!
@@ -73,11 +72,6 @@ export function FAQPage() {
                 </div>
             </div>
 
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '48px' }}>
-                <Link to="/resources" className="button">
-                    Next: Further Reading
-                </Link>
-            </div>
         </div>
     );
 }

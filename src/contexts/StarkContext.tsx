@@ -1,11 +1,14 @@
+/* eslint-disable react-refresh/only-export-components */
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { parseProgram, compileProgram } from '../core/dsl';
 import { execute, collectRegisters, type TraceRow } from '../core/vm';
 import { buildAir, summarize, type AirModel } from '../core/air';
+import { mod } from '../core/math';
 
 interface StarkState {
     code: string;
     setCode: (code: string) => void;
+    prime: number;
     trace: TraceRow[];
     regNames: string[];
     air: AirModel | null;
@@ -32,9 +35,15 @@ repeat 7:
 
 const StarkContext = createContext<StarkState | undefined>(undefined);
 
+function toErrorMessage(e: unknown): string {
+    if (e instanceof Error) return e.message;
+    return String(e);
+}
+
 export function StarkProvider({ children }: { children: React.ReactNode }) {
     const [code, setCode] = useState(DEFAULT_CODE);
     const [error, setError] = useState<string | null>(null);
+    const [prime, setPrime] = useState<number>(97);
     const [trace, setTrace] = useState<TraceRow[]>([]);
     const [regNames, setRegNames] = useState<string[]>([]);
     const [air, setAir] = useState<AirModel | null>(null);
@@ -47,6 +56,7 @@ export function StarkProvider({ children }: { children: React.ReactNode }) {
             // 1. Parse & Compile
             const stmts = parseProgram(source);
             const program = compileProgram(stmts);
+            setPrime(program.prime);
 
             // 2. Execute
             const registers = collectRegisters(program.steps);
@@ -61,10 +71,12 @@ export function StarkProvider({ children }: { children: React.ReactNode }) {
             setAir(airModel);
             setFailures(summary.failures);
 
-        } catch (e: any) {
-            setError(e.message);
+        } catch (e: unknown) {
+            setError(toErrorMessage(e));
             setTrace([]);
+            setRegNames([]);
             setAir(null);
+            setFailures([]);
         }
     };
 
@@ -80,7 +92,7 @@ export function StarkProvider({ children }: { children: React.ReactNode }) {
 
         // Corrupt value
         const oldVal = newTrace[rowIdx].regs[reg];
-        newTrace[rowIdx].regs[reg] = (oldVal + 1337) % 97; // Ensure it changes
+        newTrace[rowIdx].regs[reg] = mod(oldVal + 1337, prime); // Ensure it changes
 
         // Re-run AIR check on TAMPERED trace
         // We need to re-compile to get the steps for AIR building
@@ -90,6 +102,7 @@ export function StarkProvider({ children }: { children: React.ReactNode }) {
             const airModel = buildAir(program.steps, newTrace, program.prime, regNames);
             const summary = summarize(airModel);
 
+            setPrime(program.prime);
             setTrace(newTrace);
             setAir(airModel);
             setFailures(summary.failures);
@@ -112,7 +125,7 @@ export function StarkProvider({ children }: { children: React.ReactNode }) {
     }, [code]);
 
     return (
-        <StarkContext.Provider value={{ code, setCode, trace, regNames, air, failures, error, tamperTrace, resetTrace, resetCode }}>
+        <StarkContext.Provider value={{ code, setCode, prime, trace, regNames, air, failures, error, tamperTrace, resetTrace, resetCode }}>
             {children}
         </StarkContext.Provider>
     );

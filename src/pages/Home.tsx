@@ -18,7 +18,7 @@ export function Home() {
                 </p>
                 <p style={{ color: 'var(--text-muted)' }}>
                     You can write your own simple programs (or use the default Fibonacci example), generate an execution trace,
-                    and walk through the entire STARK proving process—from constraints to polynomials to FRI.
+                    and walk through the core STARK ideas—from constraints to polynomials to Merkle/FRI-style checks.
                 </p>
             </div>
 

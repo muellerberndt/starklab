@@ -1,7 +1,6 @@
 import { useStark } from '../contexts/StarkContext';
 import { PolynomialGraph } from '../components/PolynomialGraph';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 export function PolynomialsPage() {
     const { trace, regNames } = useStark();
@@ -40,9 +39,9 @@ export function PolynomialsPage() {
                 <p style={{ marginTop: '8px', fontSize: '0.9em' }}>
                     Unlike the simple examples in the Basics section, this is your <strong>actual program trace</strong>.
                     <br />
-                    We use a method called <a href="https://en.wikipedia.org/wiki/Lagrange_polynomial" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)', textDecoration: 'underline' }}>Lagrange Interpolation</a> (or FFT) to find a unique polynomial that passes through every single one of these points.
+                    In a full STARK, we would use <a href="https://en.wikipedia.org/wiki/Lagrange_polynomial" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)', textDecoration: 'underline' }}>Lagrange Interpolation</a> (or an FFT-based method) to define a unique finite-field polynomial that matches these values on the trace domain.
                     <br /><br />
-                    The resulting polynomial $T(x)$ captures the entire history of that register.
+                    This page visualizes the <em>evaluations</em> (samples) per step; it does not reconstruct or plot the finite-field polynomial coefficients.
                 </p>
             </div>
 
@@ -101,16 +100,6 @@ export function PolynomialsPage() {
 
 
 
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '48px' }}>
-                <Link to="/trace" className="btn btn-ghost">
-                    <ArrowLeft size={16} style={{ marginRight: '8px' }} />
-                    Back to Trace
-                </Link>
-                <Link to="/commitments" className="button">
-                    Next: Commitments
-                    <ArrowRight size={16} style={{ marginLeft: '8px' }} />
-                </Link>
-            </div>
         </div>
     );
 }

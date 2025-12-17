@@ -1,82 +1,66 @@
-import { useState, useEffect } from 'react';
+import { useMemo, useState } from 'react';
 import { useStark } from '../contexts/StarkContext';
 import { Explainer } from '../components/Explainer';
 import { PolynomialGraph } from '../components/PolynomialGraph';
 import { Link } from 'react-router-dom';
+import { mod } from '../core/math';
+
+function mulberry32(seed: number) {
+    let t = seed >>> 0;
+    return () => {
+        t += 0x6D2B79F5;
+        let x = Math.imul(t ^ (t >>> 15), 1 | t);
+        x ^= x + Math.imul(x ^ (x >>> 7), 61 | x);
+        return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+    };
+}
 
 export function CompositionPage() {
-    const { air, trace } = useStark();
-    const [alphas, setAlphas] = useState<number[]>([]);
-    const [combinedValue, setCombinedValue] = useState<number>(0);
+    const { air, trace, prime } = useStark();
     const [isRandomizing, setIsRandomizing] = useState(false);
-    const [hValues, setHValues] = useState<number[]>([]);
+    const [seed, setSeed] = useState(() => Math.floor(Math.random() * 2 ** 31));
 
-    // Flatten all constraints into a single list for visualization
-    const allConstraints = air ? [
-        ...air.boundary.map(c => ({ ...c, type: 'Boundary' })),
-        ...air.transitions.flatMap(t => t.constraints.map(c => ({ ...c, type: `Step ${t.stepIndex}` })))
-    ] : [];
+    const allConstraints = useMemo(() => {
+        if (!air) return [];
+        let globalIndex = 0;
 
-    useEffect(() => {
-        if (allConstraints.length > 0 && alphas.length === 0) {
-            randomize();
-        }
+        const out = [
+            ...air.boundary.map((c) => ({ ...c, type: 'Boundary', stepIndex: 0, globalIndex: globalIndex++ })),
+            ...air.transitions.flatMap((t) =>
+                t.constraints.map((c) => ({ ...c, type: `Step ${t.stepIndex}`, stepIndex: t.stepIndex, globalIndex: globalIndex++ }))
+            ),
+        ];
+
+        return out;
     }, [air]);
+
+    const alphas = useMemo(() => {
+        const rand = mulberry32(seed);
+        return allConstraints.map(() => Math.floor(rand() * prime));
+    }, [allConstraints, prime, seed]);
+
+    const combinedValue = useMemo(() => {
+        let sum = 0;
+        allConstraints.forEach((c, i) => {
+            sum = mod(sum + c.eval() * (alphas[i] ?? 0), prime);
+        });
+        return sum;
+    }, [allConstraints, alphas, prime]);
+
+    const hValues = useMemo(() => {
+        if (!air || trace.length === 0) return [];
+        const values = Array.from({ length: trace.length }, () => 0);
+        allConstraints.forEach((c, i) => {
+            const stepIndex = c.stepIndex ?? 0;
+            if (stepIndex < 0 || stepIndex >= values.length) return;
+            values[stepIndex] = mod(values[stepIndex] + c.eval() * (alphas[i] ?? 0), prime);
+        });
+        return values;
+    }, [air, trace.length, allConstraints, alphas, prime]);
 
     const randomize = () => {
         setIsRandomizing(true);
-        const newAlphas = allConstraints.map(() => Math.floor(Math.random() * 100));
-        setAlphas(newAlphas);
-
-        // Calculate combined value (should be 0 if valid)
-        let sum = 0;
-        allConstraints.forEach((c, i) => {
-            sum += c.eval() * newAlphas[i];
-        });
-        setCombinedValue(sum);
-
-        // Calculate H(x) values for visualization
-        // We evaluate the linear combination at each step of the trace
-        // Note: This is a simplification. In reality, H(x) is evaluated over the entire domain.
-        // But for visualization, showing it "per step" helps connect it to the constraints.
-        if (trace.length > 0) {
-            // We can't easily re-evaluate constraints for *every* x without a full polynomial library.
-            // However, we know the constraint values at the trace steps (which are mostly 0).
-            // Let's visualize the "Constraint Error" at each step.
-
-            // Re-calculate failures per step to plot them
-            const stepErrors = trace.map((_, stepIdx) => {
-                let stepError = 0;
-                // Boundary constraints (only at step 0)
-                if (stepIdx === 0) {
-                    air?.boundary.forEach((c, i) => {
-                        // Find alpha for this boundary constraint
-                        // We need to match the index in allConstraints
-                        const globalIdx = i;
-                        stepError += c.eval() * newAlphas[globalIdx];
-                    });
-                }
-
-                // Transition constraints (at stepIdx, for stepIdx -> stepIdx+1)
-                const transition = air?.transitions.find(t => t.stepIndex === stepIdx);
-                if (transition) {
-                    transition.constraints.forEach((c) => {
-                        // Find alpha. Offset is boundary length + previous transitions
-                        // This is getting complicated to map indices. 
-                        // Let's just use a simpler heuristic for the visual:
-                        // If there's a failure at this step, show a spike.
-                        const val = c.eval();
-                        if (val !== 0) {
-                            // We don't have the exact alpha easily mapped here without re-looping
-                            // Just add the value to show non-zero
-                            stepError += val;
-                        }
-                    });
-                }
-                return stepError;
-            });
-            setHValues(stepErrors);
-        }
+        setSeed(Math.floor(Math.random() * 2 ** 31));
 
         setTimeout(() => setIsRandomizing(false), 300);
     };
@@ -164,12 +148,13 @@ export function CompositionPage() {
                             // For visualization, let's assume a standard fib relation: next = curr + prev.
                             // But our trace has registers r0, r1, r2.
                             // Let's just show the raw values.
+                            const diff = mod(row.regs['r2'] - (row.regs['r0'] + row.regs['r1']), prime);
                             return (
                                 <div key={i} style={{ marginBottom: '8px' }}>
                                     <span style={{ color: 'var(--text-muted)' }}>Step {i}:</span>{' '}
                                     {row.regs['r2']} - ({row.regs['r0']} + {row.regs['r1']}) ={' '}
-                                    <span style={{ color: (row.regs['r2'] - (row.regs['r0'] + row.regs['r1'])) === 0 ? 'var(--accent-success)' : 'var(--accent-error)' }}>
-                                        {row.regs['r2'] - (row.regs['r0'] + row.regs['r1'])}
+                                    <span style={{ color: diff === 0 ? 'var(--accent-success)' : 'var(--accent-error)' }}>
+                                        {diff}
                                     </span>
                                 </div>
                             );
@@ -197,7 +182,7 @@ export function CompositionPage() {
                             {allConstraints.map((c, i) => {
                                 const val = c.eval();
                                 const alpha = alphas[i] ?? 0;
-                                const term = val * alpha;
+                                const term = mod(val * alpha, prime);
                                 return (
                                     <tr key={i} style={{
                                         background: val !== 0 ? 'rgba(255, 0, 85, 0.1)' : undefined

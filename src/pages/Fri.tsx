@@ -1,47 +1,65 @@
-import { useState, useEffect } from 'react';
+import { useMemo, useState } from 'react';
 import { useStark } from '../contexts/StarkContext';
 import { Explainer } from '../components/Explainer';
+import { mod } from '../core/math';
+
+function mulberry32(seed: number) {
+    let t = seed >>> 0;
+    return () => {
+        t += 0x6D2B79F5;
+        let x = Math.imul(t ^ (t >>> 15), 1 | t);
+        x ^= x + Math.imul(x ^ (x >>> 7), 61 | x);
+        return ((x ^ (x >>> 14)) >>> 0) / 4294967296;
+    };
+}
 
 
 
 export function FriPage() {
-    const { trace } = useStark();
-    const [layers, setLayers] = useState<number[][]>([]);
+    const { trace, prime } = useStark();
     const [currentLayer, setCurrentLayer] = useState(0);
 
-    useEffect(() => {
-        if (trace.length > 0) {
-            // Simulate FRI layers
-            // Layer 0: The trace values (simplified, just take first column)
-            const layer0 = trace.map(r => r.regs['r0'] ?? 0);
+    const { layers, betas } = useMemo(() => {
+        if (trace.length === 0) return { layers: [] as number[][], betas: [] as number[] };
 
-            // Pad to power of 2 if needed
-            while (layer0.length & (layer0.length - 1)) {
-                layer0.push(0);
-            }
+        const layer0 = trace.map((r) => mod(r.regs['r0'] ?? 0, prime));
 
-            const allLayers = [layer0];
-            let current = layer0;
-
-            // Fold until we have 1 value
-            while (current.length > 1) {
-                const next = [];
-                for (let i = 0; i < current.length; i += 2) {
-                    // Simple folding: (a + b) / 2 (mock logic)
-                    // In reality, it's P(x) + beta * P(-x)
-                    const val = Math.floor((current[i] + current[i + 1]) / 2);
-                    next.push(val);
-                }
-                allLayers.push(next);
-                current = next;
-            }
-            setLayers(allLayers);
+        // Pad to a power of 2 so we can pair elements cleanly.
+        while (layer0.length & (layer0.length - 1)) {
+            layer0.push(0);
         }
-    }, [trace]);
+
+        const allLayers = [layer0];
+        const allBetas: number[] = [];
+        let current = layer0;
+        let seed = 0x811C9DC5;
+        seed = Math.imul(seed ^ prime, 16777619);
+        for (const v of layer0) seed = Math.imul(seed ^ v, 16777619);
+        const rand = mulberry32(seed);
+
+        while (current.length > 1) {
+            const beta = Math.floor(rand() * prime);
+            allBetas.push(beta);
+
+            const next: number[] = [];
+            for (let i = 0; i < current.length; i += 2) {
+                const a = current[i];
+                const b = current[i + 1];
+                next.push(mod(a + beta * b, prime));
+            }
+
+            allLayers.push(next);
+            current = next;
+        }
+
+        return { layers: allLayers, betas: allBetas };
+    }, [trace, prime]);
+
+    const layerIndex = Math.min(currentLayer, Math.max(0, layers.length - 1));
 
     const nextLayer = () => {
-        if (currentLayer < layers.length - 1) {
-            setCurrentLayer(c => c + 1);
+        if (layerIndex < layers.length - 1) {
+            setCurrentLayer(layerIndex + 1);
         }
     };
 
@@ -82,12 +100,17 @@ export function FriPage() {
 
             <div className="card" style={{ marginTop: '32px', textAlign: 'center' }}>
                 <div style={{ marginBottom: '24px' }}>
-                    <h3>FRI Layer {currentLayer}</h3>
+                    <h3>FRI Layer {layerIndex}</h3>
                     <p className="muted">
-                        {currentLayer === 0
+                        {layerIndex === 0
                             ? "Original Domain (Trace Values)"
-                            : `Folded Domain (Size: ${layers[currentLayer]?.length})`}
+                            : `Folded Domain (Size: ${layers[layerIndex]?.length})`}
                     </p>
+                    {layerIndex > 0 && (
+                        <p className="muted" style={{ marginTop: '8px' }}>
+                            Folding challenge: <code>β = {betas[layerIndex - 1] ?? 0}</code>
+                        </p>
+                    )}
                 </div>
 
                 <div style={{
@@ -98,7 +121,7 @@ export function FriPage() {
                     marginBottom: '32px',
                     minHeight: '100px'
                 }}>
-                    {layers[currentLayer]?.map((val, i) => (
+                    {layers[layerIndex]?.map((val, i) => (
                         <div key={i} style={{
                             width: '40px',
                             height: '40px',
@@ -119,20 +142,20 @@ export function FriPage() {
                     <button
                         className="btn btn-ghost"
                         onClick={reset}
-                        disabled={currentLayer === 0}
+                        disabled={layerIndex === 0}
                     >
                         Reset
                     </button>
                     <button
                         className="button"
                         onClick={nextLayer}
-                        disabled={currentLayer >= layers.length - 1}
+                        disabled={layerIndex >= layers.length - 1}
                     >
-                        {currentLayer >= layers.length - 1 ? "Done" : "Fold Next Layer ↓"}
+                        {layerIndex >= layers.length - 1 ? "Done" : "Fold Next Layer ↓"}
                     </button>
                 </div>
 
-                {currentLayer >= layers.length - 1 && (
+                {layerIndex >= layers.length - 1 && (
                     <div style={{ marginTop: '16px', color: 'var(--accent-success)', fontWeight: 'bold' }}>
                         Folding Complete! The Verifier checks this final value.
                     </div>
@@ -152,7 +175,9 @@ export function FriPage() {
                     <li>
                         <strong>Constraints as Polynomials:</strong> We apply the constraints to these polynomials.
                         <br />
-                        <span style={{ fontSize: '0.9em', color: 'var(--text-muted)' }}>$C(x) = T(x+1) - (T(x) + T(x))$</span>
+                        <span style={{ fontSize: '0.9em', color: 'var(--text-muted)' }}>
+                            {'$C(x) = T_{r2}(x+1) - (T_{r0}(x) + T_{r1}(x))$'}
+                        </span>
                     </li>
                     <li>
                         <strong>The Check:</strong> If the trace is valid, $C(x)$ must be <strong>ZERO</strong> for every step $x$.

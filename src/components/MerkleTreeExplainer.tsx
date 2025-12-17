@@ -1,35 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useMemo, useState } from 'react';
 
-// Simple hash function for demo (not secure)
-const hash = (s: string) => {
-    let h = 0xdeadbeef;
-    for (let i = 0; i < s.length; i++) {
-        h = Math.imul(h ^ s.charCodeAt(i), 2654435761);
-    }
-    return ((h ^ h >>> 16) >>> 0).toString(16).substring(0, 6);
-};
+import { demoHash, buildMerkleLevels } from '../core/merkle';
 
 export function MerkleTreeExplainer() {
     const [messages, setMessages] = useState(['a', 'b', 'c', 'd']);
-    const [tree, setTree] = useState<string[][]>([]);
-
-    useEffect(() => {
-        // Build tree
-        const leaves = messages.map(m => hash(m));
-        const levels = [leaves];
-
-        let current = leaves;
-        while (current.length > 1) {
-            const next = [];
-            for (let i = 0; i < current.length; i += 2) {
-                const left = current[i];
-                const right = i + 1 < current.length ? current[i + 1] : '';
-                next.push(hash(left + right));
-            }
-            levels.push(next);
-            current = next;
-        }
-        setTree(levels.reverse());
+    const tree = useMemo(() => {
+        const leaves = messages.map((m) => demoHash(m));
+        const levels = buildMerkleLevels(leaves);
+        return levels.reverse();
     }, [messages]);
 
     const updateMessage = (index: number, val: string) => {
