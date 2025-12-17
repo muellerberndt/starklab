@@ -22,7 +22,7 @@ export function FiniteFieldExplainer() {
                         type="number"
                         value={prime}
                         onChange={(e) => setPrime(Math.max(2, parseInt(e.target.value) || 2))}
-                        style={{ marginLeft: '8px', width: '60px', padding: '4px', background: 'rgba(255,255,255,0.1)', border: '1px solid var(--border-color)', color: 'white', borderRadius: '4px' }}
+                        style={{ marginLeft: '8px', width: '60px', padding: '4px', background: 'rgba(255,255,255,0.15)', border: '1px solid var(--border-color)', color: 'white', borderRadius: '4px' }}
                     />
                 </label>
                 <label>
@@ -31,7 +31,7 @@ export function FiniteFieldExplainer() {
                         type="number"
                         value={a}
                         onChange={(e) => setA(parseInt(e.target.value) || 0)}
-                        style={{ marginLeft: '8px', width: '60px', padding: '4px', background: 'rgba(255,255,255,0.1)', border: '1px solid var(--border-color)', color: 'white', borderRadius: '4px' }}
+                        style={{ marginLeft: '8px', width: '60px', padding: '4px', background: 'rgba(255,255,255,0.15)', border: '1px solid var(--border-color)', color: 'white', borderRadius: '4px' }}
                     />
                 </label>
                 <label>
@@ -40,7 +40,7 @@ export function FiniteFieldExplainer() {
                         type="number"
                         value={b}
                         onChange={(e) => setB(parseInt(e.target.value) || 0)}
-                        style={{ marginLeft: '8px', width: '60px', padding: '4px', background: 'rgba(255,255,255,0.1)', border: '1px solid var(--border-color)', color: 'white', borderRadius: '4px' }}
+                        style={{ marginLeft: '8px', width: '60px', padding: '4px', background: 'rgba(255,255,255,0.15)', border: '1px solid var(--border-color)', color: 'white', borderRadius: '4px' }}
                     />
                 </label>
             </div>
@@ -62,7 +62,7 @@ export function FiniteFieldExplainer() {
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     borderRadius: '50%',
-                                    background: n === sum ? 'var(--accent-primary)' : 'rgba(255,255,255,0.1)',
+                                    background: n === sum ? 'var(--accent-primary)' : 'rgba(255,255,255,0.15)',
                                     color: n === sum ? 'white' : 'var(--text-secondary)',
                                     fontWeight: n === sum ? 'bold' : 'normal'
                                 }}
@@ -89,7 +89,7 @@ export function FiniteFieldExplainer() {
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     borderRadius: '50%',
-                                    background: n === prod ? 'var(--accent-secondary)' : 'rgba(255,255,255,0.1)',
+                                    background: n === prod ? 'var(--accent-secondary)' : 'rgba(255,255,255,0.15)',
                                     color: n === prod ? 'black' : 'var(--text-secondary)',
                                     fontWeight: n === prod ? 'bold' : 'normal'
                                 }}

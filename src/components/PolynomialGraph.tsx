@@ -9,7 +9,7 @@ interface PolynomialGraphProps {
 
 export function PolynomialGraph({ values, width = 300, height = 200, color = 'var(--accent-primary)' }: PolynomialGraphProps) {
     if (!values || values.length === 0) {
-        return <div style={{ width, height, background: 'rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>No Data</div>;
+        return <div style={{ width, height, background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>No Data</div>;
     }
 
     // Map trace values to coordinates
@@ -64,7 +64,7 @@ export function PolynomialGraph({ values, width = 300, height = 200, color = 'va
     }
 
     return (
-        <div style={{ width, height, border: '1px solid var(--border-color)', borderRadius: '8px', position: 'relative', background: 'rgba(0,0,0,0.2)', overflow: 'hidden' }}>
+        <div style={{ width, height, border: '1px solid var(--border-color)', borderRadius: '8px', position: 'relative', background: 'rgba(255,255,255,0.05)', overflow: 'hidden' }}>
             <svg width="100%" height="100%" style={{ overflow: 'hidden' }}>
                 {/* Grid lines */}
                 <line x1={pX} y1={height - pY} x2={width - pX} y2={height - pY} stroke="var(--border-color)" strokeWidth="1" />

@@ -4,13 +4,13 @@
   --bg-secondary: #111111;
   --bg-tertiary: #1a1a1a;
 
-  --text-primary: #e0e0e0;
-  --text-secondary: #a0a0a0;
-  --text-muted: #666666;
+  --text-primary: #ffffff;
+  --text-secondary: #d0d0d0;
+  --text-muted: #a0a0a0;
 
   --accent-primary: #00ff41;
   /* Hacker Green */
-  --accent-secondary: #bd00ff;
+  --accent-secondary: #ff79c6;
   /* Cyber Purple */
   --accent-success: #00ff41;
   --accent-error: #ff003c;
@@ -61,8 +61,8 @@ p {
 code {
   font-family: var(--font-mono);
   font-size: 0.9em;
-  background: rgba(255, 255, 255, 0.1);
-  padding: 0.2em 0.4em;
+  background: #1a1a1a;
+  border: 1px solid #333;
   border-radius: 4px;
 }
 
@@ -178,7 +178,7 @@ button {
 
 .line-numbers {
   padding: 16px 12px;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(255, 255, 255, 0.05);
   border-right: 1px solid var(--border-color);
   color: var(--text-muted);
   text-align: right;
@@ -232,7 +232,7 @@ button {
 }
 
 .trace-table th {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.15);
   color: var(--text-secondary);
   font-weight: 500;
 }
@@ -276,8 +276,8 @@ button {
 .constraints-list li {
   margin-bottom: 8px;
   padding: 8px 12px;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 4px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
   display: flex;
   align-items: center;
 }
