@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ZKP Tutor — Trace & AIR (Toy VM)</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="panel">
+        <div class="panel__header">
+          <h1>ZKP Tutor</h1>
+          <p class="muted">Toy VM → Trace → AIR (mod prime)</p>
+        </div>
+
+        <div class="card">
+          <div class="row">
+            <label for="primeInput">Prime p</label>
+            <input id="primeInput" type="number" min="2" step="1" value="97" />
+          </div>
+          <p id="primeHint" class="hint"></p>
+        </div>
+
+        <div class="card">
+          <div class="row row--space">
+            <label for="programInput">Program (learning DSL)</label>
+            <div class="row row--tight">
+              <select id="exampleSelect" class="select" aria-label="Example programs">
+                <option value="fibonacci">Fibonacci</option>
+                <option value="wraparound">Wraparound demo</option>
+              </select>
+              <button id="loadExampleBtn" class="btn btn--ghost" type="button">Load</button>
+            </div>
+          </div>
+
+          <textarea
+            id="programInput"
+            spellcheck="false"
+            aria-label="Program editor"
+          ></textarea>
+
+          <div class="row row--space">
+            <div class="row row--tight">
+              <button id="runBtn" class="btn" type="button">Compile & Run</button>
+              <button id="resetBtn" class="btn btn--ghost" type="button">Reset</button>
+            </div>
+            <label class="row row--tight checkbox">
+              <input id="editTraceToggle" type="checkbox" />
+              <span>Edit trace (cheat mode)</span>
+            </label>
+          </div>
+
+          <pre id="errorBox" class="error" aria-live="polite"></pre>
+        </div>
+
+        <div class="card">
+          <h2>What you’re seeing</h2>
+          <ul class="bullets">
+            <li><b>Trace</b> = table of states over time</li>
+            <li><b>AIR</b> = algebraic rules linking row i → row i+1</li>
+            <li>Everything happens in <b>Fₚ</b> (numbers wrap around mod p)</li>
+          </ul>
+          <p class="muted">
+            This is a teaching model. Later chapters add Merkle commitments, Fiat–Shamir, and FRI.
+          </p>
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="topbar">
+          <div class="row row--space">
+            <div class="row row--tight">
+              <span class="badge" id="statusBadge">Not run</span>
+              <span class="muted" id="statusText"></span>
+            </div>
+            <div class="row row--tight">
+              <label for="stepSlider" class="muted">Step</label>
+              <input id="stepSlider" type="range" min="0" max="0" value="0" />
+              <span class="mono" id="stepLabel">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="tabs">
+          <button class="tab tab--active" data-tab="trace" type="button">Trace</button>
+          <button class="tab" data-tab="air" type="button">AIR</button>
+          <button class="tab" data-tab="explain" type="button">Explain</button>
+        </div>
+
+        <section class="content content--active" id="tab-trace">
+          <div class="card card--wide">
+            <h2>Trace (rows)</h2>
+            <div class="tableWrap" id="traceTableWrap"></div>
+          </div>
+        </section>
+
+        <section class="content" id="tab-air">
+          <div class="card card--wide">
+            <h2>AIR constraints</h2>
+            <div id="airWrap"></div>
+          </div>
+        </section>
+
+        <section class="content" id="tab-explain">
+          <div class="card card--wide">
+            <h2>Step explanation</h2>
+            <div id="explainWrap"></div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
+
