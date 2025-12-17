@@ -2,7 +2,7 @@
 
 An interactive, visual explorer for **STARK** (Scalable Transparent Argument of Knowledge) proofs.
 
-🚀 **Live Demo:** [https://floatingpragma.io/starklab](https://floatingpragma.io/starklab)
+🚀 **The page is live at:** [https://floatingpragma.io/starklab](https://floatingpragma.io/starklab)
 
 ## Overview
 
@@ -27,15 +27,3 @@ npm run dev
 ```
 
 Then visit `http://localhost:5173/`.
-
-## Deployment
-
-This project is configured for deployment on **GitHub Pages**.
-
-See [DEPLOY.md](./DEPLOY.md) for full instructions on setting up custom domains and subdirectory hosting.
-
-## Credits
-
-Created by **Bernhard Mueller** ([@muellerberndt](https://twitter.com/muellerberndt)).
-
-Inspired by the [STARK 101](https://starkware.co/stark-101/) tutorial and Vitalik Buterin's [STARKs, Part I](https://vitalik.eth.limo/general/2017/11/09/starks_part_1.html).
