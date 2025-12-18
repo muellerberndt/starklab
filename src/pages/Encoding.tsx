@@ -96,14 +96,17 @@ export function EncodingPage() {
         },
         {
             title: "3. Interpolation",
-            desc: "We find a polynomial T(x) that passes through ALL these points.",
+            desc: "We find a polynomial T(x) that passes through ALL these points using Lagrange interpolation.",
             content: (
                 <div style={{ textAlign: 'center', padding: '32px' }}>
                     <div style={{ fontSize: '1.2em', marginBottom: '16px', fontFamily: 'monospace', color: 'var(--accent-primary)' }}>
                         T(0)={traceValues[0]}, T(1)={traceValues[1]}, ...
                     </div>
                     <p>
-                        This curve <strong>T(x)</strong> represents our entire computation history.
+                        <strong>Lagrange interpolation</strong> constructs this polynomial by summing weighted basis polynomials—each basis polynomial is 1 at one point and 0 at all others.
+                    </p>
+                    <p style={{ fontSize: '0.9em', color: 'var(--text-muted)', marginTop: '16px' }}>
+                        Production STARKs use FFT-based methods for efficiency, but the principle is the same.
                     </p>
                     <div style={{ height: '200px', borderBottom: '2px solid var(--border-color)', position: 'relative', marginTop: '32px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
                         <svg width="100%" height="100%" style={{ overflow: 'visible' }}>

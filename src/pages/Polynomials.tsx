@@ -34,17 +34,6 @@ export function PolynomialsPage() {
                 For each register (column), we find a polynomial $P(x)$ such that $P(step) = value$.
             </p>
 
-            <div style={{ margin: '24px 0', padding: '16px', background: 'rgba(255,255,255,0.05)', borderRadius: '8px', borderLeft: '4px solid var(--accent-primary)' }}>
-                <strong>How is this created?</strong>
-                <p style={{ marginTop: '8px', fontSize: '0.9em' }}>
-                    Unlike the simple examples in the Basics section, this is your <strong>actual program trace</strong>.
-                    <br />
-                    In a full STARK, we would use <a href="https://en.wikipedia.org/wiki/Lagrange_polynomial" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)', textDecoration: 'underline' }}>Lagrange Interpolation</a> (or an FFT-based method) to define a unique finite-field polynomial that matches these values on the trace domain.
-                    <br /><br />
-                    This page visualizes the <em>evaluations</em> (samples) per step; it does not reconstruct or plot the finite-field polynomial coefficients.
-                </p>
-            </div>
-
             <div style={{ display: 'flex', flexDirection: 'column', gap: '32px', marginTop: '32px', alignItems: 'center' }}>
                 {/* System Registers */}
                 {['pc', 'halted'].map((reg) => (
