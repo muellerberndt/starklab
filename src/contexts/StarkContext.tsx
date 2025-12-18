@@ -20,17 +20,19 @@ interface StarkState {
 }
 
 const DEFAULT_CODE = `# Fibonacci Sequence
-prime 97
+prime 257
 
 # Initialize registers
 r0 = 1
 r1 = 1
 
-# Calculate next 7 numbers
-repeat 7:
+# Calculate next 10 Fibonacci numbers
+repeat 10:
     r2 = r0 + r1
     r0 = r1
     r1 = r2
+
+halt
 `;
 
 const StarkContext = createContext<StarkState | undefined>(undefined);

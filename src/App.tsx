@@ -16,6 +16,7 @@ import { VerifierPage } from './pages/Verifier';
 
 import { ResourcesPage } from './pages/Resources';
 import { FAQPage } from './pages/FAQ';
+import { ImplementationPage } from './pages/Implementation';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route path="verify" element={<VerifierPage />} />
             <Route path="faq" element={<FAQPage />} />
             <Route path="resources" element={<ResourcesPage />} />
+            <Route path="implementation" element={<ImplementationPage />} />
           </Route>
         </Routes>
       </StarkProvider>

@@ -7,6 +7,7 @@ import {
     Layers,
     MessageSquare,
     Search,
+    Settings,
     ShieldCheck,
     type LucideIcon,
 } from 'lucide-react';
@@ -32,5 +33,6 @@ export const WALKTHROUGH_STEPS: WalkthroughStep[] = [
     { to: '/verify', icon: ShieldCheck, label: '6. Proof Check' },
     { to: '/faq', icon: MessageSquare, label: 'FAQ' },
     { to: '/resources', icon: BookOpen, label: 'Further Reading' },
+    { to: '/implementation', icon: Settings, label: 'Implementation Details' },
 ];
 
