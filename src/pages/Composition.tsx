@@ -183,7 +183,7 @@ export function CompositionPage() {
                     </div>
                 </div>
                 <p style={{ fontSize: '0.9em', color: 'var(--text-muted)', marginTop: '8px' }}>
-                    <em>Confused?</em> See <Link to="/constraint-evaluation" style={{ color: 'var(--accent-primary)' }}>Basics III</Link> for a detailed walkthrough of how this substitution works.
+                    <em>Confused?</em> See <Link to="/constraint-eval" style={{ color: 'var(--accent-primary)' }}>Basics III</Link> for a detailed walkthrough of how this substitution works.
                 </p>
                 <p>
                     We then combine all these evaluated constraints using random coefficients α (derived via Fiat-Shamir):
