@@ -21,7 +21,7 @@ export function Home() {
                     and walk through the core STARK ideas—from constraints to polynomials to Merkle/FRI-style checks.
                 </p>
                 <p style={{ color: 'var(--text-muted)', marginTop: '12px' }}>
-                    The current “Proof Check” page uses a toy verifier; full toy STARK proof verification (Fiat–Shamir + Merkle openings + FRI queries) is coming soon.
+                    The implementation includes a complete toy STARK prover and verifier with Fiat–Shamir, Merkle commitments, and FRI queries.
                 </p>
             </div>
 

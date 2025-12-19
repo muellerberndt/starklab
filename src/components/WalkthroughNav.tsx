@@ -11,6 +11,9 @@ export function WalkthroughNav() {
     const { pathname } = useLocation();
     const current = normalizePathname(pathname);
 
+    // Don't show nav on home page (it has its own "Start the Journey" button)
+    if (current === '/') return null;
+
     const idx = WALKTHROUGH_STEPS.findIndex((s) => s.to === current);
     if (idx === -1) return null;
 

@@ -39,10 +39,10 @@ export function ConstraintEvaluationPage() {
         const r1 = r1Values[i];
         const r1Next = r1Values[i + 1];
 
-        // Calculate diff in prime field (p=97)
-        // We want (r1Next - (r0 + r1)) % 97 == 0
-        const val = (r1Next - (r0 + r1)) % 97;
-        return val < 0 ? val + 97 : val;
+        // Calculate diff in prime field (p=257)
+        // We want (r1Next - (r0 + r1)) % 257 == 0
+        const val = (r1Next - (r0 + r1)) % 257;
+        return val < 0 ? val + 257 : val;
     });
 
     return (
