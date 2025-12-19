@@ -98,12 +98,13 @@ export function CompositionPage() {
 
             <Explainer title="The Big Picture">
                 <p>
-                    Each constraint says something like "the next value of r0 must equal the current r1".
-                    For a valid trace, every constraint evaluates to <strong>0</strong>.
+                    Each constraint formula says something like "the next value of r0 must equal the current value plus 2".
+                    We <strong>apply</strong> these formulas to the trace polynomial by substitution:
+                    replace r0<sub>current</sub> with P(x) and r0<sub>next</sub> with P(x+1).
                 </p>
                 <p>
-                    We combine all constraints with random weights. If even one constraint is non-zero,
-                    the combined result will (with high probability) be non-zero.
+                    The result is a <strong>constraint polynomial</strong> C(x). For a valid trace, C(x) = 0 at all trace points.
+                    We combine all constraint polynomials with random weights into H(x). If even one is non-zero, H(x) will (with high probability) be non-zero.
                 </p>
             </Explainer>
 
@@ -162,10 +163,30 @@ export function CompositionPage() {
 
             {/* Step 2: Random combination */}
             <div className="card" style={{ marginTop: '32px' }}>
-                <h3>Step 2: Random Linear Combination</h3>
+                <h3>Step 2: Apply Constraints to Trace & Combine</h3>
                 <p>
-                    The verifier provides random coefficients α₀, α₁, α₂, ... (via Fiat-Shamir).
-                    We combine all constraints:
+                    Each constraint C<sub>i</sub>(x) is the <strong>result of applying a constraint formula to the trace polynomial</strong>.
+                    For example, if the constraint is "r0 increases by 2":
+                </p>
+                <div style={{
+                    margin: '16px 0',
+                    padding: '12px',
+                    background: 'rgba(100, 200, 255, 0.1)',
+                    borderRadius: '8px',
+                    fontFamily: 'monospace',
+                    textAlign: 'center',
+                    border: '1px dashed var(--accent-secondary)'
+                }}>
+                    C(x) = P<sub>r0</sub>(x+1) − (P<sub>r0</sub>(x) + 2)
+                    <div style={{ fontSize: '0.85em', color: 'var(--text-muted)', marginTop: '8px', fontFamily: 'inherit' }}>
+                        ↑ We substitute P(x) for r0 — this is the <strong>constraint polynomial</strong>!
+                    </div>
+                </div>
+                <p style={{ fontSize: '0.9em', color: 'var(--text-muted)', marginTop: '8px' }}>
+                    <em>Confused?</em> See <Link to="/constraint-evaluation" style={{ color: 'var(--accent-primary)' }}>Basics III</Link> for a detailed walkthrough of how this substitution works.
+                </p>
+                <p>
+                    We then combine all these evaluated constraints using random coefficients α (derived via Fiat-Shamir):
                 </p>
                 <div style={{
                     margin: '16px 0',

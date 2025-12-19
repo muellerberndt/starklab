@@ -76,8 +76,6 @@ function SimpleGraph({
 
 export function ConstraintEvaluationPage() {
     // Simple 4-step counter example: r0 increments by 2 each step
-    // r0: 0, 2, 4, 6
-    // Constraint: r0_next = r0_current + 2
     const trace = [
         { step: 0, r0: 0 },
         { step: 1, r0: 2 },
@@ -85,108 +83,187 @@ export function ConstraintEvaluationPage() {
         { step: 3, r0: 6 },
     ];
 
-    // For polynomial visualization, we need:
-    // P_r0(x) values at x=0,1,2: [0, 2, 4] (we check transitions 0→1, 1→2, 2→3)
-    // P_r0(x+1) values: [2, 4, 6] (the "next" values)
-    // Constant 2: [2, 2, 2]
-    // Sum P_r0(x) + 2: [2, 4, 6]
-    // Constraint C(x) = P_r0(x+1) - (P_r0(x) + 2): [0, 0, 0]
-
+    // Polynomial values
+    const r0Values = trace.map(t => t.r0);  // [0, 2, 4, 6]
     const r0Current = trace.slice(0, -1).map(t => t.r0);  // [0, 2, 4]
     const r0Next = trace.slice(1).map(t => t.r0);         // [2, 4, 6]
-    const constant2 = r0Current.map(() => 2);              // [2, 2, 2]
-    const sum = r0Current.map((v, i) => v + constant2[i]); // [2, 4, 6]
+    const sum = r0Current.map(v => v + 2);                 // [2, 4, 6]
     const constraint = r0Next.map((next, i) => next - sum[i]); // [0, 0, 0]
 
-    // Calculate shared Y range for all polynomials (except constraint which has its own)
-    const allValues = [...r0Current, ...r0Next, ...constant2, ...sum];
+    // Calculate shared Y range
+    const allValues = [...r0Values, ...sum];
     const yMin = Math.min(...allValues) - 1;
     const yMax = Math.max(...allValues) + 1;
 
     return (
         <div className="container" style={{ paddingBottom: '100px' }}>
-            <h1>Basics III: Constraints</h1>
+            <h1>Basics III: Applying Constraints to Polynomials</h1>
             <p>
-                How do we express "the program ran correctly" as a mathematical equation?
+                This is the <strong>key insight</strong> of STARKs: we take the trace polynomial and
+                <em> plug it into</em> a constraint formula to check if the computation was correct.
             </p>
 
-            {/* What is a constraint */}
+            {/* Part 1: The Setup */}
             <div className="card" style={{ marginTop: '32px', borderLeft: '4px solid var(--accent-primary)' }}>
-                <h3>What is a Constraint?</h3>
-                <p>
-                    A <strong>constraint</strong> is a rule that must be satisfied at each step of the computation.
-                    We express constraints as equations that equal <strong>zero</strong> when the rule is followed.
-                </p>
-                <div style={{ marginTop: '16px', padding: '16px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
-                    <p style={{ margin: 0 }}>
-                        <strong>Example:</strong> A program that adds 2 to a counter each step:
-                    </p>
-                    <div style={{ fontFamily: 'monospace', margin: '12px 0', fontSize: '1.1em', textAlign: 'center' }}>
-                        r0<sub>next</sub> − (r0<sub>current</sub> + 2) = 0
+                <h3>Part 1: The Two Ingredients</h3>
+                <p>We have two things that are <strong>agreed upon publicly</strong>:</p>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginTop: '16px' }}>
+                    <div style={{ padding: '16px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
+                        <h4 style={{ marginTop: 0, color: 'var(--accent-secondary)' }}>1. The Constraint Formula</h4>
+                        <p style={{ fontSize: '0.9em', marginBottom: '12px' }}>
+                            A rule the program must follow, expressed as an equation:
+                        </p>
+                        <div style={{
+                            fontFamily: 'monospace',
+                            fontSize: '1.1em',
+                            textAlign: 'center',
+                            padding: '12px',
+                            background: 'rgba(100, 200, 255, 0.1)',
+                            borderRadius: '4px',
+                            border: '1px solid var(--accent-secondary)'
+                        }}>
+                            r0<sub>next</sub> − (r0<sub>current</sub> + 2) = 0
+                        </div>
+                        <p style={{ fontSize: '0.85em', color: 'var(--text-muted)', marginTop: '12px', marginBottom: 0 }}>
+                            "The next value of r0 must equal the current value plus 2"
+                        </p>
                     </div>
-                    <p style={{ margin: 0, fontSize: '0.9em', color: 'var(--text-muted)' }}>
-                        If this equals 0, the rule was followed. Non-zero means the rule was violated.
-                    </p>
+
+                    <div style={{ padding: '16px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
+                        <h4 style={{ marginTop: 0, color: 'var(--accent-primary)' }}>2. The Trace Polynomial P(x)</h4>
+                        <p style={{ fontSize: '0.9em', marginBottom: '12px' }}>
+                            The prover encodes their execution trace as a polynomial:
+                        </p>
+                        <div style={{
+                            fontFamily: 'monospace',
+                            fontSize: '0.95em',
+                            padding: '12px',
+                            background: 'rgba(100, 200, 255, 0.1)',
+                            borderRadius: '4px',
+                            border: '1px solid var(--accent-primary)'
+                        }}>
+                            P(0) = 0, P(1) = 2, P(2) = 4, P(3) = 6
+                        </div>
+                        <p style={{ fontSize: '0.85em', color: 'var(--text-muted)', marginTop: '12px', marginBottom: 0 }}>
+                            A curve that passes through all the trace values
+                        </p>
+                    </div>
                 </div>
             </div>
 
-            {/* The trace table */}
-            <div className="card" style={{ marginTop: '32px' }}>
-                <h3>Applying the Constraint to Each Transition</h3>
+            {/* Part 2: The Key Step */}
+            <div className="card" style={{ marginTop: '32px', border: '2px solid var(--accent-secondary)' }}>
+                <h3 style={{ color: 'var(--accent-secondary)' }}>Part 2: Applying the Constraint to the Polynomial</h3>
                 <p>
-                    Here's a simple 4-step trace where r0 starts at 0 and increases by 2 each step.
-                    A <strong>transition constraint</strong> is checked between every pair of consecutive rows:
+                    Here's what <strong>"applying the constraint formula to the trace polynomial"</strong> means:
                 </p>
 
-                {/* Show the constraint being applied */}
                 <div style={{
-                    margin: '16px 0',
-                    padding: '12px 16px',
+                    margin: '24px 0',
+                    padding: '20px',
                     background: 'rgba(100, 200, 255, 0.1)',
                     borderRadius: '8px',
-                    fontFamily: 'monospace',
-                    textAlign: 'center',
-                    border: '1px solid var(--accent-secondary)'
+                    border: '1px dashed var(--accent-secondary)'
                 }}>
-                    <span style={{ color: 'var(--text-muted)', fontSize: '0.85em' }}>For each transition, check:</span>
-                    <div style={{ fontSize: '1.1em', marginTop: '4px' }}>
+                    <div style={{ marginBottom: '16px', fontSize: '0.95em' }}>
+                        <strong>The constraint formula says:</strong>
+                    </div>
+                    <div style={{
+                        fontFamily: 'monospace',
+                        fontSize: '1.2em',
+                        textAlign: 'center',
+                        marginBottom: '20px'
+                    }}>
                         r0<sub>next</sub> − (r0<sub>current</sub> + 2) = 0
                     </div>
+
+                    <div style={{ marginBottom: '16px', fontSize: '0.95em' }}>
+                        <strong>We substitute the trace polynomial P(x) for r0:</strong>
+                    </div>
+                    <div style={{
+                        fontFamily: 'monospace',
+                        fontSize: '1.2em',
+                        textAlign: 'center',
+                        padding: '16px',
+                        background: 'rgba(0,0,0,0.3)',
+                        borderRadius: '8px',
+                        color: 'var(--accent-primary)'
+                    }}>
+                        C(x) = P(x+1) − (P(x) + 2)
+                    </div>
+
+                    <div style={{ marginTop: '20px', fontSize: '0.9em', color: 'var(--text-muted)', textAlign: 'center' }}>
+                        ↑ This is the <strong>constraint polynomial</strong> — it's what you get when you
+                        plug the trace polynomial into the constraint formula!
+                    </div>
+                </div>
+            </div>
+
+            {/* Part 3: Visual Step-by-Step */}
+            <div className="card" style={{ marginTop: '32px' }}>
+                <h3>Part 3: Let's Compute C(x) Step by Step</h3>
+                <p>Watch how we evaluate C(x) = P(x+1) − (P(x) + 2) at each point:</p>
+
+                {/* Show the trace polynomial first */}
+                <div style={{
+                    margin: '24px 0 16px',
+                    padding: '8px 12px',
+                    background: 'rgba(100, 200, 255, 0.1)',
+                    borderRadius: '4px',
+                    fontSize: '0.9em'
+                }}>
+                    <strong>The Trace Polynomial P(x):</strong> This is what the prover committed to
                 </div>
 
-                <div style={{ overflowX: 'auto', marginTop: '16px' }}>
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
+                    <SimpleGraph values={r0Values} color="var(--accent-primary)" label="P(x) — the prover's trace polynomial" yMin={yMin} yMax={yMax} />
+                </div>
+
+                {/* Step by step evaluation */}
+                <div style={{
+                    margin: '24px 0 16px',
+                    padding: '8px 12px',
+                    background: 'rgba(100, 200, 255, 0.1)',
+                    borderRadius: '4px',
+                    fontSize: '0.9em'
+                }}>
+                    <strong>Evaluating C(x) = P(x+1) − (P(x) + 2) at each transition:</strong>
+                </div>
+
+                <div style={{ overflowX: 'auto' }}>
                     <table style={{
                         width: '100%',
-                        maxWidth: '600px',
+                        maxWidth: '800px',
                         margin: '0 auto',
                         borderCollapse: 'collapse',
                         fontFamily: 'monospace',
-                        fontSize: '0.95em'
+                        fontSize: '0.9em'
                     }}>
                         <thead>
                             <tr style={{ borderBottom: '2px solid var(--border-color)' }}>
-                                <th style={{ padding: '12px 16px', textAlign: 'center' }}>Transition</th>
-                                <th style={{ padding: '12px 16px', textAlign: 'center', color: 'var(--accent-primary)' }}>r0<sub>current</sub></th>
-                                <th style={{ padding: '12px 16px', textAlign: 'center' }}>r0<sub>next</sub></th>
-                                <th style={{ padding: '12px 16px', textAlign: 'center' }}>Evaluate Constraint</th>
+                                <th style={{ padding: '12px', textAlign: 'center' }}>x</th>
+                                <th style={{ padding: '12px', textAlign: 'center', color: 'var(--accent-primary)' }}>P(x)</th>
+                                <th style={{ padding: '12px', textAlign: 'center', color: 'var(--accent-secondary)' }}>P(x+1)</th>
+                                <th style={{ padding: '12px', textAlign: 'center', color: '#bd93f9' }}>P(x) + 2</th>
+                                <th style={{ padding: '12px', textAlign: 'center' }}>C(x) = P(x+1) − (P(x)+2)</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {trace.slice(0, -1).map((row, i) => {
-                                const nextR0 = trace[i + 1].r0;
-                                const expected = row.r0 + 2;
-                                const diff = nextR0 - expected;
+                            {r0Current.map((current, i) => {
+                                const next = r0Next[i];
+                                const plusTwo = current + 2;
+                                const result = next - plusTwo;
                                 return (
                                     <tr key={i} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                                        <td style={{ padding: '12px 16px', textAlign: 'center', color: 'var(--text-muted)' }}>
-                                            step {row.step} → {row.step + 1}
-                                        </td>
-                                        <td style={{ padding: '12px 16px', textAlign: 'center', color: 'var(--accent-primary)', fontWeight: 'bold' }}>{row.r0}</td>
-                                        <td style={{ padding: '12px 16px', textAlign: 'center', fontWeight: 'bold' }}>{nextR0}</td>
-                                        <td style={{ padding: '12px 16px', textAlign: 'center' }}>
-                                            <span style={{ color: 'var(--text-muted)' }}>{nextR0} − ({row.r0} + 2) = </span>
-                                            <span style={{ color: 'var(--accent-success)', fontWeight: 'bold' }}>
-                                                {diff} ✓
+                                        <td style={{ padding: '12px', textAlign: 'center', color: 'var(--text-muted)' }}>{i}</td>
+                                        <td style={{ padding: '12px', textAlign: 'center', color: 'var(--accent-primary)', fontWeight: 'bold' }}>{current}</td>
+                                        <td style={{ padding: '12px', textAlign: 'center', color: 'var(--accent-secondary)', fontWeight: 'bold' }}>{next}</td>
+                                        <td style={{ padding: '12px', textAlign: 'center', color: '#bd93f9', fontWeight: 'bold' }}>{plusTwo}</td>
+                                        <td style={{ padding: '12px', textAlign: 'center' }}>
+                                            <span style={{ color: 'var(--text-muted)' }}>{next} − {plusTwo} = </span>
+                                            <span style={{ color: 'var(--accent-success)', fontWeight: 'bold', fontSize: '1.1em' }}>
+                                                {result}
                                             </span>
                                         </td>
                                     </tr>
@@ -195,106 +272,100 @@ export function ConstraintEvaluationPage() {
                         </tbody>
                     </table>
                 </div>
-                <p style={{ marginTop: '16px', textAlign: 'center', color: 'var(--accent-success)', fontWeight: 'bold' }}>
-                    All transition constraints evaluate to 0 — the trace is valid!
-                </p>
-            </div>
 
-            {/* Polynomial visualization */}
-            <div className="card" style={{ marginTop: '32px', borderLeft: '4px solid var(--accent-secondary)' }}>
-                <h3>Encoding as Polynomials</h3>
-                <p>
-                    The prover encodes the trace column as a polynomial using{' '}
-                    <a href="https://en.wikipedia.org/wiki/Lagrange_polynomial" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)' }}>
-                        Lagrange interpolation
-                    </a>. Then both prover and verifier can apply the constraint formula to this polynomial:
-                </p>
-
-                {/* Step 1: Trace polynomial */}
+                {/* Visual representation */}
                 <div style={{
-                    margin: '24px 0 16px',
-                    padding: '8px 12px',
-                    background: 'rgba(100, 200, 255, 0.1)',
-                    borderRadius: '4px',
-                    fontSize: '0.9em'
-                }}>
-                    <strong>Step 1:</strong> Prover's trace → Trace polynomial
-                </div>
-
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <SimpleGraph values={r0Current} color="var(--accent-primary)" label="P_r0(x) — trace polynomial from prover" yMin={yMin} yMax={yMax} />
-                </div>
-
-                {/* Step 2: Apply constraint formula */}
-                <div style={{
-                    margin: '24px 0 16px',
-                    padding: '8px 12px',
-                    background: 'rgba(100, 200, 255, 0.1)',
-                    borderRadius: '4px',
-                    fontSize: '0.9em'
-                }}>
-                    <strong>Step 2:</strong> Apply the public constraint formula: C(x) = P_r0(x+1) − (P_r0(x) + 2)
-                </div>
-
-                <div style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: '16px',
-                    flexWrap: 'wrap'
-                }}>
-                    <SimpleGraph values={r0Next} color="var(--accent-secondary)" label="P_r0(x+1)" yMin={yMin} yMax={yMax} />
-                    <div style={{ fontSize: '1.5em', fontWeight: 'bold' }}>−</div>
-                    <div style={{ textAlign: 'center' }}>
-                        <div style={{ fontSize: '0.85em', color: 'var(--text-muted)', marginBottom: '4px' }}>(</div>
-                        <SimpleGraph values={sum} color="#bd93f9" label="P_r0(x) + 2" yMin={yMin} yMax={yMax} />
-                        <div style={{ fontSize: '0.85em', color: 'var(--text-muted)', marginTop: '4px' }}>)</div>
-                    </div>
-                </div>
-
-                {/* Step 3: Result */}
-                <div style={{
-                    margin: '24px 0 16px',
+                    margin: '32px 0 16px',
                     padding: '8px 12px',
                     background: 'rgba(0, 255, 100, 0.1)',
                     borderRadius: '4px',
                     fontSize: '0.9em'
                 }}>
-                    <strong>Step 3:</strong> Check that C(x) = 0 at all trace points
+                    <strong>The Result: C(x) = 0 everywhere!</strong>
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <SimpleGraph values={constraint} color="var(--accent-success)" label="C(x) = 0 everywhere!" yMin={-2} yMax={2} />
+                    <SimpleGraph values={constraint} color="var(--accent-success)" label="C(x) — the constraint polynomial" yMin={-2} yMax={2} />
                 </div>
 
                 <div style={{
-                    marginTop: '16px',
-                    padding: '16px',
-                    background: 'rgba(0,0,0,0.2)',
+                    marginTop: '24px',
+                    padding: '20px',
+                    background: 'rgba(0, 255, 100, 0.1)',
                     borderRadius: '8px',
-                    textAlign: 'center'
+                    textAlign: 'center',
+                    border: '1px solid var(--accent-success)'
                 }}>
-                    <p style={{ margin: 0, color: 'var(--accent-success)', fontWeight: 'bold' }}>
-                        C(x) = 0 at all points — the trace satisfies the constraint!
+                    <p style={{ margin: 0, fontSize: '1.1em', fontWeight: 'bold', color: 'var(--accent-success)' }}>
+                        C(x) = 0 at all points means the trace satisfies the constraint!
                     </p>
-                    <p style={{ margin: '8px 0 0', fontSize: '0.85em', color: 'var(--text-muted)' }}>
-                        The verifier doesn't need to see the full trace. It can spot-check C(x) at random points
-                        using the prover's polynomial commitments.
+                    <p style={{ margin: '12px 0 0', fontSize: '0.9em', color: 'var(--text-muted)' }}>
+                        If the prover had cheated (e.g., P(2) = 5 instead of 4), then C(1) would be non-zero.
                     </p>
                 </div>
             </div>
 
-            {/* Key insight */}
+            {/* Part 4: Why This Matters */}
             <div className="card" style={{ marginTop: '32px', background: 'rgba(100, 200, 255, 0.05)' }}>
-                <h3>The Key Insight</h3>
+                <h3>Part 4: Why This Matters</h3>
                 <p>
-                    By expressing constraints as polynomials:
+                    The constraint polynomial C(x) is the <strong>result</strong> of plugging P(x) into the constraint formula.
                 </p>
-                <ul style={{ marginTop: '8px', lineHeight: '1.8' }}>
-                    <li><strong>Compression:</strong> Instead of checking N separate equations, we check one polynomial identity</li>
-                    <li><strong>Error amplification:</strong> If even one constraint fails, C(x) will be non-zero <em>almost everywhere</em></li>
-                    <li><strong>Efficient verification:</strong> The verifier only needs to check C(x) at a few random points</li>
-                </ul>
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginTop: '16px' }}>
+                    <div style={{ padding: '16px', background: 'rgba(0,255,100,0.1)', borderRadius: '8px' }}>
+                        <div style={{ fontWeight: 'bold', color: 'var(--accent-success)', marginBottom: '8px' }}>
+                            If trace is valid:
+                        </div>
+                        <p style={{ margin: 0, fontSize: '0.9em' }}>
+                            C(x) = 0 at all trace points
+                        </p>
+                    </div>
+                    <div style={{ padding: '16px', background: 'rgba(255,100,100,0.1)', borderRadius: '8px' }}>
+                        <div style={{ fontWeight: 'bold', color: 'var(--accent-error)', marginBottom: '8px' }}>
+                            If trace is invalid:
+                        </div>
+                        <p style={{ margin: 0, fontSize: '0.9em' }}>
+                            C(x) ≠ 0 at some point (the cheated step)
+                        </p>
+                    </div>
+                </div>
+
+                <div style={{ marginTop: '24px', padding: '16px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
+                    <p style={{ margin: 0, fontSize: '0.95em' }}>
+                        <strong>The verifier's job:</strong> Given the prover's polynomial commitments,
+                        spot-check C(x) at a few random points. If C(x) ≠ 0 anywhere, reject the proof.
+                        The verifier computes C(x) themselves using the same constraint formula!
+                    </p>
+                </div>
+            </div>
+
+            {/* Summary */}
+            <div className="card" style={{ marginTop: '32px', border: '1px solid var(--accent-primary)' }}>
+                <h3>Summary: The Key Formula</h3>
+                <div style={{
+                    textAlign: 'center',
+                    padding: '24px',
+                    background: 'rgba(0,0,0,0.2)',
+                    borderRadius: '8px',
+                    marginTop: '16px'
+                }}>
+                    <div style={{ fontSize: '0.9em', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                        Constraint Formula (public rule):
+                    </div>
+                    <div style={{ fontFamily: 'monospace', fontSize: '1.1em', marginBottom: '16px' }}>
+                        r0<sub>next</sub> − (r0<sub>current</sub> + 2) = 0
+                    </div>
+
+                    <div style={{ fontSize: '1.5em', color: 'var(--text-muted)', margin: '8px 0' }}>↓ substitute P(x) for r0</div>
+
+                    <div style={{ fontSize: '0.9em', color: 'var(--text-muted)', marginBottom: '8px' }}>
+                        Constraint Polynomial (result of applying formula to trace):
+                    </div>
+                    <div style={{ fontFamily: 'monospace', fontSize: '1.3em', color: 'var(--accent-primary)', fontWeight: 'bold' }}>
+                        C(x) = P(x+1) − (P(x) + 2)
+                    </div>
+                </div>
             </div>
 
         </div>

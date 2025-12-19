@@ -11,8 +11,8 @@ export function ProtocolPage() {
         },
         {
             actor: 'Prover',
-            action: 'Derive Alphas & Commit Quotient',
-            desc: <span>Using Fiat-Shamir, I derive random α coefficients from my trace commitment. Then I combine all constraints into H(x), compute Q(x) = H(x)/Z(x), and commit to the quotient LDE.</span>,
+            action: 'Evaluate Constraints & Commit Quotient',
+            desc: <span>I <strong>apply the constraint formulas to my trace polynomial</strong> to get H(x). For example: H(x) = P(x+1) − (P(x) + 2). If my trace is valid, H(x) = 0 at all trace points. Then I compute Q(x) = H(x)/Z(x) and commit to the quotient LDE.</span>,
             icon: ArrowUp,
             data: 'Merkle Root of Quotient LDE'
         },
@@ -197,42 +197,6 @@ export function ProtocolPage() {
                     The pages that follow (1-6) explain each of these components in detail.
                 </p>
             </div>
-
-            <div className="card" style={{ marginTop: '32px', border: '1px solid var(--accent-primary)' }}>
-                <h3 style={{ color: 'var(--accent-primary)', marginTop: 0 }}>Math Deep Dive: "Applying" Constraints</h3>
-                <p>
-                    How do we mathematically check the trace? We use <strong>Polynomial Substitution</strong>.
-                </p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginTop: '16px' }}>
-                    <div style={{ padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px' }}>
-                        <h4 style={{ marginTop: 0, color: 'var(--text-primary)' }}>1. The Ingredients</h4>
-                        <ul style={{ paddingLeft: '20px', fontSize: '0.9em', lineHeight: '1.6' }}>
-                            <li>
-                                <strong>Trace Polynomial $T(x)$</strong>: A curve that passes through all your trace values.
-                                <br /><span style={{ color: 'var(--text-muted)' }}>$T(0)=1, T(1)=1, T(2)=2...$</span>
-                            </li>
-                            <li>
-                                <strong>Constraint</strong>: A rule that must hold for any valid step.
-                                <br /><span style={{ color: 'var(--text-muted)' }}>$Next - (Curr + Curr) = 0$</span>
-                            </li>
-                        </ul>
-                    </div>
-                    <div style={{ padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px' }}>
-                        <h4 style={{ marginTop: 0, color: 'var(--text-primary)' }}>2. The Check (Division)</h4>
-                        <p style={{ fontSize: '0.9em', lineHeight: '1.6' }}>
-                            We don't just check if $P(x) = 0$. We check if $P(x)$ is <strong>divisible</strong> by a target polynomial $Z(x)$ that is zero on all steps.
-                        </p>
-                        <div style={{ textAlign: 'center', padding: '8px', background: 'rgba(0,0,0,0.2)', borderRadius: '4px', margin: '8px 0' }}>
-                            $Q(x) = P(x) / Z(x)$
-                        </div>
-                        <p style={{ fontSize: '0.9em', margin: 0 }}>
-                            If the Prover is honest, $Q(x)$ is a clean polynomial. <br />
-                            If they lie, the division fails and $Q(x)$ becomes a mess (high degree).
-                        </p>
-                    </div>
-                </div>
-            </div>
-
 
         </div>
     );
