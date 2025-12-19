@@ -103,7 +103,7 @@ export function EncodingPage() {
                         T(0)={traceValues[0]}, T(1)={traceValues[1]}, ...
                     </div>
                     <p>
-                        <strong>Lagrange interpolation</strong> constructs this polynomial by summing weighted basis polynomials—each basis polynomial is 1 at one point and 0 at all others.
+                        <strong><a href="https://en.wikipedia.org/wiki/Lagrange_polynomial" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)' }}>Lagrange interpolation</a></strong> constructs this polynomial by summing weighted basis polynomials—each basis polynomial is 1 at one point and 0 at all others.
                     </p>
                     <p style={{ fontSize: '0.9em', color: 'var(--text-muted)', marginTop: '16px' }}>
                         Production STARKs use FFT-based methods for efficiency, but the principle is the same.
