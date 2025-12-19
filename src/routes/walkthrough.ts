@@ -28,6 +28,7 @@ export const WALKTHROUGH_STEPS: WalkthroughStep[] = [
     { to: '/polynomials', icon: Layers, label: '1.5 Polynomials' },
     { to: '/commitments', icon: Database, label: '2. Commitments' },
     { to: '/composition', icon: Layers, label: '3. Composition' },
+    { to: '/composition-details', icon: Layers, label: '3.5 Composition Details' },
     { to: '/fri', icon: Search, label: '4. FRI' },
     { to: '/zk', icon: ShieldCheck, label: '5. Zero-Knowledge' },
     { to: '/verify', icon: ShieldCheck, label: '6. Proof Check' },

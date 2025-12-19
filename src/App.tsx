@@ -9,6 +9,7 @@ import { EncodingPage } from './pages/Encoding';
 import { TracePage } from './pages/Trace';
 import { CommitmentsPage } from './pages/Commitments';
 import { CompositionPage } from './pages/Composition';
+import { CompositionDetailsPage } from './pages/CompositionDetails';
 import { ConstraintEvaluationPage } from './pages/ConstraintEvaluation';
 import { FriPage } from './pages/Fri';
 import { ZkPage } from './pages/Zk';
@@ -32,6 +33,7 @@ function App() {
             <Route path="polynomials" element={<PolynomialsPage />} />
             <Route path="commitments" element={<CommitmentsPage />} />
             <Route path="composition" element={<CompositionPage />} />
+            <Route path="composition-details" element={<CompositionDetailsPage />} />
             <Route path="constraint-eval" element={<ConstraintEvaluationPage />} />
             <Route path="fri" element={<FriPage />} />
             <Route path="zk" element={<ZkPage />} />
