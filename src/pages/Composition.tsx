@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { useStark } from '../contexts/StarkContext';
 import { PolynomialGraph } from '../components/PolynomialGraph';
+import { Explainer } from '../components/Explainer';
 import { Link } from 'react-router-dom';
 import { mod } from '../core/math';
 
@@ -56,6 +57,25 @@ export function CompositionPage() {
         return values;
     }, [air, trace.length, allConstraints, alphas, prime]);
 
+    // Find a representative transition constraint to show
+    const exampleTransition = useMemo(() => {
+        if (!air || air.transitions.length === 0) return null;
+        // Find a step with an assignment (not just halt)
+        for (const t of air.transitions) {
+            if (t.kind !== 'halt') {
+                const assignmentConstraint = t.constraints.find(c => c.id.startsWith('write_'));
+                if (assignmentConstraint) {
+                    return {
+                        stepIndex: t.stepIndex,
+                        source: t.source.text,
+                        constraint: assignmentConstraint
+                    };
+                }
+            }
+        }
+        return null;
+    }, [air]);
+
     if (!air || trace.length === 0) {
         return (
             <div className="container">
@@ -71,12 +91,103 @@ export function CompositionPage() {
         <div className="container" style={{ paddingBottom: '100px' }}>
             <h1>3. Composition</h1>
             <p>
-                The prover combines all {allConstraints.length} constraints into a single <strong>composition polynomial</strong> H(x).
+                Now we need to prove all {allConstraints.length} AIR constraints are satisfied,
+                without the verifier checking each one individually. We combine them into a
+                single <strong>composition polynomial</strong> H(x).
             </p>
+
+            <Explainer title="The Big Picture">
+                <p>
+                    Each constraint says something like "the next value of r0 must equal the current r1".
+                    For a valid trace, every constraint evaluates to <strong>0</strong>.
+                </p>
+                <p>
+                    We combine all constraints with random weights. If even one constraint is non-zero,
+                    the combined result will (with high probability) be non-zero.
+                </p>
+            </Explainer>
+
+            {/* Step 1: Show what constraints look like */}
+            <div className="card" style={{ marginTop: '32px' }}>
+                <h3>Step 1: Constraints as Polynomials</h3>
+                <p>
+                    Your program has <strong>{air.transitions.length}</strong> instructions,
+                    generating <strong>{allConstraints.length}</strong> total constraints
+                    (boundary + transition constraints for each step).
+                </p>
+
+                {exampleTransition && (
+                    <div style={{ marginTop: '16px' }}>
+                        <p>
+                            For example, at <strong>step {exampleTransition.stepIndex}</strong>,
+                            the instruction <code>{exampleTransition.source}</code> creates this constraint:
+                        </p>
+                        <div style={{
+                            margin: '16px 0',
+                            padding: '16px',
+                            background: 'rgba(0,0,0,0.3)',
+                            borderRadius: '8px',
+                            fontFamily: 'monospace',
+                            borderLeft: '4px solid var(--accent-primary)'
+                        }}>
+                            <div style={{ color: 'var(--accent-secondary)', marginBottom: '8px' }}>
+                                Constraint at step {exampleTransition.stepIndex}:
+                            </div>
+                            <code style={{ color: 'var(--accent-primary)' }}>
+                                {exampleTransition.constraint.expr}
+                            </code>
+                            <div style={{ marginTop: '12px', fontSize: '0.9em', color: 'var(--text-muted)' }}>
+                                {exampleTransition.constraint.why}
+                            </div>
+                            <div style={{ marginTop: '8px' }}>
+                                Current value: <span style={{
+                                    color: exampleTransition.constraint.eval() === 0
+                                        ? 'var(--accent-success)'
+                                        : 'var(--accent-error)',
+                                    fontWeight: 'bold'
+                                }}>
+                                    {exampleTransition.constraint.eval()}
+                                </span>
+                                {exampleTransition.constraint.eval() === 0 && ' (satisfied!)'}
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+                <p style={{ fontSize: '0.9em', color: 'var(--text-muted)' }}>
+                    Each step also has constraints for registers that don't change, pc incrementing, etc.
+                    See <Link to="/composition-details" style={{ color: 'var(--accent-primary)' }}>Composition Details</Link> for all constraints.
+                </p>
+            </div>
+
+            {/* Step 2: Random combination */}
+            <div className="card" style={{ marginTop: '32px' }}>
+                <h3>Step 2: Random Linear Combination</h3>
+                <p>
+                    The verifier provides random coefficients α₀, α₁, α₂, ... (via Fiat-Shamir).
+                    We combine all constraints:
+                </p>
+                <div style={{
+                    margin: '16px 0',
+                    padding: '16px',
+                    background: 'rgba(0,0,0,0.2)',
+                    borderRadius: '8px',
+                    fontFamily: 'monospace',
+                    textAlign: 'center',
+                    fontSize: '1.1em'
+                }}>
+                    H(x) = α₀·C₀(x) + α₁·C₁(x) + α₂·C₂(x) + ... + α<sub>{allConstraints.length - 1}</sub>·C<sub>{allConstraints.length - 1}</sub>(x)
+                </div>
+                <p>
+                    <strong>Why random weights?</strong> If even one constraint C<sub>i</sub>(x) ≠ 0,
+                    the random α<sub>i</sub> makes it extremely unlikely that the terms cancel out.
+                    A cheating prover can't predict the alphas in advance.
+                </p>
+            </div>
 
             {/* Main visualization */}
             <div className="card" style={{ marginTop: '32px' }}>
-                <h3 style={{ textAlign: 'center', marginBottom: '16px' }}>Composition Polynomial H(x)</h3>
+                <h3 style={{ textAlign: 'center', marginBottom: '16px' }}>Result: Composition Polynomial H(x)</h3>
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <PolynomialGraph
                         values={hValues}
@@ -88,7 +199,7 @@ export function CompositionPage() {
                 <div style={{ textAlign: 'center', marginTop: '16px' }}>
                     {combinedValue === 0 ? (
                         <div style={{ color: 'var(--accent-success)', fontWeight: 'bold', fontSize: '1.1em' }}>
-                            H(x) = 0 at all trace points — all constraints satisfied!
+                            H(x) = 0 at all {trace.length} trace points — all constraints satisfied!
                         </div>
                     ) : (
                         <div style={{ color: 'var(--accent-error)', fontWeight: 'bold', fontSize: '1.1em' }}>
@@ -98,57 +209,68 @@ export function CompositionPage() {
                 </div>
             </div>
 
-            {/* How it works */}
-            <div className="card" style={{ marginTop: '32px' }}>
-                <h3>How It Works</h3>
-                <p>
-                    Each AIR constraint (like <code>r1' = r0 + r1</code>) becomes a polynomial equation using the trace polynomials:
-                </p>
-                <div style={{ margin: '16px 0', padding: '16px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px', fontFamily: 'monospace', textAlign: 'center' }}>
-                    C(x) = T_r1(x+1) - T_r0(x) - T_r1(x)
-                </div>
-                <p>
-                    The verifier sends random coefficients α₀, α₁, ... and the prover computes:
-                </p>
-                <div style={{ margin: '16px 0', padding: '16px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px', fontFamily: 'monospace', textAlign: 'center' }}>
-                    H(x) = α₀·C₀(x) + α₁·C₁(x) + α₂·C₂(x) + ...
-                </div>
-                <p style={{ marginTop: '16px' }}>
-                    If all constraints equal 0, then H(x) = 0 at all trace points.
-                    The random alphas ensure a cheating prover can't make non-zero terms cancel out.
-                </p>
-            </div>
-
-            {/* The key insight */}
+            {/* The quotient argument */}
             <div className="card" style={{ marginTop: '32px', borderLeft: '4px solid var(--accent-secondary)' }}>
-                <h3>The Quotient Polynomial</h3>
+                <h3>Step 3: The Quotient Polynomial</h3>
                 <p>
-                    If H(x) = 0 at all N trace points (x = 0, 1, ..., N-1), then H(x) is divisible by the <strong>vanishing polynomial</strong>:
+                    Here's the key insight: if H(x) = 0 at all {trace.length} trace points,
+                    then H(x) is divisible by the <strong>vanishing polynomial</strong>:
                 </p>
-                <div style={{ margin: '16px 0', padding: '16px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px', fontFamily: 'monospace', textAlign: 'center' }}>
-                    Z(x) = (x - 0)(x - 1)(x - 2)...(x - (N-1)) = x^N - 1
+                <div style={{
+                    margin: '16px 0',
+                    padding: '16px',
+                    background: 'rgba(0,0,0,0.2)',
+                    borderRadius: '8px',
+                    fontFamily: 'monospace',
+                    textAlign: 'center'
+                }}>
+                    Z(x) = x<sup>N</sup> - 1 &nbsp;&nbsp; (where N = {trace.length})
                 </div>
+                <p style={{ fontSize: '0.9em', color: 'var(--text-muted)', marginBottom: '16px' }}>
+                    Z(x) is zero exactly at the N-th roots of unity — the points where we evaluate the trace.
+                </p>
+
                 <p>
                     The prover computes the <strong>quotient polynomial</strong>:
                 </p>
-                <div style={{ margin: '16px 0', padding: '16px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px', fontFamily: 'monospace', textAlign: 'center' }}>
+                <div style={{
+                    margin: '16px 0',
+                    padding: '16px',
+                    background: 'rgba(100, 200, 255, 0.1)',
+                    borderRadius: '8px',
+                    fontFamily: 'monospace',
+                    textAlign: 'center',
+                    fontSize: '1.2em',
+                    border: '1px solid var(--accent-secondary)'
+                }}>
                     Q(x) = H(x) / Z(x)
                 </div>
-                <p>
-                    If the trace is valid, Q(x) is a low-degree polynomial. If the trace is invalid, H(x) won't be divisible by Z(x),
-                    and Q(x) won't be a polynomial at all — it will have high degree or be undefined.
-                </p>
-                <p style={{ marginTop: '16px', fontWeight: 'bold' }}>
-                    FRI (next step) proves Q(x) is low-degree, which proves all constraints are satisfied!
-                </p>
+
+                <div style={{ marginTop: '16px', padding: '16px', background: 'rgba(0,255,100,0.05)', borderRadius: '8px' }}>
+                    <p style={{ margin: 0 }}>
+                        <strong>The magic:</strong> If H(x) is truly zero at all trace points,
+                        then Q(x) is a <em>low-degree polynomial</em>.
+                        If even one constraint fails, H(x) won't divide evenly,
+                        and Q(x) will have high degree or won't be a polynomial at all.
+                    </p>
+                </div>
             </div>
 
-            {/* Link to details */}
-            <div className="card" style={{ marginTop: '32px', textAlign: 'center', background: 'rgba(255,255,255,0.02)' }}>
-                <p>Want to see the individual constraints and how they combine?</p>
-                <Link to="/composition-details" className="button" style={{ marginTop: '12px', display: 'inline-block' }}>
-                    View Composition Details →
-                </Link>
+            {/* What's next */}
+            <div className="card" style={{ marginTop: '32px', background: 'rgba(255,255,255,0.02)' }}>
+                <h3>What's Next?</h3>
+                <p>
+                    We need to prove Q(x) is low-degree. That's what <strong>FRI</strong> does —
+                    it's an efficient protocol to verify polynomial degree without revealing the whole polynomial.
+                </p>
+                <div style={{ display: 'flex', gap: '16px', marginTop: '16px', flexWrap: 'wrap' }}>
+                    <Link to="/composition-details" className="btn btn-ghost">
+                        View All Constraints →
+                    </Link>
+                    <Link to="/fri" className="button">
+                        Continue to FRI →
+                    </Link>
+                </div>
             </div>
         </div>
     );
