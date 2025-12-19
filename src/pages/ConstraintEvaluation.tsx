@@ -132,14 +132,32 @@ export function ConstraintEvaluationPage() {
 
             {/* The trace table */}
             <div className="card" style={{ marginTop: '32px' }}>
-                <h3>Our Example Trace</h3>
+                <h3>Applying the Constraint to Each Transition</h3>
                 <p>
-                    Here's a simple 4-step trace where r0 starts at 0 and increases by 2 each step:
+                    Here's a simple 4-step trace where r0 starts at 0 and increases by 2 each step.
+                    A <strong>transition constraint</strong> is checked between every pair of consecutive rows:
                 </p>
+
+                {/* Show the constraint being applied */}
+                <div style={{
+                    margin: '16px 0',
+                    padding: '12px 16px',
+                    background: 'rgba(100, 200, 255, 0.1)',
+                    borderRadius: '8px',
+                    fontFamily: 'monospace',
+                    textAlign: 'center',
+                    border: '1px solid var(--accent-secondary)'
+                }}>
+                    <span style={{ color: 'var(--text-muted)', fontSize: '0.85em' }}>For each transition, check:</span>
+                    <div style={{ fontSize: '1.1em', marginTop: '4px' }}>
+                        r0<sub>next</sub> − (r0<sub>current</sub> + 2) = 0
+                    </div>
+                </div>
+
                 <div style={{ overflowX: 'auto', marginTop: '16px' }}>
                     <table style={{
                         width: '100%',
-                        maxWidth: '500px',
+                        maxWidth: '600px',
                         margin: '0 auto',
                         borderCollapse: 'collapse',
                         fontFamily: 'monospace',
@@ -147,11 +165,10 @@ export function ConstraintEvaluationPage() {
                     }}>
                         <thead>
                             <tr style={{ borderBottom: '2px solid var(--border-color)' }}>
-                                <th style={{ padding: '12px 16px', textAlign: 'center' }}>Step (x)</th>
-                                <th style={{ padding: '12px 16px', textAlign: 'center', color: 'var(--accent-primary)' }}>r0</th>
-                                <th style={{ padding: '12px 16px', textAlign: 'center' }}>r0 + 2</th>
+                                <th style={{ padding: '12px 16px', textAlign: 'center' }}>Transition</th>
+                                <th style={{ padding: '12px 16px', textAlign: 'center', color: 'var(--accent-primary)' }}>r0<sub>current</sub></th>
                                 <th style={{ padding: '12px 16px', textAlign: 'center' }}>r0<sub>next</sub></th>
-                                <th style={{ padding: '12px 16px', textAlign: 'center' }}>Constraint</th>
+                                <th style={{ padding: '12px 16px', textAlign: 'center' }}>Evaluate Constraint</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -161,13 +178,15 @@ export function ConstraintEvaluationPage() {
                                 const diff = nextR0 - expected;
                                 return (
                                     <tr key={i} style={{ borderBottom: '1px solid var(--border-color)' }}>
-                                        <td style={{ padding: '12px 16px', textAlign: 'center' }}>{row.step}</td>
+                                        <td style={{ padding: '12px 16px', textAlign: 'center', color: 'var(--text-muted)' }}>
+                                            step {row.step} → {row.step + 1}
+                                        </td>
                                         <td style={{ padding: '12px 16px', textAlign: 'center', color: 'var(--accent-primary)', fontWeight: 'bold' }}>{row.r0}</td>
-                                        <td style={{ padding: '12px 16px', textAlign: 'center' }}>{expected}</td>
-                                        <td style={{ padding: '12px 16px', textAlign: 'center' }}>{nextR0}</td>
+                                        <td style={{ padding: '12px 16px', textAlign: 'center', fontWeight: 'bold' }}>{nextR0}</td>
                                         <td style={{ padding: '12px 16px', textAlign: 'center' }}>
+                                            <span style={{ color: 'var(--text-muted)' }}>{nextR0} − ({row.r0} + 2) = </span>
                                             <span style={{ color: 'var(--accent-success)', fontWeight: 'bold' }}>
-                                                {nextR0} − {expected} = {diff} ✓
+                                                {diff} ✓
                                             </span>
                                         </td>
                                     </tr>
@@ -177,7 +196,7 @@ export function ConstraintEvaluationPage() {
                     </table>
                 </div>
                 <p style={{ marginTop: '16px', textAlign: 'center', color: 'var(--accent-success)', fontWeight: 'bold' }}>
-                    All constraints evaluate to 0!
+                    All transition constraints evaluate to 0 — the trace is valid!
                 </p>
             </div>
 
