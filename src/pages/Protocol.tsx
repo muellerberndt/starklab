@@ -4,36 +4,29 @@ export function ProtocolPage() {
     const steps = [
         {
             actor: 'Prover',
-            action: 'Commit to Trace',
-            desc: <span>I have run the program. Here is the <a href="https://en.wikipedia.org/wiki/Merkle_tree" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)', textDecoration: 'underline' }}>Merkle Root</a> of the execution trace (blinded).</span>,
+            action: 'Commit to Trace (LDE)',
+            desc: <span>I have run the program and evaluated the trace polynomials on a larger domain (LDE). Here is the <a href="https://en.wikipedia.org/wiki/Merkle_tree" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)', textDecoration: 'underline' }}>Merkle Root</a> of those evaluations.</span>,
             icon: Lock,
-            data: 'Merkle Root (demo hash)'
-        },
-        {
-            actor: 'Verifier',
-            action: 'Send Challenges (Alphas)',
-            desc: 'Prove it. Apply the constraints to your Trace Polynomials and combine them using these random numbers.',
-            icon: ArrowDown,
-            data: 'Random Coefficients (α₀, α₁, ...)'
+            data: 'Merkle Root of Trace LDE'
         },
         {
             actor: 'Prover',
-            action: 'Commit to Quotient',
-            desc: 'I divided the combined constraints by the Vanishing Polynomial to get a Quotient $Q(x)$. Here is its Merkle Root.',
+            action: 'Derive Alphas & Commit Quotient',
+            desc: <span>Using Fiat-Shamir, I derive random α coefficients from my trace commitment. Then I combine all constraints into H(x), compute Q(x) = H(x)/Z(x), and commit to the quotient LDE.</span>,
             icon: ArrowUp,
-            data: 'Merkle Root of Quotient Poly'
+            data: 'Merkle Root of Quotient LDE'
         },
         {
-            actor: 'Verifier',
-            action: 'Send FRI Challenges',
-            desc: 'Now prove that polynomial is low-degree. Fold it!',
-            icon: ArrowDown,
-            data: 'Folding Factor (β)'
+            actor: 'Prover',
+            action: 'FRI Commitments',
+            desc: 'To prove Q(x) is low-degree, I repeatedly fold the polynomial and commit to each layer. Each folding factor β is derived from the previous commitment.',
+            icon: ArrowUp,
+            data: 'FRI Layer Roots + Final Value'
         },
         {
             actor: 'Verifier',
             action: 'Query Phase',
-            desc: 'Open the Merkle Trees at these random positions so I can check the constraints.',
+            desc: 'I derive random query positions from the transcript. Open the Merkle Trees at these positions so I can verify.',
             icon: ArrowDown,
             data: 'Random Indices (idx₁, idx₂, ...)'
         },

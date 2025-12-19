@@ -61,9 +61,14 @@ export function CommitmentsPage() {
                     All trace columns (pc, halted, and your registers) are combined into <strong>one Merkle tree</strong>.
                     The prover sends only the root - a single hash that represents the entire computation.
                 </p>
+                <p style={{ marginTop: '12px' }}>
+                    <strong>Important:</strong> Before committing, the prover computes a <strong>Low-Degree Extension (LDE)</strong> of each column.
+                    This means evaluating the trace polynomial on a <em>larger domain</em> (typically 4-16x bigger).
+                </p>
                 <p style={{ marginTop: '12px', fontSize: '0.9em', color: 'var(--text-muted)' }}>
-                    In a real STARK, the prover first computes the Low-Degree Extension (LDE) of each column,
-                    then commits to all LDE values together. This demo shows the structure with raw trace values.
+                    <strong>Why LDE?</strong> If we only committed to N trace points, a cheater could construct a polynomial
+                    that passes through those points but is wrong elsewhere. By evaluating on M = 4N points, random spot-checks
+                    are much more likely to catch cheating. This demo shows the concept with raw trace values for simplicity.
                 </p>
             </Explainer>
 

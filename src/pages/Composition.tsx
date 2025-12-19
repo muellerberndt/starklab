@@ -254,13 +254,19 @@ export function CompositionPage() {
                         and Q(x) will have high degree or won't be a polynomial at all.
                     </p>
                 </div>
+
+                <div style={{ marginTop: '16px', padding: '12px', background: 'rgba(100, 200, 255, 0.1)', borderRadius: '8px', fontSize: '0.9em' }}>
+                    <strong>Second Commitment:</strong> Just like the trace, the prover evaluates Q(x) on the LDE domain
+                    and commits to those values via a Merkle root. This is the <em>quotient commitment</em> sent to the verifier.
+                </div>
             </div>
 
             {/* What's next */}
             <div className="card" style={{ marginTop: '32px', background: 'rgba(255,255,255,0.02)' }}>
                 <h3>What's Next?</h3>
                 <p>
-                    We need to prove Q(x) is low-degree. That's what <strong>FRI</strong> does —
+                    The prover has now sent two commitments: the <strong>trace LDE</strong> and the <strong>quotient LDE</strong>.
+                    Now we need to prove Q(x) is low-degree. That's what <strong>FRI</strong> does —
                     it's an efficient protocol to verify polynomial degree without revealing the whole polynomial.
                 </p>
                 <div style={{ display: 'flex', gap: '16px', marginTop: '16px', flexWrap: 'wrap' }}>
