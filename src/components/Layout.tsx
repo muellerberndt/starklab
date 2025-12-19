@@ -65,7 +65,7 @@ export function Layout() {
                             fontSize: '0.9em'
                         }}>
                             <p>
-                                (c) Bernhard Mueller • <a href="https://twitter.com/muellerberndt" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>@muellerberndt</a>
+                                (c) Bernhard Mueller • <a href="https://twitter.com/muellerberndt" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>@muellerberndt</a> • <a href="https://github.com/muellerberndt/starklab" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>GitHub</a>
                             </p>
                         </footer>
                     </div>
