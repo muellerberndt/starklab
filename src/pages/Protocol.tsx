@@ -12,7 +12,7 @@ export function ProtocolPage() {
         {
             actor: 'Prover',
             action: 'Evaluate Constraints & Commit Quotient',
-            desc: <span>I <strong>apply the constraint formulas to my trace polynomial</strong> to get H(x). For example: H(x) = P(x+1) − (P(x) + 2). If my trace is valid, H(x) = 0 at all trace points. Then I compute Q(x) = H(x)/Z(x) and commit to the quotient LDE.</span>,
+            desc: <span>I apply the constraints to my trace polynomial to get H(x). If valid, H(x) = 0 at all trace points. I compute Q(x) = H(x)/Z(x) and commit to the quotient LDE.</span>,
             icon: ArrowUp,
             data: 'Merkle Root of Quotient LDE'
         },
