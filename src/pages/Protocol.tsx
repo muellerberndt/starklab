@@ -55,10 +55,13 @@ export function ProtocolPage() {
 
     return (
         <div className="container" style={{ paddingBottom: '100px' }}>
-            <h1>Protocol Overview</h1>
+            <h1>The STARK Protocol</h1>
             <p>
-                STARKs are an <strong>Interactive Oracle Proof (IOP)</strong>. This means the Prover and Verifier have a conversation.
-                (In practice, we use the Fiat-Shamir heuristic to make it non-interactive, but the logic is the same).
+                Now let's see how STARKs specifically implement the prover/verifier model. STARKs are an <strong>Interactive Oracle Proof (IOP)</strong>
+                with special properties: they're <strong>transparent</strong> (no trusted setup) and <strong>post-quantum secure</strong> (use hash functions, not elliptic curves).
+            </p>
+            <p style={{ fontSize: '0.9em', color: 'var(--text-muted)', marginTop: '8px' }}>
+                In practice, we use the Fiat-Shamir heuristic to make it non-interactive, but the logic below shows the underlying conversation.
             </p>
 
             <div style={{ marginTop: '48px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px' }}>
@@ -174,7 +177,35 @@ export function ProtocolPage() {
                 })}
             </div>
 
-            <div className="card" style={{ marginTop: '64px', border: '1px solid var(--accent-primary)' }}>
+            {/* STARK-Specific Components */}
+            <div className="card" style={{ marginTop: '48px', background: 'rgba(100, 200, 255, 0.05)', border: '1px solid rgba(100, 200, 255, 0.2)' }}>
+                <h3 style={{ marginTop: 0 }}>What Makes STARKs Special</h3>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginTop: '16px' }}>
+                    <div style={{ padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
+                        <div style={{ fontWeight: 'bold', marginBottom: '8px', color: 'var(--accent-primary)' }}>Merkle Commitments</div>
+                        <p style={{ margin: 0, fontSize: '0.85em', color: 'var(--text-muted)' }}>
+                            The prover commits to polynomial evaluations using Merkle trees. This allows selective opening without revealing everything.
+                        </p>
+                    </div>
+                    <div style={{ padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
+                        <div style={{ fontWeight: 'bold', marginBottom: '8px', color: 'var(--accent-secondary)' }}>FRI Protocol</div>
+                        <p style={{ margin: 0, fontSize: '0.85em', color: 'var(--text-muted)' }}>
+                            Fast Reed-Solomon IOP of Proximity — proves that committed values come from a low-degree polynomial, using only hashes.
+                        </p>
+                    </div>
+                    <div style={{ padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
+                        <div style={{ fontWeight: 'bold', marginBottom: '8px', color: 'var(--accent-success)' }}>Quotient Polynomial</div>
+                        <p style={{ margin: 0, fontSize: '0.85em', color: 'var(--text-muted)' }}>
+                            Dividing by the vanishing polynomial converts "constraints hold at all trace points" into "this is a valid polynomial."
+                        </p>
+                    </div>
+                </div>
+                <p style={{ marginTop: '16px', fontSize: '0.9em', color: 'var(--text-muted)' }}>
+                    The pages that follow (1-6) explain each of these components in detail.
+                </p>
+            </div>
+
+            <div className="card" style={{ marginTop: '32px', border: '1px solid var(--accent-primary)' }}>
                 <h3 style={{ color: 'var(--accent-primary)', marginTop: 0 }}>Math Deep Dive: "Applying" Constraints</h3>
                 <p>
                     How do we mathematically check the trace? We use <strong>Polynomial Substitution</strong>.

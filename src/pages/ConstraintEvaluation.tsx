@@ -202,82 +202,86 @@ export function ConstraintEvaluationPage() {
 
             {/* Polynomial visualization */}
             <div className="card" style={{ marginTop: '32px', borderLeft: '4px solid var(--accent-secondary)' }}>
-                <h3>Visualizing as Polynomials</h3>
+                <h3>Encoding as Polynomials</h3>
                 <p>
-                    In STARKs, we encode each column as a polynomial using{' '}
+                    The prover encodes the trace column as a polynomial using{' '}
                     <a href="https://en.wikipedia.org/wiki/Lagrange_polynomial" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)' }}>
                         Lagrange interpolation
-                    </a>. Let's see how the constraint looks as polynomial arithmetic:
+                    </a>. Then both prover and verifier can apply the constraint formula to this polynomial:
                 </p>
 
-                {/* Row 1: P_r0(x) and constant 2 */}
+                {/* Step 1: Trace polynomial */}
+                <div style={{
+                    margin: '24px 0 16px',
+                    padding: '8px 12px',
+                    background: 'rgba(100, 200, 255, 0.1)',
+                    borderRadius: '4px',
+                    fontSize: '0.9em'
+                }}>
+                    <strong>Step 1:</strong> Prover's trace → Trace polynomial
+                </div>
+
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <SimpleGraph values={r0Current} color="var(--accent-primary)" label="P_r0(x) — trace polynomial from prover" yMin={yMin} yMax={yMax} />
+                </div>
+
+                {/* Step 2: Apply constraint formula */}
+                <div style={{
+                    margin: '24px 0 16px',
+                    padding: '8px 12px',
+                    background: 'rgba(100, 200, 255, 0.1)',
+                    borderRadius: '4px',
+                    fontSize: '0.9em'
+                }}>
+                    <strong>Step 2:</strong> Apply the public constraint formula: C(x) = P_r0(x+1) − (P_r0(x) + 2)
+                </div>
+
                 <div style={{
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    gap: '24px',
-                    marginTop: '24px',
+                    gap: '16px',
                     flexWrap: 'wrap'
                 }}>
-                    <SimpleGraph values={r0Current} color="var(--accent-primary)" label="P_r0(x)" yMin={yMin} yMax={yMax} />
-                    <div style={{ fontSize: '1.5em', fontWeight: 'bold' }}>+</div>
-                    <SimpleGraph values={constant2} color="var(--accent-tertiary)" label="2 (constant)" yMin={yMin} yMax={yMax} />
+                    <SimpleGraph values={r0Next} color="var(--accent-secondary)" label="P_r0(x+1)" yMin={yMin} yMax={yMax} />
+                    <div style={{ fontSize: '1.5em', fontWeight: 'bold' }}>−</div>
+                    <div style={{ textAlign: 'center' }}>
+                        <div style={{ fontSize: '0.85em', color: 'var(--text-muted)', marginBottom: '4px' }}>(</div>
+                        <SimpleGraph values={sum} color="#bd93f9" label="P_r0(x) + 2" yMin={yMin} yMax={yMax} />
+                        <div style={{ fontSize: '0.85em', color: 'var(--text-muted)', marginTop: '4px' }}>)</div>
+                    </div>
                 </div>
 
-                {/* Equals */}
-                <div style={{ textAlign: 'center', margin: '16px 0', fontSize: '1.5em', fontWeight: 'bold' }}>=</div>
-
-                {/* Row 2: Sum */}
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <SimpleGraph values={sum} color="#bd93f9" label="P_r0(x) + 2" yMin={yMin} yMax={yMax} />
-                </div>
-
-                {/* This should equal... */}
+                {/* Step 3: Result */}
                 <div style={{
-                    textAlign: 'center',
-                    margin: '24px 0',
-                    padding: '12px',
-                    background: 'rgba(0,255,100,0.1)',
-                    borderRadius: '8px'
-                }}>
-                    <div style={{ fontSize: '1em', marginBottom: '8px' }}>This should equal...</div>
-                </div>
-
-                {/* Row 3: P_r0(x+1) */}
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <SimpleGraph values={r0Next} color="var(--accent-secondary)" label="P_r0(x+1) — the 'next' values" yMin={yMin} yMax={yMax} />
-                </div>
-
-                {/* Comparison note */}
-                <div style={{
-                    textAlign: 'center',
-                    margin: '16px 0',
-                    padding: '16px',
-                    background: 'rgba(0,0,0,0.2)',
-                    borderRadius: '8px'
-                }}>
-                    <p style={{ margin: 0, fontSize: '0.95em' }}>
-                        Notice: <span style={{ color: '#bd93f9', fontWeight: 'bold' }}>P_r0(x) + 2</span> = [2, 4, 6]
-                        matches exactly with <span style={{ color: 'var(--accent-secondary)', fontWeight: 'bold' }}>P_r0(x+1)</span> = [2, 4, 6]
-                    </p>
-                </div>
-
-                {/* Constraint polynomial */}
-                <div style={{
-                    textAlign: 'center',
                     margin: '24px 0 16px',
-                    fontSize: '1em'
+                    padding: '8px 12px',
+                    background: 'rgba(0, 255, 100, 0.1)',
+                    borderRadius: '4px',
+                    fontSize: '0.9em'
                 }}>
-                    <strong>Constraint polynomial:</strong> C(x) = P_r0(x+1) − (P_r0(x) + 2)
+                    <strong>Step 3:</strong> Check that C(x) = 0 at all trace points
                 </div>
 
                 <div style={{ display: 'flex', justifyContent: 'center' }}>
                     <SimpleGraph values={constraint} color="var(--accent-success)" label="C(x) = 0 everywhere!" yMin={-2} yMax={2} />
                 </div>
 
-                <p style={{ marginTop: '16px', textAlign: 'center', color: 'var(--accent-success)', fontWeight: 'bold' }}>
-                    The constraint polynomial is zero at all points — the trace is valid!
-                </p>
+                <div style={{
+                    marginTop: '16px',
+                    padding: '16px',
+                    background: 'rgba(0,0,0,0.2)',
+                    borderRadius: '8px',
+                    textAlign: 'center'
+                }}>
+                    <p style={{ margin: 0, color: 'var(--accent-success)', fontWeight: 'bold' }}>
+                        C(x) = 0 at all points — the trace satisfies the constraint!
+                    </p>
+                    <p style={{ margin: '8px 0 0', fontSize: '0.85em', color: 'var(--text-muted)' }}>
+                        The verifier doesn't need to see the full trace. It can spot-check C(x) at random points
+                        using the prover's polynomial commitments.
+                    </p>
+                </div>
             </div>
 
             {/* Key insight */}
@@ -293,15 +297,6 @@ export function ConstraintEvaluationPage() {
                 </ul>
             </div>
 
-            {/* Advanced note about selectors */}
-            <div className="card" style={{ marginTop: '32px', opacity: 0.8 }}>
-                <h3 style={{ fontSize: '1em', color: 'var(--text-muted)' }}>Advanced: Handling Different Instructions</h3>
-                <p style={{ fontSize: '0.9em', color: 'var(--text-muted)' }}>
-                    Real programs have different operations (ADD, MUL, etc.). STARKs use <strong>selector columns</strong> —
-                    extra columns that "turn on" the right constraint for each instruction type. This way, a fixed set of
-                    constraints can verify any program.
-                </p>
-            </div>
         </div>
     );
 }

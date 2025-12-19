@@ -3,7 +3,7 @@ import { ArrowRight } from 'lucide-react';
 
 export function EncodingPage() {
     const [step, setStep] = useState(0);
-    const [traceValues, setTraceValues] = useState([1, 1, 2, 3, 5, 8, 13, 21]);
+    const [traceValues, setTraceValues] = useState([0, 2, 4, 6]);
 
     const handleTraceChange = (index: number, value: string) => {
         const newValues = [...traceValues];
@@ -44,19 +44,19 @@ export function EncodingPage() {
     const steps = [
         // ... (steps content remains mostly the same, but I'll keep the structure)
         {
-            title: "1. The Example: Fibonacci",
+            title: "1. The Example: Counter +2",
             desc: "Before we encode anything, let's define what we are encoding.",
             content: (
                 <div style={{ textAlign: 'center', maxWidth: '600px' }}>
                     <p style={{ fontSize: '1.1em', marginBottom: '24px' }}>
-                        In this <strong>Basics</strong> section, we use a simple, static example:
+                        In this <strong>Basics</strong> section, we use a simple example:
                         <br />
-                        A program that calculates <strong>Fibonacci numbers</strong> (1, 1, 2, 3, 5...).
+                        A program that <strong>adds 2</strong> to a counter each step.
                     </p>
                     <div style={{ display: 'flex', justifyContent: 'center', gap: '32px', marginBottom: '24px' }}>
                         <div style={{ background: 'rgba(255,255,255,0.05)', padding: '16px', borderRadius: '8px' }}>
                             <div style={{ color: 'var(--text-muted)', fontSize: '0.9em' }}>Register r0</div>
-                            <div style={{ fontSize: '1.5em', fontFamily: 'monospace', fontWeight: 'bold' }}>1, 1, 2, 3, 5, 8...</div>
+                            <div style={{ fontSize: '1.5em', fontFamily: 'monospace', fontWeight: 'bold' }}>0, 2, 4, 6</div>
                         </div>
                     </div>
                     <div className="alert info">
