@@ -33,7 +33,8 @@ export const WALKTHROUGH_STEPS: WalkthroughStep[] = [
     { to: '/fri', icon: Search, label: '4. FRI' },
     { to: '/zk', icon: ShieldCheck, label: '5. Zero-Knowledge' },
     { to: '/verify', icon: ShieldCheck, label: '6. Proof Check' },
-    { to: '/faq', icon: MessageSquare, label: 'FAQ' },
+    { to: '/proof-security', icon: ShieldCheck, label: '6.5 Proof Security' },
+    { to: '/glossary', icon: BookOpen, label: 'Glossary' },
     { to: '/resources', icon: BookOpen, label: 'Further Reading' },
     { to: '/implementation', icon: Settings, label: 'Implementation Details' },
 ];

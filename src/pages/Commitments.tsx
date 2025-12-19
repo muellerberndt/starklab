@@ -168,7 +168,7 @@ export function CommitmentsPage() {
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
                     <div style={{ padding: '16px', background: 'rgba(255,255,255,0.03)', borderRadius: '8px' }}>
                         <div style={{ fontWeight: 'bold', marginBottom: '8px', color: 'var(--text-muted)' }}>
-                            ❌ Separate Roots
+                            Separate Roots (less efficient)
                         </div>
                         <div style={{ fontSize: '0.85em', fontFamily: 'monospace' }}>
                             {columns.slice(0, 3).map(col => (
@@ -185,7 +185,7 @@ export function CommitmentsPage() {
 
                     <div style={{ padding: '16px', background: 'rgba(112, 0, 255, 0.1)', borderRadius: '8px' }}>
                         <div style={{ fontWeight: 'bold', marginBottom: '8px', color: 'var(--accent-primary)' }}>
-                            ✓ Combined Root
+                            Combined Root (preferred)
                         </div>
                         <div style={{ fontSize: '0.85em', fontFamily: 'monospace' }}>
                             all: {combinedRoot}
