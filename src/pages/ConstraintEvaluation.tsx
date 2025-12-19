@@ -97,25 +97,68 @@ export function ConstraintEvaluationPage() {
 
     return (
         <div className="container" style={{ paddingBottom: '100px' }}>
-            <h1>Basics III: Applying Constraints to Polynomials</h1>
+            <h1>Basics III: Constraints</h1>
             <p>
-                To check if a trace is valid, we substitute the trace polynomial into the constraint formula.
+                A <strong>constraint</strong> is a rule that a valid execution must satisfy.
+                Every instruction in your program creates constraints that relate the current state to the next state.
             </p>
 
-            {/* Part 1: The Setup */}
+            {/* What is a Constraint */}
+            <div className="card" style={{ marginTop: '32px' }}>
+                <h3>What is a Constraint?</h3>
+                <p>
+                    Consider a simple program that adds 2 to a register each step. The constraint for this is:
+                </p>
+                <div style={{
+                    margin: '16px 0',
+                    padding: '16px',
+                    background: 'rgba(0,0,0,0.2)',
+                    borderRadius: '8px',
+                    textAlign: 'center'
+                }}>
+                    <div style={{ fontFamily: 'monospace', fontSize: '1.1em', marginBottom: '8px' }}>
+                        r0<sub>next</sub> = r0<sub>current</sub> + 2
+                    </div>
+                    <div style={{ fontSize: '0.9em', color: 'var(--text-muted)' }}>
+                        "The next value of r0 must equal the current value plus 2"
+                    </div>
+                </div>
+                <p>
+                    We rewrite this as an equation that equals zero when satisfied:
+                </p>
+                <div style={{
+                    margin: '16px 0',
+                    padding: '16px',
+                    background: 'rgba(100, 200, 255, 0.1)',
+                    borderRadius: '8px',
+                    fontFamily: 'monospace',
+                    fontSize: '1.1em',
+                    textAlign: 'center',
+                    border: '1px solid var(--accent-secondary)'
+                }}>
+                    r0<sub>next</sub> − (r0<sub>current</sub> + 2) = 0
+                </div>
+                <p style={{ fontSize: '0.9em', color: 'var(--text-muted)' }}>
+                    If the trace violates this rule at any step, the left side won't equal zero — that's how we catch cheaters.
+                </p>
+            </div>
+
+            {/* The Two Ingredients */}
             <div className="card" style={{ marginTop: '32px', borderLeft: '4px solid var(--accent-primary)' }}>
-                <h3>The Two Ingredients</h3>
-                <p>Both are public:</p>
+                <h3>Checking Constraints with Polynomials</h3>
+                <p>
+                    To check constraints efficiently, we work with polynomials. We have:
+                </p>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginTop: '16px' }}>
                     <div style={{ padding: '16px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
-                        <h4 style={{ marginTop: 0, color: 'var(--accent-secondary)' }}>1. The Constraint Formula</h4>
+                        <h4 style={{ marginTop: 0, color: 'var(--accent-secondary)' }}>The Constraint Formula</h4>
                         <p style={{ fontSize: '0.9em', marginBottom: '12px' }}>
-                            A rule the program must follow, expressed as an equation:
+                            The rule from above, written as "= 0":
                         </p>
                         <div style={{
                             fontFamily: 'monospace',
-                            fontSize: '1.1em',
+                            fontSize: '1em',
                             textAlign: 'center',
                             padding: '12px',
                             background: 'rgba(100, 200, 255, 0.1)',
@@ -124,15 +167,12 @@ export function ConstraintEvaluationPage() {
                         }}>
                             r0<sub>next</sub> − (r0<sub>current</sub> + 2) = 0
                         </div>
-                        <p style={{ fontSize: '0.85em', color: 'var(--text-muted)', marginTop: '12px', marginBottom: 0 }}>
-                            "The next value of r0 must equal the current value plus 2"
-                        </p>
                     </div>
 
                     <div style={{ padding: '16px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
-                        <h4 style={{ marginTop: 0, color: 'var(--accent-primary)' }}>2. The Trace Polynomial P(x)</h4>
+                        <h4 style={{ marginTop: 0, color: 'var(--accent-primary)' }}>The Trace Polynomial P(x)</h4>
                         <p style={{ fontSize: '0.9em', marginBottom: '12px' }}>
-                            The prover encodes their execution trace as a polynomial:
+                            The prover's trace encoded as a polynomial:
                         </p>
                         <div style={{
                             fontFamily: 'monospace',
@@ -144,9 +184,6 @@ export function ConstraintEvaluationPage() {
                         }}>
                             P(0) = 0, P(1) = 2, P(2) = 4, P(3) = 6
                         </div>
-                        <p style={{ fontSize: '0.85em', color: 'var(--text-muted)', marginTop: '12px', marginBottom: 0 }}>
-                            A curve that passes through all the trace values
-                        </p>
                     </div>
                 </div>
             </div>
