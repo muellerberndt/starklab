@@ -116,6 +116,9 @@ export function EncodingPage() {
                             ))}
                         </svg>
                     </div>
+                    <p style={{ fontSize: '0.85em', color: 'var(--text-muted)', marginTop: '16px', fontStyle: 'italic' }}>
+                        Note: The curve is for visualization. Since we work in a finite field, the polynomial only has values at integer points (field elements), not "in between."
+                    </p>
                 </div>
             )
         },
