@@ -1,3 +1,5 @@
+import { FileText, Ruler, SlidersHorizontal } from 'lucide-react';
+
 // Simple graph component for polynomial visualization
 function SimpleGraph({
     values,
@@ -103,17 +105,23 @@ export function ProverVerifierPage() {
                     marginTop: '16px'
                 }}>
                     <div style={{ padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px', textAlign: 'center' }}>
-                        <div style={{ fontSize: '1.5em', marginBottom: '4px' }}>📜</div>
+                        <div style={{ marginBottom: '8px', display: 'flex', justifyContent: 'center' }}>
+                            <FileText size={24} color="var(--accent-primary)" />
+                        </div>
                         <div style={{ fontWeight: 'bold', fontSize: '0.9em' }}>The Program</div>
                         <div style={{ fontSize: '0.8em', color: 'var(--text-muted)' }}>What computation to prove</div>
                     </div>
                     <div style={{ padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px', textAlign: 'center' }}>
-                        <div style={{ fontSize: '1.5em', marginBottom: '4px' }}>📐</div>
+                        <div style={{ marginBottom: '8px', display: 'flex', justifyContent: 'center' }}>
+                            <Ruler size={24} color="var(--accent-secondary)" />
+                        </div>
                         <div style={{ fontWeight: 'bold', fontSize: '0.9em' }}>Constraint Formulas</div>
                         <div style={{ fontSize: '0.8em', color: 'var(--text-muted)' }}>Rules the trace must satisfy</div>
                     </div>
                     <div style={{ padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px', textAlign: 'center' }}>
-                        <div style={{ fontSize: '1.5em', marginBottom: '4px' }}>🔢</div>
+                        <div style={{ marginBottom: '8px', display: 'flex', justifyContent: 'center' }}>
+                            <SlidersHorizontal size={24} color="var(--accent-warning)" />
+                        </div>
                         <div style={{ fontWeight: 'bold', fontSize: '0.9em' }}>Field & Parameters</div>
                         <div style={{ fontSize: '0.8em', color: 'var(--text-muted)' }}>Prime, trace length, etc.</div>
                     </div>
