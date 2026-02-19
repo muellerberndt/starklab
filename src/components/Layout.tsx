@@ -65,6 +65,9 @@ export function Layout() {
                             fontSize: '0.9em'
                         }}>
                             <p>
+                                <a href="https://floatingpragma.io/" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>Floating Pragma</a> • <a href="https://floatingpragma.io/awesome-zk-proofs/" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>ZK Proofs</a> • <a href="https://floatingpragma.io/awesome-ai-security/" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>AI Security</a> • <a href="https://floatingpragma.io/oph/" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>OPH</a> • <a href="https://floatingpragma.io/selected-works/" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>Selected Works</a>
+                            </p>
+                            <p style={{ marginTop: '8px' }}>
                                 (c) Bernhard Mueller • <a href="https://twitter.com/muellerberndt" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>@muellerberndt</a> • <a href="https://github.com/muellerberndt/starklab" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>GitHub</a>
                             </p>
                         </footer>
