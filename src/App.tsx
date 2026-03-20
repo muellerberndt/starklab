@@ -20,11 +20,13 @@ import { ProofSecurityPage } from './pages/ProofSecurity';
 import { ResourcesPage } from './pages/Resources';
 import { GlossaryPage } from './pages/Glossary';
 import { ImplementationPage } from './pages/Implementation';
+import { SeoManager } from './components/SeoManager';
 
 function App() {
   return (
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <StarkProvider>
+        <SeoManager />
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />

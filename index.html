@@ -32,6 +32,27 @@
   <!-- Additional SEO -->
   <meta name="robots" content="index, follow" />
   <meta name="googlebot" content="index, follow" />
+  <script>
+    (function () {
+      var path = window.location.pathname || '/starklab/';
+      if (!path.startsWith('/starklab')) return;
+
+      if (path === '/starklab') {
+        path = '/starklab/';
+      } else if (!path.endsWith('/')) {
+        path += '/';
+      }
+
+      var canonical = 'https://floatingpragma.io' + path;
+      var canonicalLink = document.querySelector('link[rel="canonical"]');
+      var ogUrl = document.querySelector('meta[property="og:url"]');
+      var twitterUrl = document.querySelector('meta[property="twitter:url"]');
+
+      if (canonicalLink) canonicalLink.setAttribute('href', canonical);
+      if (ogUrl) ogUrl.setAttribute('content', canonical);
+      if (twitterUrl) twitterUrl.setAttribute('content', canonical);
+    })();
+  </script>
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HLGH209WMG"></script>

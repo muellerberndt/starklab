@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+Sitemap: https://floatingpragma.io/sitemap.xml
 Sitemap: https://floatingpragma.io/starklab/sitemap.xml
