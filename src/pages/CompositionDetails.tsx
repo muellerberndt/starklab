@@ -321,7 +321,7 @@ export function CompositionDetailsPage() {
                         </p>
                     ) : (
                         <p style={{ color: 'var(--accent-error)' }}>
-                            Some constraints are non-zero! Try <Link to="/trace">corrupting the trace</Link> to see this.
+                            Some constraints are non-zero! Try <Link to="/trace/">corrupting the trace</Link> to see this.
                         </p>
                     )}
                 </div>
@@ -350,10 +350,10 @@ export function CompositionDetailsPage() {
             </div>
 
             <div style={{ marginTop: '32px', textAlign: 'center' }}>
-                <Link to="/composition" className="btn btn-ghost" style={{ marginRight: '16px' }}>
+                <Link to="/composition/" className="btn btn-ghost" style={{ marginRight: '16px' }}>
                     ← Back to Overview
                 </Link>
-                <Link to="/fri" className="button">
+                <Link to="/fri/" className="button">
                     Continue to FRI →
                 </Link>
             </div>

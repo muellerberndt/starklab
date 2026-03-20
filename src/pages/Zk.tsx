@@ -288,10 +288,10 @@ export function ZkPage() {
             </div>
 
             <div style={{ marginTop: '32px', textAlign: 'center' }}>
-                <Link to="/fri" className="btn btn-ghost" style={{ marginRight: '16px' }}>
+                <Link to="/fri/" className="btn btn-ghost" style={{ marginRight: '16px' }}>
                     ← Back to FRI
                 </Link>
-                <Link to="/verify" className="button">
+                <Link to="/verify/" className="button">
                     Continue to Verification →
                 </Link>
             </div>

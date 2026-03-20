@@ -14,7 +14,7 @@ export function WalkthroughNav() {
     // Don't show nav on home page (it has its own "Start the Journey" button)
     if (current === '/') return null;
 
-    const idx = WALKTHROUGH_STEPS.findIndex((s) => s.to === current);
+    const idx = WALKTHROUGH_STEPS.findIndex((s) => normalizePathname(s.to) === current);
     if (idx === -1) return null;
 
     const prev = idx > 0 ? WALKTHROUGH_STEPS[idx - 1] : null;
@@ -42,4 +42,3 @@ export function WalkthroughNav() {
         </div>
     );
 }
-

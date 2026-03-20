@@ -79,7 +79,7 @@ export function TracePage() {
                     The prover proves: "I know a trace that satisfies the public AIR constraints."
                 </p>
                 <p style={{ marginTop: '8px', fontSize: '0.9em', color: 'var(--text-muted)' }}>
-                    See <Link to="/implementation" style={{ color: 'var(--accent-primary)' }}>Implementation Details</Link> for
+                    See <Link to="/implementation/" style={{ color: 'var(--accent-primary)' }}>Implementation Details</Link> for
                     a complete breakdown of what's created when.
                 </p>
             </Explainer>

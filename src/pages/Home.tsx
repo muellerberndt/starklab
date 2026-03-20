@@ -41,7 +41,7 @@ export function Home() {
             </div>
 
             <div style={{ display: 'flex', justifyContent: 'center', marginTop: '48px' }}>
-                <Link to="/math" className="btn btn-primary" style={{ fontSize: '1.2rem', padding: '16px 32px' }}>
+                <Link to="/math/" className="btn btn-primary" style={{ fontSize: '1.2rem', padding: '16px 32px' }}>
                     Start the Journey <ArrowRight size={20} />
                 </Link>
             </div>

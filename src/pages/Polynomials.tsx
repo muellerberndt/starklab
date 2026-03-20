@@ -12,7 +12,7 @@ export function PolynomialsPage() {
                 <div className="card" style={{ textAlign: 'center', padding: '48px' }}>
                     <h3>No Trace Found</h3>
                     <p>Please generate a trace first.</p>
-                    <Link to="/trace" className="button">Go to Step 1</Link>
+                    <Link to="/trace/" className="button">Go to Step 1</Link>
                 </div>
             </div>
         );

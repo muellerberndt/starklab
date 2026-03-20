@@ -83,7 +83,7 @@ export function FriPage() {
             <div className="container">
                 <h1>4. FRI Protocol</h1>
                 <div className="alert error">
-                    Trace has constraint violations! <Link to="/trace">Fix the trace</Link> first.
+                    Trace has constraint violations! <Link to="/trace/">Fix the trace</Link> first.
                 </div>
             </div>
         );
@@ -310,10 +310,10 @@ export function FriPage() {
             </div>
 
             <div style={{ marginTop: '32px', textAlign: 'center' }}>
-                <Link to="/composition" className="btn btn-ghost" style={{ marginRight: '16px' }}>
+                <Link to="/composition/" className="btn btn-ghost" style={{ marginRight: '16px' }}>
                     ← Back to Composition
                 </Link>
-                <Link to="/verify" className="button">
+                <Link to="/verify/" className="button">
                     Run Full Verification →
                 </Link>
             </div>

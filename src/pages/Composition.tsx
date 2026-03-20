@@ -99,7 +99,7 @@ export function CompositionPage() {
             <Explainer title="The Big Picture">
                 <p>
                     Each constraint becomes a polynomial C(x) by substituting the trace polynomial
-                    (see <Link to="/constraint-eval" style={{ color: 'var(--accent-primary)' }}>Basics III</Link>).
+                    (see <Link to="/constraint-eval/" style={{ color: 'var(--accent-primary)' }}>Basics III</Link>).
                     We combine all C(x) with random weights into H(x). If any constraint fails, H(x) ≠ 0.
                 </p>
             </Explainer>
@@ -153,7 +153,7 @@ export function CompositionPage() {
 
                 <p style={{ fontSize: '0.9em', color: 'var(--text-muted)' }}>
                     Each step also has constraints for registers that don't change, pc incrementing, etc.
-                    See <Link to="/composition-details" style={{ color: 'var(--accent-primary)' }}>Composition Details</Link> for all constraints.
+                    See <Link to="/composition-details/" style={{ color: 'var(--accent-primary)' }}>Composition Details</Link> for all constraints.
                 </p>
             </div>
 
@@ -266,10 +266,10 @@ export function CompositionPage() {
                     it's an efficient protocol to verify polynomial degree without revealing the whole polynomial.
                 </p>
                 <div style={{ display: 'flex', gap: '16px', marginTop: '16px', flexWrap: 'wrap' }}>
-                    <Link to="/composition-details" className="btn btn-ghost">
+                    <Link to="/composition-details/" className="btn btn-ghost">
                         View All Constraints →
                     </Link>
-                    <Link to="/fri" className="button">
+                    <Link to="/fri/" className="button">
                         Continue to FRI →
                     </Link>
                 </div>
