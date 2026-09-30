@@ -12,52 +12,33 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- Primary Meta Tags -->
-  <title>STARK Lab - Interactive STARK Proof Tutorial</title>
-  <meta name="title" content="STARK Lab - Interactive STARK Proof Tutorial" />
-  <meta name="description" content="Learn how STARK proofs work through interactive visualizations. Write programs, explore execution traces, polynomial encoding, FRI protocol, and zero-knowledge proofs step by step." />
-  <meta name="keywords" content="STARK, zero knowledge proofs, ZKP, cryptography, blockchain, FRI protocol, polynomial commitment, interactive tutorial, zk-STARKs" />
+  <title>STARK Lab | Interactive proof tutorial | Pragma Research</title>
+  <meta name="title" content="STARK Lab | Interactive proof tutorial | Pragma Research" />
+  <meta name="description" content="Explore STARK proof concepts through interactive lessons on execution traces, finite fields, commitments and FRI. An educational toy implementation." />
   <meta name="author" content="Pragma Research" />
   <link rel="canonical" href="https://floatingpragma.io/starklab/" />
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://floatingpragma.io/starklab/" />
-  <meta property="og:title" content="STARK Lab - Interactive STARK Proof Tutorial" />
-  <meta property="og:description" content="Learn how STARK proofs work through interactive visualizations. Write programs, explore execution traces, polynomial encoding, FRI protocol, and zero-knowledge proofs." />
+  <meta property="og:title" content="STARK Lab | Interactive proof tutorial | Pragma Research" />
+  <meta property="og:description" content="Explore STARK proof concepts through interactive lessons on execution traces, finite fields, commitments and FRI. An educational toy implementation." />
   <meta property="og:site_name" content="Pragma Research" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:image:alt" content="Pragma Research: brains that learn." />
   <meta property="og:image" content="https://floatingpragma.io/assets/og-company-research.png?v=2" />
 
   <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:url" content="https://floatingpragma.io/starklab/" />
-  <meta property="twitter:title" content="STARK Lab - Interactive STARK Proof Tutorial" />
-  <meta property="twitter:description" content="Learn how STARK proofs work through interactive visualizations. Write programs, explore execution traces, polynomial encoding, FRI protocol, and zero-knowledge proofs." />
-  <meta property="twitter:image" content="https://floatingpragma.io/assets/og-company-research.png?v=2" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://floatingpragma.io/starklab/" />
+  <meta name="twitter:title" content="STARK Lab | Interactive proof tutorial | Pragma Research" />
+  <meta name="twitter:description" content="Explore STARK proof concepts through interactive lessons on execution traces, finite fields, commitments and FRI. An educational toy implementation." />
+  <meta name="twitter:image:alt" content="Pragma Research: brains that learn." />
+  <meta name="twitter:image" content="https://floatingpragma.io/assets/og-company-research.png?v=2" />
 
   <!-- Additional SEO -->
-  <meta name="robots" content="index, follow" />
-  <meta name="googlebot" content="index, follow" />
-  <script>
-    (function () {
-      var path = window.location.pathname || '/starklab/';
-      if (!path.startsWith('/starklab')) return;
-
-      if (path === '/starklab') {
-        path = '/starklab/';
-      } else if (!path.endsWith('/')) {
-        path += '/';
-      }
-
-      var canonical = 'https://floatingpragma.io' + path;
-      var canonicalLink = document.querySelector('link[rel="canonical"]');
-      var ogUrl = document.querySelector('meta[property="og:url"]');
-      var twitterUrl = document.querySelector('meta[property="twitter:url"]');
-
-      if (canonicalLink) canonicalLink.setAttribute('href', canonical);
-      if (ogUrl) ogUrl.setAttribute('content', canonical);
-      if (twitterUrl) twitterUrl.setAttribute('content', canonical);
-    })();
-  </script>
+  <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+  <meta name="googlebot" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
 
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-HLGH209WMG"></script>
@@ -72,33 +53,8 @@
   <link rel="related" href="https://floatingpragma.io/work/" title="Work and founder" />
 
   <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "STARK Lab",
-    "description": "Interactive tutorial for learning STARK zero-knowledge proofs",
-    "url": "https://floatingpragma.io/starklab/",
-    "author": {
-      "@type": "Person",
-      "name": "Bernhard Mueller",
-      "url": "https://floatingpragma.io",
-      "sameAs": ["https://github.com/muellerberndt", "https://twitter.com/muellerberndt"]
-    },
-    "educationalLevel": "Advanced",
-    "about": {
-      "@type": "Thing",
-      "name": "STARK Proofs",
-      "description": "Scalable Transparent Argument of Knowledge - a type of zero-knowledge proof"
-    },
-    "isPartOf": {
-      "@type": "WebSite",
-      "name": "Pragma Research",
-      "url": "https://floatingpragma.io"
-    }
-  }
-  </script>
-  <script type="module" crossorigin src="/starklab/assets/index-C54ecTOy.js"></script>
+  <script id="page-structured-data" type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","@id":"https://floatingpragma.io/#organization","name":"Pragma Research","url":"https://floatingpragma.io/"},{"@type":"WebSite","@id":"https://floatingpragma.io/starklab/#website","name":"STARK Lab","url":"https://floatingpragma.io/starklab/","publisher":{"@id":"https://floatingpragma.io/#organization"},"inLanguage":"en"},{"@type":["WebPage","LearningResource"],"@id":"https://floatingpragma.io/starklab/","url":"https://floatingpragma.io/starklab/","name":"STARK Lab | Interactive proof tutorial | Pragma Research","description":"Explore STARK proof concepts through interactive lessons on execution traces, finite fields, commitments and FRI. An educational toy implementation.","inLanguage":"en","learningResourceType":"Interactive tutorial","isAccessibleForFree":true,"isPartOf":{"@id":"https://floatingpragma.io/starklab/#website"},"publisher":{"@id":"https://floatingpragma.io/#organization"},"breadcrumb":{"@id":"https://floatingpragma.io/starklab/#breadcrumb"}},{"@type":"BreadcrumbList","@id":"https://floatingpragma.io/starklab/#breadcrumb","itemListElement":[{"@type":"ListItem","position":1,"name":"Pragma Research","item":"https://floatingpragma.io/"},{"@type":"ListItem","position":2,"name":"STARK Lab","item":"https://floatingpragma.io/starklab/"}]}]}</script>
+  <script type="module" crossorigin src="/starklab/assets/index-CElItOzP.js"></script>
   <link rel="stylesheet" crossorigin href="/starklab/assets/index-CdagAwmn.css">
 </head>
 
