@@ -100,8 +100,8 @@ export const ROUTE_SEO: Record<string, SeoMeta> = {
 
 export const SITE_ORIGIN = 'https://floatingpragma.io';
 export const SITE_URL = `${SITE_ORIGIN}/starklab/`;
-export const PREVIEW_IMAGE = `${SITE_ORIGIN}/assets/og-company-research.png?v=2`;
-export const PREVIEW_ALT = 'Pragma Research: brains that learn.';
+export const PREVIEW_IMAGE = `${SITE_ORIGIN}/assets/pragma-settling-networks-2026-09.png`;
+export const PREVIEW_ALT = 'Cadence. Brains that learn. Pragma Research caret and three connected patches with state, error and feedback on charcoal.';
 export const INDEX_ROBOTS = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
 
 function normalizePathname(pathname: string): string {
