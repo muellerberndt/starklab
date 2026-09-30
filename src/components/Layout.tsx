@@ -5,7 +5,7 @@ import './Layout.css';
 import { WALKTHROUGH_STEPS } from '../routes/walkthrough';
 import { WalkthroughNav } from './WalkthroughNav';
 
-const companyLinks = ['Cadence', 'Demos', 'Robotics', 'Research', 'Investors', 'Work'];
+const companyLinks = ['Cadence', 'Demos', 'Research', 'Work'];
 
 export function Layout() {
     const [chaptersOpen, setChaptersOpen] = useState(false);
@@ -71,7 +71,7 @@ export function Layout() {
                     <nav className="lesson-nav" aria-label="Tutorial chapters">{WALKTHROUGH_STEPS.map(item => <NavLink key={item.to} to={item.to} end={item.to === '/'} className={({ isActive }) => `nav-item ${isActive ? 'active' : ''}`} onClick={closeChapters}><item.icon size={18} aria-hidden="true" /><span>{item.label}</span></NavLink>)}</nav>
                     <a className="lab-source" href="https://github.com/muellerberndt/starklab">Explore the source ↗</a>
                 </aside>
-                <main className="main-content" id="lesson" tabIndex={-1}><div className="content-container"><Outlet /><WalkthroughNav /><footer className="lab-footer"><p>STARK Lab · Pragma Research</p><p>An interactive teaching implementation by Bernhard Mueller.</p><div><a href="https://floatingpragma.io/research/">Research</a><a href="https://floatingpragma.io/work/#platforms">More mathematical work</a><a href="https://github.com/muellerberndt/starklab">Source code ↗</a></div></footer></div></main>
+                <main className="main-content" id="lesson" tabIndex={-1}><div className="content-container"><Outlet /><WalkthroughNav /><footer className="lab-footer"><p>STARK Lab · Pragma Research</p><p>An interactive teaching implementation by Bernhard Mueller.</p><div><a href="https://floatingpragma.io/research/">Research</a><a href="https://blog.floatingpragma.io/">Blog ↗</a><a href="https://floatingpragma.io/robotics/">Robotics</a><a href="https://floatingpragma.io/investors/">Investors</a><a href="https://floatingpragma.io/work/#platforms">More mathematical work</a><a href="https://github.com/muellerberndt/starklab">Source code ↗</a></div></footer></div></main>
             </div>
         </div>
     );
