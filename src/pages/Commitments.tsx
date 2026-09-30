@@ -142,7 +142,7 @@ export function CommitmentsPage() {
                     {/* Root */}
                     <div style={{
                         padding: '24px',
-                        background: 'var(--lime)',
+                        background: 'var(--accent-soft)',
                         borderRadius: '12px',
                         color: 'var(--text-primary)',
                         fontWeight: 'bold',

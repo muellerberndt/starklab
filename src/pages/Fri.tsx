@@ -156,7 +156,7 @@ export function FriPage() {
                     <div style={{
                         marginTop: '16px',
                         padding: '12px',
-                        background: 'rgba(61, 101, 37, 0.08)',
+                        background: 'var(--success-soft)',
                         borderRadius: '8px',
                         borderLeft: '4px solid var(--accent-success)'
                     }}>

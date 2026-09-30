@@ -9,7 +9,7 @@ for (const route of routes) {
   const canonical = `https://floatingpragma.io/starklab/${route ? route + '/' : ''}`;
   assert(html.includes(`rel="canonical" href="${canonical}"`), `Missing canonical: ${route}`);
   assert(html.includes('id="root"'), `Missing app root: ${route}`);
-  assert(html.includes('floatingpragma.io/favicon.svg?v=5'), `Missing Pragma icon: ${route}`);
+  assert(html.includes('floatingpragma.io/favicon.svg?v=6'), `Missing Pragma icon: ${route}`);
   assert(!/http-equiv="refresh"|location\.replace/.test(html), `Lesson replaced by redirect: ${route}`);
   const assets = [...html.matchAll(/(?:src|href)="\/starklab\/(assets\/[^"?#]+)[^"]*"/g)];
   assert(assets.some(([, asset]) => asset.endsWith('.js')), `Missing application bundle: ${route}`);

@@ -369,7 +369,7 @@ function ConstraintCard({ constraint }: { constraint: { expr: string; why: strin
     return (
         <div style={{
             padding: '12px',
-            background: isSatisfied ? 'rgba(61, 101, 37, 0.08)' : 'rgba(169, 48, 45, 0.08)',
+            background: isSatisfied ? 'var(--success-soft)' : 'rgba(169, 48, 45, 0.08)',
             borderRadius: '8px',
             borderLeft: `4px solid ${isSatisfied ? 'var(--accent-success)' : 'var(--accent-error)'}`
         }}>

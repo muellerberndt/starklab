@@ -333,7 +333,7 @@ export function ProverVerifierPage() {
                             <div style={{
                                 marginTop: '12px',
                                 padding: '12px',
-                                background: 'rgba(61, 101, 37, 0.08)',
+                                background: 'var(--success-soft)',
                                 borderRadius: '8px',
                                 fontSize: '0.9em'
                             }}>

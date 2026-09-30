@@ -242,7 +242,7 @@ export function CompositionPage() {
                     Q(x) = H(x) / Z(x)
                 </div>
 
-                <div style={{ marginTop: '16px', padding: '16px', background: 'rgba(61, 101, 37, 0.08)', borderRadius: '8px' }}>
+                <div style={{ marginTop: '16px', padding: '16px', background: 'var(--success-soft)', borderRadius: '8px' }}>
                     <p style={{ margin: 0 }}>
                         <strong>The magic:</strong> If H(x) is truly zero at all trace points,
                         then Q(x) is a <em>low-degree polynomial</em>.

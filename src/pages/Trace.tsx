@@ -43,7 +43,7 @@ export function TracePage() {
                 </div>
                 <div style={{
                     padding: '16px',
-                    background: 'rgba(121, 90, 8, 0.08)',
+                    background: 'var(--bg-tertiary)',
                     borderRadius: '8px',
                     borderLeft: '4px solid var(--accent-tertiary)',
                 }}>
@@ -161,7 +161,7 @@ export function TracePage() {
                                 marginLeft: '8px',
                                 fontSize: '0.7em',
                                 padding: '2px 8px',
-                                background: 'rgba(121, 90, 8, 0.12)',
+                                background: 'var(--bg-tertiary)',
                                 borderRadius: '4px',
                                 color: 'var(--accent-tertiary)',
                             }}>

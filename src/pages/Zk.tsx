@@ -134,7 +134,7 @@ export function ZkPage() {
                             aria-label="Mask trace values"
                             aria-checked={isZkMode}
                             onClick={() => setIsZkMode(!isZkMode)}
-                            style={{ position: 'relative', flexShrink: 0, width: '64px', height: '44px', padding: 0, border: '1px solid var(--border-color)', borderRadius: '24px', background: isZkMode ? 'var(--lime)' : 'var(--bg-tertiary)' }}
+                            style={{ position: 'relative', flexShrink: 0, width: '64px', height: '44px', padding: 0, border: '1px solid var(--border-color)', borderRadius: '24px', background: isZkMode ? 'var(--accent-soft)' : 'var(--bg-tertiary)' }}
                         >
                             <span aria-hidden="true" style={{ position: 'absolute', height: '28px', width: '28px', left: isZkMode ? '28px' : '6px', top: '7px', background: 'var(--text-primary)', borderRadius: '50%' }} />
                         </button>

@@ -34,7 +34,7 @@ export function MerkleTreeExplainer() {
                                         className="merkle-node"
                                         style={{
                                             padding: '8px 12px',
-                                            background: levelIndex === 0 ? 'var(--lime)' : 'var(--bg-tertiary)',
+                                            background: levelIndex === 0 ? 'var(--accent-soft)' : 'var(--bg-tertiary)',
                                             border: '1px solid var(--border-color)',
                                             borderRadius: '8px',
                                             minWidth: '80px',

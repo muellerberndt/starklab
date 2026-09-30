@@ -285,7 +285,7 @@ export function ConstraintEvaluationPage() {
                 <div style={{
                     marginTop: '24px',
                     padding: '16px',
-                    background: 'rgba(61, 101, 37, 0.08)',
+                    background: 'var(--success-soft)',
                     borderRadius: '8px',
                     textAlign: 'center',
                     border: '1px solid var(--accent-success)'

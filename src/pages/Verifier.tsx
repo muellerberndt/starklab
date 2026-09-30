@@ -183,7 +183,7 @@ export function VerifierPage() {
                             padding: '24px',
                             borderRadius: '12px',
                             textAlign: 'center',
-                            background: isValid ? 'rgba(61, 101, 37, 0.08)' : 'rgba(169, 48, 45, 0.08)',
+                            background: isValid ? 'var(--success-soft)' : 'rgba(169, 48, 45, 0.08)',
                             border: `2px solid ${isValid ? 'var(--accent-success)' : 'var(--accent-error)'}`,
                         }}>
                             {isValid ? (

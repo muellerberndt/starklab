@@ -168,7 +168,7 @@ export function ImplementationPage() {
                                 <td style={{ padding: '12px' }}>8 rows</td>
                                 <td style={{ padding: '12px' }}>Tiny demos</td>
                             </tr>
-                            <tr style={{ borderBottom: '1px solid var(--border-color)', background: 'rgba(61, 101, 37, 0.08)' }}>
+                            <tr style={{ borderBottom: '1px solid var(--border-color)', background: 'var(--success-soft)' }}>
                                 <td style={{ padding: '12px', fontFamily: 'var(--font-mono)' }}>257</td>
                                 <td style={{ padding: '12px', fontFamily: 'var(--font-mono)' }}>256 = 2⁸</td>
                                 <td style={{ padding: '12px', fontFamily: 'var(--font-mono)' }}>3</td>

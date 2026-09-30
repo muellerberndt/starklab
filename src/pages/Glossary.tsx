@@ -339,7 +339,7 @@ export function GlossaryPage() {
                             aria-pressed={selectedCategory === null}
                             style={{
                                 padding: '8px 12px', minHeight: '44px',
-                                background: selectedCategory === null ? 'var(--lime)' : 'var(--bg-tertiary)',
+                                background: selectedCategory === null ? 'var(--accent-soft)' : 'var(--bg-tertiary)',
                                 border: 'none',
                                 borderRadius: '16px',
                                 color: 'var(--text-primary)',
@@ -356,7 +356,7 @@ export function GlossaryPage() {
                                 aria-pressed={selectedCategory === cat}
                                 style={{
                                     padding: '8px 12px', minHeight: '44px',
-                                    background: selectedCategory === cat ? 'var(--lime)' : 'var(--bg-tertiary)',
+                                    background: selectedCategory === cat ? 'var(--accent-soft)' : 'var(--bg-tertiary)',
                                     border: 'none',
                                     borderRadius: '16px',
                                     color: 'var(--text-primary)',
