@@ -15,7 +15,7 @@ export function ProofSecurityPage() {
                         margin: '16px 0',
                         fontSize: '1.1em',
                         padding: '12px',
-                        background: 'rgba(0,0,0,0.2)',
+                        background: 'var(--bg-tertiary)',
                         borderRadius: '8px'
                     }}>
                         H(z) = Q(z) × Z(z)
@@ -85,7 +85,7 @@ export function ProofSecurityPage() {
                     <div style={{
                         margin: '16px 0',
                         padding: '12px',
-                        background: 'rgba(0,0,0,0.2)',
+                        background: 'var(--bg-tertiary)',
                         borderRadius: '8px',
                         fontFamily: 'monospace',
                         textAlign: 'center',
@@ -137,13 +137,13 @@ export function ProofSecurityPage() {
                 >
                     <div style={{
                         display: 'grid',
-                        gridTemplateColumns: '1fr 1fr',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
                         gap: '24px',
                     }}>
                         {/* Left: Attack */}
                         <div style={{
                             padding: '20px',
-                            background: 'rgba(255,255,255,0.02)',
+                            background: 'var(--bg-tertiary)',
                             borderRadius: '8px',
                             borderLeft: '3px solid var(--accent-error)',
                         }}>
@@ -169,7 +169,7 @@ export function ProofSecurityPage() {
                         {/* Right: Defense */}
                         <div style={{
                             padding: '20px',
-                            background: 'rgba(255,255,255,0.02)',
+                            background: 'var(--bg-tertiary)',
                             borderRadius: '8px',
                             borderLeft: '3px solid var(--accent-success)',
                         }}>

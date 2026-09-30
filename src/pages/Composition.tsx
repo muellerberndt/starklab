@@ -122,7 +122,7 @@ export function CompositionPage() {
                         <div style={{
                             margin: '16px 0',
                             padding: '16px',
-                            background: 'rgba(0,0,0,0.3)',
+                            background: 'var(--bg-tertiary)',
                             borderRadius: '8px',
                             fontFamily: 'monospace',
                             borderLeft: '4px solid var(--accent-primary)'
@@ -166,7 +166,7 @@ export function CompositionPage() {
                 <div style={{
                     margin: '16px 0',
                     padding: '16px',
-                    background: 'rgba(0,0,0,0.2)',
+                    background: 'var(--bg-tertiary)',
                     borderRadius: '8px',
                     fontFamily: 'monospace',
                     textAlign: 'center',
@@ -215,7 +215,7 @@ export function CompositionPage() {
                 <div style={{
                     margin: '16px 0',
                     padding: '16px',
-                    background: 'rgba(0,0,0,0.2)',
+                    background: 'var(--bg-tertiary)',
                     borderRadius: '8px',
                     fontFamily: 'monospace',
                     textAlign: 'center'
@@ -232,7 +232,7 @@ export function CompositionPage() {
                 <div style={{
                     margin: '16px 0',
                     padding: '16px',
-                    background: 'rgba(100, 200, 255, 0.1)',
+                    background: 'var(--bg-tertiary)',
                     borderRadius: '8px',
                     fontFamily: 'monospace',
                     textAlign: 'center',
@@ -242,7 +242,7 @@ export function CompositionPage() {
                     Q(x) = H(x) / Z(x)
                 </div>
 
-                <div style={{ marginTop: '16px', padding: '16px', background: 'rgba(0,255,100,0.05)', borderRadius: '8px' }}>
+                <div style={{ marginTop: '16px', padding: '16px', background: 'rgba(61, 101, 37, 0.08)', borderRadius: '8px' }}>
                     <p style={{ margin: 0 }}>
                         <strong>The magic:</strong> If H(x) is truly zero at all trace points,
                         then Q(x) is a <em>low-degree polynomial</em>.
@@ -251,14 +251,14 @@ export function CompositionPage() {
                     </p>
                 </div>
 
-                <div style={{ marginTop: '16px', padding: '12px', background: 'rgba(100, 200, 255, 0.1)', borderRadius: '8px', fontSize: '0.9em' }}>
+                <div style={{ marginTop: '16px', padding: '12px', background: 'var(--bg-tertiary)', borderRadius: '8px', fontSize: '0.9em' }}>
                     <strong>Second Commitment:</strong> Just like the trace, the prover evaluates Q(x) on the LDE domain
                     and commits to those values via a Merkle root. This is the <em>quotient commitment</em> sent to the verifier.
                 </div>
             </div>
 
             {/* What's next */}
-            <div className="card" style={{ marginTop: '32px', background: 'rgba(255,255,255,0.02)' }}>
+            <div className="card" style={{ marginTop: '32px', background: 'var(--bg-tertiary)' }}>
                 <h3>What's Next?</h3>
                 <p>
                     The prover has now sent two commitments: the <strong>trace LDE</strong> and the <strong>quotient LDE</strong>.

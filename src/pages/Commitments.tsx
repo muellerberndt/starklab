@@ -85,7 +85,7 @@ export function CommitmentsPage() {
                             flex: '1 1 120px',
                             minWidth: '120px',
                             padding: '12px',
-                            background: 'rgba(255,255,255,0.05)',
+                            background: 'var(--bg-tertiary)',
                             borderRadius: '8px',
                             borderTop: `3px solid hsl(${colIdx * 50 + 200}, 70%, 60%)`
                         }}>
@@ -127,7 +127,7 @@ export function CommitmentsPage() {
                     {/* Flattened values preview */}
                     <div style={{
                         padding: '16px',
-                        background: 'rgba(0,0,0,0.2)',
+                        background: 'var(--bg-tertiary)',
                         borderRadius: '8px',
                         fontFamily: 'monospace',
                         fontSize: '0.8em',
@@ -142,12 +142,12 @@ export function CommitmentsPage() {
                     {/* Root */}
                     <div style={{
                         padding: '24px',
-                        background: 'linear-gradient(135deg, var(--accent-primary), #9d4eff)',
+                        background: 'var(--lime)',
                         borderRadius: '12px',
-                        color: 'white',
+                        color: 'var(--text-primary)',
                         fontWeight: 'bold',
                         fontSize: '1.5em',
-                        boxShadow: '0 8px 32px rgba(112, 0, 255, 0.3)'
+                        boxShadow: '0 4px 16px rgba(25, 29, 28, 0.08)'
                     }}>
                         {combinedRoot}
                     </div>
@@ -165,8 +165,8 @@ export function CommitmentsPage() {
                     We could commit to each column separately, but combining them is more efficient:
                 </p>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
-                    <div style={{ padding: '16px', background: 'rgba(255,255,255,0.03)', borderRadius: '8px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '24px' }}>
+                    <div style={{ padding: '16px', background: 'var(--bg-tertiary)', borderRadius: '8px' }}>
                         <div style={{ fontWeight: 'bold', marginBottom: '8px', color: 'var(--text-muted)' }}>
                             Separate Roots (less efficient)
                         </div>
@@ -183,7 +183,7 @@ export function CommitmentsPage() {
                         </div>
                     </div>
 
-                    <div style={{ padding: '16px', background: 'rgba(112, 0, 255, 0.1)', borderRadius: '8px' }}>
+                    <div style={{ padding: '16px', background: 'var(--bg-tertiary)', borderRadius: '8px' }}>
                         <div style={{ fontWeight: 'bold', marginBottom: '8px', color: 'var(--accent-primary)' }}>
                             Combined Root (preferred)
                         </div>

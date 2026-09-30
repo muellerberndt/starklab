@@ -183,7 +183,7 @@ export function VerifierPage() {
                             padding: '24px',
                             borderRadius: '12px',
                             textAlign: 'center',
-                            background: isValid ? 'rgba(0, 255, 100, 0.1)' : 'rgba(255, 50, 50, 0.1)',
+                            background: isValid ? 'rgba(61, 101, 37, 0.08)' : 'rgba(169, 48, 45, 0.08)',
                             border: `2px solid ${isValid ? 'var(--accent-success)' : 'var(--accent-error)'}`,
                         }}>
                             {isValid ? (
@@ -229,10 +229,10 @@ function ProofSummary({ proof }: { proof: ToyStarkProof }) {
     return (
         <div style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))',
             gap: '16px',
         }}>
-            <div className="card" style={{ background: 'rgba(255,255,255,0.02)', padding: '16px' }}>
+            <div className="card" style={{ background: 'var(--bg-tertiary)', padding: '16px' }}>
                 <div className="muted" style={{ fontSize: '0.85em' }}>Trace Length</div>
                 <div style={{ fontSize: '1.5em', fontWeight: 'bold' }}>
                     {params.traceLength} → {params.paddedTraceLength}
@@ -240,7 +240,7 @@ function ProofSummary({ proof }: { proof: ToyStarkProof }) {
                 <div className="muted" style={{ fontSize: '0.8em' }}>padded to power of 2</div>
             </div>
 
-            <div className="card" style={{ background: 'rgba(255,255,255,0.02)', padding: '16px' }}>
+            <div className="card" style={{ background: 'var(--bg-tertiary)', padding: '16px' }}>
                 <div className="muted" style={{ fontSize: '0.85em' }}>LDE Domain</div>
                 <div style={{ fontSize: '1.5em', fontWeight: 'bold' }}>
                     {params.ldeDomainSize}
@@ -250,7 +250,7 @@ function ProofSummary({ proof }: { proof: ToyStarkProof }) {
                 </div>
             </div>
 
-            <div className="card" style={{ background: 'rgba(255,255,255,0.02)', padding: '16px' }}>
+            <div className="card" style={{ background: 'var(--bg-tertiary)', padding: '16px' }}>
                 <div className="muted" style={{ fontSize: '0.85em' }}>Queries</div>
                 <div style={{ fontSize: '1.5em', fontWeight: 'bold' }}>
                     {params.numQueries}
@@ -258,7 +258,7 @@ function ProofSummary({ proof }: { proof: ToyStarkProof }) {
                 <div className="muted" style={{ fontSize: '0.8em' }}>random checks</div>
             </div>
 
-            <div className="card" style={{ background: 'rgba(255,255,255,0.02)', padding: '16px' }}>
+            <div className="card" style={{ background: 'var(--bg-tertiary)', padding: '16px' }}>
                 <div className="muted" style={{ fontSize: '0.85em' }}>FRI Layers</div>
                 <div style={{ fontSize: '1.5em', fontWeight: 'bold' }}>
                     {proof.friLayers.length}
@@ -266,7 +266,7 @@ function ProofSummary({ proof }: { proof: ToyStarkProof }) {
                 <div className="muted" style={{ fontSize: '0.8em' }}>folding rounds</div>
             </div>
 
-            <div className="card" style={{ background: 'rgba(255,255,255,0.02)', padding: '16px', gridColumn: 'span 2' }}>
+            <div className="card" style={{ background: 'var(--bg-tertiary)', padding: '16px', gridColumn: '1 / -1' }}>
                 <div className="muted" style={{ fontSize: '0.85em' }}>Commitments</div>
                 <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.9em', marginTop: '8px' }}>
                     <div>Trace: <code>{proof.traceCommitment}</code></div>
@@ -299,19 +299,30 @@ function VerificationStepCard({
             style={{
                 padding: '16px',
                 borderRadius: '8px',
-                background: isActive ? 'rgba(255,255,255,0.05)' : 'rgba(255,255,255,0.02)',
+                background: isActive ? 'var(--bg-tertiary)' : 'var(--bg-secondary)',
                 borderLeft: `4px solid ${statusColor}`,
                 transition: 'all 0.3s ease',
             }}
         >
             <div
+                role={step.data ? 'button' : undefined}
+                tabIndex={step.data ? 0 : undefined}
+                aria-expanded={step.data ? expanded : undefined}
+                aria-label={step.data ? `${step.name} details` : undefined}
                 style={{
                     display: 'flex',
+                    minHeight: '44px',
                     justifyContent: 'space-between',
                     alignItems: 'center',
                     cursor: step.data ? 'pointer' : 'default',
                 }}
                 onClick={() => step.data && setExpanded(!expanded)}
+                onKeyDown={(event) => {
+                    if (step.data && (event.key === 'Enter' || event.key === ' ')) {
+                        event.preventDefault();
+                        setExpanded(!expanded);
+                    }
+                }}
             >
                 <div>
                     <div style={{ fontWeight: 'bold', display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -326,7 +337,7 @@ function VerificationStepCard({
                             fontSize: '0.85em',
                             marginTop: '8px',
                             padding: '8px 12px',
-                            background: 'rgba(0,0,0,0.2)',
+                            background: 'var(--bg-tertiary)',
                             borderRadius: '4px',
                             fontFamily: 'var(--font-mono)',
                         }}>
@@ -346,7 +357,7 @@ function VerificationStepCard({
                 <div style={{
                     marginTop: '16px',
                     padding: '12px',
-                    background: 'rgba(0,0,0,0.3)',
+                    background: 'var(--bg-tertiary)',
                     borderRadius: '8px',
                     fontSize: '0.85em',
                 }}>
@@ -377,6 +388,7 @@ function StepDataView({ step }: { step: VerificationStep }) {
                 <div style={{ marginBottom: '12px', color: 'var(--accent-secondary)' }}>
                     Query Results (checking H = Q × Z):
                 </div>
+                <div style={{ overflowX: 'auto', maxWidth: '100%' }}>
                 <table style={{ width: '100%', fontSize: '0.9em' }}>
                     <thead>
                         <tr style={{ textAlign: 'left', borderBottom: '1px solid var(--border-color)' }}>
@@ -390,7 +402,7 @@ function StepDataView({ step }: { step: VerificationStep }) {
                     </thead>
                     <tbody>
                         {results.map((r, i) => (
-                            <tr key={i} style={{ borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                            <tr key={i} style={{ borderBottom: '1px solid var(--border-color)' }}>
                                 <td style={{ padding: '8px', fontFamily: 'var(--font-mono)' }}>{r.index}</td>
                                 <td style={{ padding: '8px', fontFamily: 'var(--font-mono)' }}>{r.H}</td>
                                 <td style={{ padding: '8px', fontFamily: 'var(--font-mono)' }}>{r.Q}</td>
@@ -405,6 +417,7 @@ function StepDataView({ step }: { step: VerificationStep }) {
                         ))}
                     </tbody>
                 </table>
+                </div>
             </div>
         );
     }
@@ -444,7 +457,7 @@ function QueryDetailView({ proof }: { proof: ToyStarkProof }) {
                 ))}
             </div>
 
-            <div className="card" style={{ background: 'rgba(0,0,0,0.3)', marginTop: '16px' }}>
+            <div className="card" style={{ background: 'var(--bg-tertiary)', marginTop: '16px' }}>
                 <h4 style={{ margin: '0 0 16px 0' }}>
                     Query at LDE index {query.ldeIndex}
                 </h4>
@@ -454,7 +467,7 @@ function QueryDetailView({ proof }: { proof: ToyStarkProof }) {
                     <div style={{
                         textAlign: 'center',
                         padding: '24px',
-                        background: 'rgba(255,255,255,0.02)',
+                        background: 'var(--bg-tertiary)',
                         borderRadius: '8px',
                     }}>
                         <div style={{ fontSize: '1.4em', fontFamily: 'var(--font-mono)' }}>
@@ -497,7 +510,7 @@ function QueryDetailView({ proof }: { proof: ToyStarkProof }) {
                                     key={col}
                                     style={{
                                         padding: '8px',
-                                        background: 'rgba(255,255,255,0.02)',
+                                        background: 'var(--bg-tertiary)',
                                         borderRadius: '4px',
                                         textAlign: 'center',
                                     }}
@@ -512,7 +525,7 @@ function QueryDetailView({ proof }: { proof: ToyStarkProof }) {
                     {/* Explanation */}
                     <div style={{
                         padding: '16px',
-                        background: 'rgba(var(--accent-secondary-rgb), 0.1)',
+                        background: 'var(--bg-tertiary)',
                         borderRadius: '8px',
                         borderLeft: '4px solid var(--accent-secondary)',
                     }}>

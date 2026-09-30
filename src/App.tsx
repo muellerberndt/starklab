@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
 import { StarkProvider } from './contexts/StarkContext';
 import { Layout } from './components/Layout';
 import { Home } from './pages/Home';
@@ -47,6 +47,7 @@ function App() {
             <Route path="glossary" element={<GlossaryPage />} />
             <Route path="resources" element={<ResourcesPage />} />
             <Route path="implementation" element={<ImplementationPage />} />
+            <Route path="*" element={<section><h1>Lesson not found.</h1><p>Choose a chapter from the menu or return to the introduction.</p><Link className="btn" to="/">Open STARK Lab</Link></section>} />
           </Route>
         </Routes>
       </StarkProvider>

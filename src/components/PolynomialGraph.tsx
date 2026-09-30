@@ -9,7 +9,7 @@ interface PolynomialGraphProps {
 
 export function PolynomialGraph({ values, width = 300, height = 200, color = 'var(--accent-primary)' }: PolynomialGraphProps) {
     if (!values || values.length === 0) {
-        return <div style={{ width, height, background: 'rgba(255,255,255,0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>No Data</div>;
+        return <div style={{ width: '100%', maxWidth: width, height, background: 'var(--bg-tertiary)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>No Data</div>;
     }
 
     // Map trace values to coordinates
@@ -64,8 +64,8 @@ export function PolynomialGraph({ values, width = 300, height = 200, color = 'va
     }
 
     return (
-        <div style={{ width, height, border: '1px solid var(--border-color)', borderRadius: '8px', position: 'relative', background: 'rgba(255,255,255,0.05)', overflow: 'hidden' }}>
-            <svg width="100%" height="100%" style={{ overflow: 'hidden' }}>
+        <div className="polynomial-graph" tabIndex={0} role="region" aria-label="Polynomial plot; scroll horizontally to inspect all steps" style={{ width: '100%', maxWidth: width, overflowX: 'auto', border: '1px solid var(--border-color)', borderRadius: '8px', position: 'relative', background: 'var(--bg-tertiary)' }}>
+            <svg viewBox={`0 0 ${width} ${height}`} width="100%" height={height} style={{ display: 'block', minWidth: width }} role="img" aria-label="Polynomial values by trace step">
                 {/* Grid lines */}
                 <line x1={pX} y1={height - pY} x2={width - pX} y2={height - pY} stroke="var(--border-color)" strokeWidth="1" />
                 <line x1={pX} y1={pY} x2={pX} y2={height - pY} stroke="var(--border-color)" strokeWidth="1" />
@@ -77,7 +77,7 @@ export function PolynomialGraph({ values, width = 300, height = 200, color = 'va
                         x={p.x}
                         y={height - 5}
                         fill="var(--text-muted)"
-                        fontSize="10"
+                        fontSize="12"
                         textAnchor="middle"
                     >
                         {i}
@@ -85,12 +85,12 @@ export function PolynomialGraph({ values, width = 300, height = 200, color = 'va
                 ))}
 
                 {/* Y-axis labels (min/max) */}
-                <text x={5} y={height - pY} fill="var(--text-muted)" fontSize="10" textAnchor="start">{min}</text>
-                <text x={5} y={pY + 10} fill="var(--text-muted)" fontSize="10" textAnchor="start">{max}</text>
+                <text x={5} y={height - pY} fill="var(--text-muted)" fontSize="12" textAnchor="start">{min}</text>
+                <text x={5} y={pY + 10} fill="var(--text-muted)" fontSize="12" textAnchor="start">{max}</text>
 
                 <path d={d} fill="none" stroke={color} strokeWidth="3" />
                 {points.map((p, i) => (
-                    <circle key={i} cx={p.x} cy={p.y} r="4" fill="white" stroke={color} strokeWidth="2" />
+                    <circle key={i} cx={p.x} cy={p.y} r="4" fill="var(--bg-secondary)" stroke={color} strokeWidth="2" />
                 ))}
             </svg>
         </div>

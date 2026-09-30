@@ -36,9 +36,9 @@ function SimpleGraph({
     const zeroY = padding.top + graphHeight - ((0 - yMin) / range) * graphHeight;
 
     return (
-        <div style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: 'center', maxWidth: '100%', overflowX: 'auto' }}>
             <div style={{ color, fontWeight: 'bold', marginBottom: '6px', fontSize: '0.85em' }}>{label}</div>
-            <svg width={width} height={height} style={{ background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
+            <svg viewBox={`0 0 ${width} ${height}`} width={width} height={height} style={{ minWidth: width, display: 'block', margin: 'auto', background: 'var(--bg-tertiary)', borderRadius: '8px' }}>
                 <line x1={padding.left} y1={padding.top} x2={padding.left} y2={height - padding.bottom} stroke="var(--border-color)" />
                 <line x1={padding.left} y1={height - padding.bottom} x2={width - padding.right} y2={height - padding.bottom} stroke="var(--border-color)" />
 
@@ -46,19 +46,19 @@ function SimpleGraph({
                     <line x1={padding.left} y1={zeroY} x2={width - padding.right} y2={zeroY} stroke="var(--text-muted)" strokeDasharray="4" strokeOpacity={0.5} />
                 )}
 
-                <text x={padding.left - 5} y={padding.top + 5} fill="var(--text-muted)" fontSize="9" textAnchor="end">{yMax}</text>
-                <text x={padding.left - 5} y={height - padding.bottom} fill="var(--text-muted)" fontSize="9" textAnchor="end">{yMin}</text>
+                <text x={padding.left - 5} y={padding.top + 5} fill="var(--text-muted)" fontSize="12" textAnchor="end">{yMax}</text>
+                <text x={padding.left - 5} y={height - padding.bottom} fill="var(--text-muted)" fontSize="12" textAnchor="end">{yMin}</text>
 
                 {points.map((p, i) => (
-                    <text key={i} x={p.x} y={height - 8} fill="var(--text-muted)" fontSize="9" textAnchor="middle">{i}</text>
+                    <text key={i} x={p.x} y={height - 8} fill="var(--text-muted)" fontSize="12" textAnchor="middle">{i}</text>
                 ))}
 
                 <path d={pathD} fill="none" stroke={color} strokeWidth="2" />
 
                 {points.map((p, i) => (
                     <g key={i}>
-                        <circle cx={p.x} cy={p.y} r="4" fill="white" stroke={color} strokeWidth="2" />
-                        <text x={p.x} y={p.y - 8} fill={color} fontSize="10" textAnchor="middle" fontWeight="bold">{p.val}</text>
+                        <circle cx={p.x} cy={p.y} r="4" fill="var(--bg-secondary)" stroke={color} strokeWidth="2" />
+                        <text x={p.x} y={p.y - 8} fill={color} fontSize="12" textAnchor="middle" fontWeight="bold">{p.val}</text>
                     </g>
                 ))}
             </svg>
@@ -100,25 +100,25 @@ export function ProverVerifierPage() {
                 </p>
                 <div style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 150px), 1fr))',
                     gap: '12px',
                     marginTop: '16px'
                 }}>
-                    <div style={{ padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px', textAlign: 'center' }}>
+                    <div style={{ padding: '12px', background: 'var(--bg-tertiary)', borderRadius: '8px', textAlign: 'center' }}>
                         <div style={{ marginBottom: '8px', display: 'flex', justifyContent: 'center' }}>
                             <FileText size={24} color="var(--accent-primary)" />
                         </div>
                         <div style={{ fontWeight: 'bold', fontSize: '0.9em' }}>The Program</div>
                         <div style={{ fontSize: '0.8em', color: 'var(--text-muted)' }}>What computation to prove</div>
                     </div>
-                    <div style={{ padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px', textAlign: 'center' }}>
+                    <div style={{ padding: '12px', background: 'var(--bg-tertiary)', borderRadius: '8px', textAlign: 'center' }}>
                         <div style={{ marginBottom: '8px', display: 'flex', justifyContent: 'center' }}>
                             <Ruler size={24} color="var(--accent-secondary)" />
                         </div>
                         <div style={{ fontWeight: 'bold', fontSize: '0.9em' }}>Constraint Formulas</div>
                         <div style={{ fontSize: '0.8em', color: 'var(--text-muted)' }}>Rules the trace must satisfy</div>
                     </div>
-                    <div style={{ padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px', textAlign: 'center' }}>
+                    <div style={{ padding: '12px', background: 'var(--bg-tertiary)', borderRadius: '8px', textAlign: 'center' }}>
                         <div style={{ marginBottom: '8px', display: 'flex', justifyContent: 'center' }}>
                             <SlidersHorizontal size={24} color="var(--accent-warning)" />
                         </div>
@@ -147,14 +147,14 @@ export function ProverVerifierPage() {
                             height: '32px',
                             borderRadius: '50%',
                             background: 'var(--accent-primary)',
-                            color: 'white',
+                            color: 'var(--bg-secondary)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             fontWeight: 'bold',
                             flexShrink: 0
                         }}>1</div>
-                        <div style={{ flex: 1 }}>
+                        <div style={{ flex: 1, minWidth: 0 }}>
                             <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>Execute & Generate Trace</div>
                             <div style={{ fontSize: '0.9em', color: 'var(--text-muted)' }}>
                                 Run the program and record the state at each step.
@@ -162,7 +162,7 @@ export function ProverVerifierPage() {
                             <div style={{
                                 marginTop: '12px',
                                 padding: '12px',
-                                background: 'rgba(0,0,0,0.2)',
+                                background: 'var(--bg-tertiary)',
                                 borderRadius: '8px',
                                 fontFamily: 'monospace',
                                 fontSize: '0.85em'
@@ -179,14 +179,14 @@ export function ProverVerifierPage() {
                             height: '32px',
                             borderRadius: '50%',
                             background: 'var(--accent-primary)',
-                            color: 'white',
+                            color: 'var(--bg-secondary)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             fontWeight: 'bold',
                             flexShrink: 0
                         }}>2</div>
-                        <div style={{ flex: 1 }}>
+                        <div style={{ flex: 1, minWidth: 0 }}>
                             <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>Encode as Polynomial</div>
                             <div style={{ fontSize: '0.9em', color: 'var(--text-muted)' }}>
                                 Use Lagrange interpolation to create a polynomial that passes through all trace points.
@@ -204,14 +204,14 @@ export function ProverVerifierPage() {
                             height: '32px',
                             borderRadius: '50%',
                             background: 'var(--accent-primary)',
-                            color: 'white',
+                            color: 'var(--bg-secondary)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             fontWeight: 'bold',
                             flexShrink: 0
                         }}>3</div>
-                        <div style={{ flex: 1 }}>
+                        <div style={{ flex: 1, minWidth: 0 }}>
                             <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>Apply Constraint Formula</div>
                             <div style={{ fontSize: '0.9em', color: 'var(--text-muted)' }}>
                                 Compute the constraint polynomial C(x) using the public formula.
@@ -219,7 +219,7 @@ export function ProverVerifierPage() {
                             <div style={{
                                 marginTop: '12px',
                                 padding: '8px 12px',
-                                background: 'rgba(100, 200, 255, 0.1)',
+                                background: 'var(--bg-tertiary)',
                                 borderRadius: '4px',
                                 fontFamily: 'monospace',
                                 fontSize: '0.9em',
@@ -240,14 +240,14 @@ export function ProverVerifierPage() {
                             height: '32px',
                             borderRadius: '50%',
                             background: 'var(--accent-primary)',
-                            color: 'white',
+                            color: 'var(--bg-secondary)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             fontWeight: 'bold',
                             flexShrink: 0
                         }}>4</div>
-                        <div style={{ flex: 1 }}>
+                        <div style={{ flex: 1, minWidth: 0 }}>
                             <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>Commit & Prove</div>
                             <div style={{ fontSize: '0.9em', color: 'var(--text-muted)' }}>
                                 Commit to the polynomials (using Merkle trees) and prove that C(x) = 0 at all trace points
@@ -273,14 +273,14 @@ export function ProverVerifierPage() {
                             height: '32px',
                             borderRadius: '50%',
                             background: 'var(--accent-secondary)',
-                            color: 'white',
+                            color: 'var(--bg-secondary)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             fontWeight: 'bold',
                             flexShrink: 0
                         }}>1</div>
-                        <div style={{ flex: 1 }}>
+                        <div style={{ flex: 1, minWidth: 0 }}>
                             <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>Receive Commitments</div>
                             <div style={{ fontSize: '0.9em', color: 'var(--text-muted)' }}>
                                 Get Merkle roots that commit the prover to specific polynomial values.
@@ -295,14 +295,14 @@ export function ProverVerifierPage() {
                             height: '32px',
                             borderRadius: '50%',
                             background: 'var(--accent-secondary)',
-                            color: 'white',
+                            color: 'var(--bg-secondary)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             fontWeight: 'bold',
                             flexShrink: 0
                         }}>2</div>
-                        <div style={{ flex: 1 }}>
+                        <div style={{ flex: 1, minWidth: 0 }}>
                             <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>Generate Random Challenges</div>
                             <div style={{ fontSize: '0.9em', color: 'var(--text-muted)' }}>
                                 Pick random points to query (using Fiat-Shamir for non-interactivity).
@@ -317,14 +317,14 @@ export function ProverVerifierPage() {
                             height: '32px',
                             borderRadius: '50%',
                             background: 'var(--accent-secondary)',
-                            color: 'white',
+                            color: 'var(--bg-secondary)',
                             display: 'flex',
                             alignItems: 'center',
                             justifyContent: 'center',
                             fontWeight: 'bold',
                             flexShrink: 0
                         }}>3</div>
-                        <div style={{ flex: 1 }}>
+                        <div style={{ flex: 1, minWidth: 0 }}>
                             <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>Spot-Check Constraints</div>
                             <div style={{ fontSize: '0.9em', color: 'var(--text-muted)' }}>
                                 Using the <strong>same public constraint formula</strong>, verify that the prover's
@@ -333,7 +333,7 @@ export function ProverVerifierPage() {
                             <div style={{
                                 marginTop: '12px',
                                 padding: '12px',
-                                background: 'rgba(0, 255, 100, 0.1)',
+                                background: 'rgba(61, 101, 37, 0.08)',
                                 borderRadius: '8px',
                                 fontSize: '0.9em'
                             }}>
@@ -346,16 +346,16 @@ export function ProverVerifierPage() {
             </div>
 
             {/* Why This Works */}
-            <div className="card" style={{ marginTop: '32px', background: 'rgba(100, 200, 255, 0.05)' }}>
+            <div className="card" style={{ marginTop: '32px', background: 'var(--bg-tertiary)' }}>
                 <h3>Why This Works</h3>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginTop: '16px' }}>
-                    <div style={{ padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '16px', marginTop: '16px' }}>
+                    <div style={{ padding: '12px', background: 'var(--bg-tertiary)', borderRadius: '8px' }}>
                         <div style={{ fontWeight: 'bold', marginBottom: '8px', color: 'var(--accent-success)' }}>Honest Prover</div>
                         <p style={{ margin: 0, fontSize: '0.9em' }}>
                             If the trace is valid, C(x) = 0 everywhere, so all spot-checks pass.
                         </p>
                     </div>
-                    <div style={{ padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
+                    <div style={{ padding: '12px', background: 'var(--bg-tertiary)', borderRadius: '8px' }}>
                         <div style={{ fontWeight: 'bold', marginBottom: '8px', color: 'var(--accent-error)' }}>Cheating Prover</div>
                         <p style={{ margin: 0, fontSize: '0.9em' }}>
                             If even one constraint fails, C(x) ≠ 0 almost everywhere.
@@ -375,7 +375,7 @@ export function ProverVerifierPage() {
                 </p>
                 <div style={{
                     fontFamily: 'monospace',
-                    background: 'rgba(0,0,0,0.3)',
+                    background: 'var(--bg-tertiary)',
                     padding: '12px',
                     borderRadius: '4px',
                     margin: '12px 0',

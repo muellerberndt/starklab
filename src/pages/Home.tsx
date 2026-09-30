@@ -1,50 +1,17 @@
 import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
+const steps = [
+    { number: '01', title: 'Execute', to: '/trace/', text: 'Write a small program and inspect every step in its trace.' },
+    { number: '02', title: 'Encode', to: '/polynomials/', text: 'Turn that trace into polynomials and algebraic constraints.' },
+    { number: '03', title: 'Commit', to: '/commitments/', text: 'Bind the data with Merkle trees and explore FRI folding.' },
+    { number: '04', title: 'Verify', to: '/verify/', text: 'Generate a proof, change its contents and test the checks.' },
+];
+
 export function Home() {
-    return (
-        <div className="space-y-8">
-            <div className="card glass">
-                <h1 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>
-                    Welcome to <span style={{
-                        background: 'linear-gradient(to right, var(--accent-secondary), var(--accent-primary))',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                        display: 'inline-block'
-                    }}>STARK Lab</span>
-                </h1>
-                <p style={{ fontSize: '1.2rem', color: 'var(--text-primary)', marginBottom: '16px' }}>
-                    An interactive, step-by-step tutorial to understand STARK proofs intuitively.
-                </p>
-                <p style={{ color: 'var(--text-muted)' }}>
-                    You can write your own simple programs (or use the default Fibonacci example), generate an execution trace,
-                    and walk through the core STARK ideas—from constraints to polynomials to Merkle/FRI-style checks.
-                </p>
-                <p style={{ color: 'var(--text-muted)', marginTop: '12px' }}>
-                    The implementation includes a complete toy STARK prover and verifier with Fiat–Shamir, Merkle commitments, and FRI queries.
-                </p>
-            </div>
-
-            <div className="grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
-                <div className="card">
-                    <h3>Interactive Learning</h3>
-                    <p>Play with variables, generate traces, and see constraints check out in real-time.</p>
-                </div>
-                <div className="card">
-                    <h3>From Scratch</h3>
-                    <p>Start with basic finite fields and build up to a full Zero-Knowledge proof.</p>
-                </div>
-                <div className="card">
-                    <h3>Visual Explanations</h3>
-                    <p>See the math come alive with dynamic visualizations and clear explanations.</p>
-                </div>
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'center', marginTop: '48px' }}>
-                <Link to="/math/" className="btn btn-primary" style={{ fontSize: '1.2rem', padding: '16px 32px' }}>
-                    Start the Journey <ArrowRight size={20} />
-                </Link>
-            </div>
-        </div>
-    );
+    return <>
+        <section className="home-hero"><p className="eyebrow">STARK Lab / Pragma Research</p><h1>See how a proof is built.</h1><p className="lead">An interactive guide to STARK proofs. Write a program, follow its execution and explore how a verifier checks the result.</p><div className="home-actions"><Link to="/math/" className="btn">Start the tutorial <ArrowRight size={18} /></Link><Link to="/trace/" className="btn btn-ghost">Open the playground <ArrowRight size={18} /></Link></div></section>
+        <nav className="home-chain" aria-label="Explore the proof stages">{steps.map(step => <Link to={step.to} key={step.number}><span>{step.number} /</span><h3>{step.title}</h3><p>{step.text}</p></Link>)}</nav>
+        <section className="home-note"><h2>Learn by changing the inputs.</h2><p>Start with the Fibonacci example or write a program of your own. Explore finite fields, execution traces, constraints, polynomial encoding, Merkle commitments and FRI. The lessons share your program as you move between them.</p><p>STARK stands for Scalable Transparent Argument of Knowledge. This teaching implementation includes a toy prover and verifier with Fiat–Shamir challenges, Merkle commitments and FRI queries. It is a place to inspect the mechanisms, not a production proof system.</p></section>
+    </>;
 }

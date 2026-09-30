@@ -15,15 +15,16 @@ export function FiniteFieldExplainer() {
 
     return (
         <div className="finite-field-explainer">
-            <div className="controls" style={{ display: 'flex', gap: '16px', marginBottom: '24px', alignItems: 'center' }}>
+            <div className="controls" style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', marginBottom: '24px', alignItems: 'center' }}>
                 <label>
                     Prime (P):
-                    <input
-                        type="number"
+                    <select
                         value={prime}
-                        onChange={(e) => setPrime(Math.max(2, parseInt(e.target.value) || 2))}
-                        style={{ marginLeft: '8px', width: '60px', padding: '4px', background: 'rgba(255,255,255,0.15)', border: '1px solid var(--border-color)', color: 'white', borderRadius: '4px' }}
-                    />
+                        onChange={(e) => setPrime(Number(e.target.value))}
+                        style={{ marginLeft: '8px', minWidth: '76px', minHeight: '44px', padding: '8px', fontSize: '16px', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: '4px' }}
+                    >
+                        {[2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31].map(p => <option key={p} value={p}>{p}</option>)}
+                    </select>
                 </label>
                 <label>
                     a:
@@ -31,7 +32,7 @@ export function FiniteFieldExplainer() {
                         type="number"
                         value={a}
                         onChange={(e) => setA(parseInt(e.target.value) || 0)}
-                        style={{ marginLeft: '8px', width: '60px', padding: '4px', background: 'rgba(255,255,255,0.15)', border: '1px solid var(--border-color)', color: 'white', borderRadius: '4px' }}
+                        style={{ marginLeft: '8px', width: '76px', minHeight: '44px', padding: '8px', fontSize: '16px', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: '4px' }}
                     />
                 </label>
                 <label>
@@ -40,12 +41,12 @@ export function FiniteFieldExplainer() {
                         type="number"
                         value={b}
                         onChange={(e) => setB(parseInt(e.target.value) || 0)}
-                        style={{ marginLeft: '8px', width: '60px', padding: '4px', background: 'rgba(255,255,255,0.15)', border: '1px solid var(--border-color)', color: 'white', borderRadius: '4px' }}
+                        style={{ marginLeft: '8px', width: '76px', minHeight: '44px', padding: '8px', fontSize: '16px', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', color: 'var(--text-primary)', borderRadius: '4px' }}
                     />
                 </label>
             </div>
 
-            <div className="visualizer" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px' }}>
+            <div className="visualizer" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '24px' }}>
                 <div className="card">
                     <h4>Addition (mod {prime})</h4>
                     <div style={{ fontSize: '1.2em', margin: '16px 0' }}>
@@ -62,8 +63,8 @@ export function FiniteFieldExplainer() {
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     borderRadius: '50%',
-                                    background: n === sum ? 'var(--accent-primary)' : 'rgba(255,255,255,0.15)',
-                                    color: n === sum ? 'white' : 'var(--text-secondary)',
+                                    background: n === sum ? 'var(--accent-primary)' : 'var(--bg-tertiary)',
+                                    color: n === sum ? 'var(--bg-secondary)' : 'var(--text-secondary)',
                                     fontWeight: n === sum ? 'bold' : 'normal'
                                 }}
                             >
@@ -89,8 +90,8 @@ export function FiniteFieldExplainer() {
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                     borderRadius: '50%',
-                                    background: n === prod ? 'var(--accent-secondary)' : 'rgba(255,255,255,0.15)',
-                                    color: n === prod ? 'black' : 'var(--text-secondary)',
+                                    background: n === prod ? 'var(--accent-secondary)' : 'var(--bg-tertiary)',
+                                    color: n === prod ? 'var(--bg-secondary)' : 'var(--text-secondary)',
                                     fontWeight: n === prod ? 'bold' : 'normal'
                                 }}
                             >

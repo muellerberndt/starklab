@@ -19,14 +19,14 @@ export function TracePage() {
             {/* Phase explanation banner */}
             <div style={{
                 display: 'grid',
-                gridTemplateColumns: '1fr 1fr',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
                 gap: '16px',
                 marginTop: '24px',
                 marginBottom: '24px',
             }}>
                 <div style={{
                     padding: '16px',
-                    background: 'rgba(100, 200, 255, 0.1)',
+                    background: 'var(--bg-tertiary)',
                     borderRadius: '8px',
                     borderLeft: '4px solid var(--accent-secondary)',
                 }}>
@@ -43,7 +43,7 @@ export function TracePage() {
                 </div>
                 <div style={{
                     padding: '16px',
-                    background: 'rgba(255, 180, 100, 0.1)',
+                    background: 'rgba(121, 90, 8, 0.08)',
                     borderRadius: '8px',
                     borderLeft: '4px solid var(--accent-tertiary)',
                 }}>
@@ -99,7 +99,7 @@ export function TracePage() {
 
             <div style={{ marginBottom: '32px' }}>
                 <details style={{
-                    background: 'rgba(255,255,255,0.05)',
+                    background: 'var(--bg-tertiary)',
                     borderRadius: '8px',
                     border: '1px solid var(--border-color)',
                     padding: '12px'
@@ -122,7 +122,7 @@ export function TracePage() {
                 </details>
             </div>
 
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginTop: '32px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '24px', marginTop: '32px' }}>
                 <div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
                         <h3>
@@ -131,7 +131,7 @@ export function TracePage() {
                                 marginLeft: '8px',
                                 fontSize: '0.7em',
                                 padding: '2px 8px',
-                                background: 'rgba(100, 200, 255, 0.2)',
+                                background: 'var(--bg-tertiary)',
                                 borderRadius: '4px',
                                 color: 'var(--accent-secondary)',
                             }}>
@@ -161,7 +161,7 @@ export function TracePage() {
                                 marginLeft: '8px',
                                 fontSize: '0.7em',
                                 padding: '2px 8px',
-                                background: 'rgba(255, 180, 100, 0.2)',
+                                background: 'rgba(121, 90, 8, 0.12)',
                                 borderRadius: '4px',
                                 color: 'var(--accent-tertiary)',
                             }}>
@@ -179,6 +179,7 @@ export function TracePage() {
                             <button
                                 className="btn btn-ghost"
                                 onClick={tamperTrace}
+                                disabled={trace.length === 0 || regNames.length === 0}
                                 style={{ fontSize: '0.8em', padding: '6px 12px', color: 'var(--accent-error)', borderColor: 'var(--accent-error)' }}
                             >
                                 Corrupt Trace
@@ -214,7 +215,7 @@ export function TracePage() {
                         <span style={{
                             fontSize: '0.7em',
                             padding: '2px 8px',
-                            background: 'rgba(100, 200, 255, 0.2)',
+                            background: 'var(--bg-tertiary)',
                             borderRadius: '4px',
                             color: 'var(--accent-secondary)',
                         }}>

@@ -1,0 +1,21 @@
+/* Lesson diagrams keep their own scrolling surface on narrow screens. */
+.polynomial-graph {
+    max-width: 100%;
+    overscroll-behavior-inline: contain;
+}
+
+.merkle-explainer [role="region"] {
+    overscroll-behavior-inline: contain;
+}
+
+@media (max-width: 600px) {
+    .protocol-timeline-line,
+    .protocol-timeline-dot {
+        left: 8px !important;
+    }
+
+    .protocol-timeline-card {
+        width: calc(100% - 28px) !important;
+        margin-left: 28px;
+    }
+}

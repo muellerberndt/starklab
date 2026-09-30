@@ -54,7 +54,7 @@ export function EncodingPage() {
                         A program that <strong>adds 2</strong> to a counter each step.
                     </p>
                     <div style={{ display: 'flex', justifyContent: 'center', gap: '32px', marginBottom: '24px' }}>
-                        <div style={{ background: 'rgba(255,255,255,0.05)', padding: '16px', borderRadius: '8px' }}>
+                        <div style={{ background: 'var(--bg-tertiary)', padding: '16px', borderRadius: '8px' }}>
                             <div style={{ color: 'var(--text-muted)', fontSize: '0.9em' }}>Register r0</div>
                             <div style={{ fontSize: '1.5em', fontFamily: 'monospace', fontWeight: 'bold' }}>0, 2, 4, 6</div>
                         </div>
@@ -70,10 +70,10 @@ export function EncodingPage() {
             title: "2. Trace to Points",
             desc: "First, we treat the execution trace as a set of (x, y) coordinates.",
             content: (
-                <div style={{ display: 'flex', gap: '32px', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '32px', alignItems: 'center', justifyContent: 'center' }}>
                     <div style={{ textAlign: 'center' }}>
                         <h4>Execution Trace</h4>
-                        <div style={{ background: 'rgba(255,255,255,0.05)', padding: '16px', borderRadius: '8px', fontFamily: 'monospace' }}>
+                        <div style={{ background: 'var(--bg-tertiary)', padding: '16px', borderRadius: '8px', fontFamily: 'monospace' }}>
                             {traceValues.map((val, i) => (
                                 <div key={i}>Step {i}: {val}</div>
                             ))}
@@ -85,7 +85,7 @@ export function EncodingPage() {
                     <ArrowRight size={24} color="var(--text-muted)" />
                     <div style={{ textAlign: 'center' }}>
                         <h4>Coordinates</h4>
-                        <div style={{ background: 'rgba(255,255,255,0.05)', padding: '16px', borderRadius: '8px', fontFamily: 'monospace' }}>
+                        <div style={{ background: 'var(--bg-tertiary)', padding: '16px', borderRadius: '8px', fontFamily: 'monospace' }}>
                             {traceValues.map((val, i) => (
                                 <div key={i}>({i}, {val})</div>
                             ))}
@@ -108,11 +108,11 @@ export function EncodingPage() {
                     <p style={{ fontSize: '0.9em', color: 'var(--text-muted)', marginTop: '16px' }}>
                         Production STARKs use FFT-based methods for efficiency, but the principle is the same.
                     </p>
-                    <div style={{ height: '200px', borderBottom: '2px solid var(--border-color)', position: 'relative', marginTop: '32px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
-                        <svg width="100%" height="100%" style={{ overflow: 'visible' }}>
+                    <div style={{ height: '200px', borderBottom: '2px solid var(--border-color)', position: 'relative', marginTop: '32px', background: 'var(--bg-tertiary)', borderRadius: '8px' }}>
+                        <svg viewBox="0 0 300 220" width="100%" height="100%" style={{ display: 'block' }}>
                             <path d={d} fill="none" stroke="var(--accent-primary)" strokeWidth="3" />
                             {points.map((p, i) => (
-                                <circle key={i} cx={p.x} cy={p.y} r="6" fill="white" stroke="var(--accent-primary)" strokeWidth="2" />
+                                <circle key={i} cx={p.x} cy={p.y} r="6" fill="var(--bg-secondary)" stroke="var(--accent-primary)" strokeWidth="2" />
                             ))}
                         </svg>
                     </div>
@@ -131,8 +131,8 @@ export function EncodingPage() {
                         If two low-degree polynomials are the same at a few points, they are the same <strong>everywhere</strong>.
                     </p>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', textAlign: 'left' }}>
-                        <div style={{ background: 'rgba(255,255,255,0.05)', padding: '24px', borderRadius: '8px' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '24px', textAlign: 'left' }}>
+                        <div style={{ background: 'var(--bg-tertiary)', padding: '24px', borderRadius: '8px' }}>
                             <h4 style={{ color: 'var(--accent-primary)', marginTop: 0 }}>Compressed Logic</h4>
                             <p style={{ fontSize: '0.9em', color: 'var(--text-muted)' }}>
                                 Instead of checking billions of steps one by one, we can check a single polynomial equation.
@@ -140,7 +140,7 @@ export function EncodingPage() {
                                 If the equation holds for the polynomial, it holds for the entire trace!
                             </p>
                         </div>
-                        <div style={{ background: 'rgba(255,255,255,0.05)', padding: '24px', borderRadius: '8px' }}>
+                        <div style={{ background: 'var(--bg-tertiary)', padding: '24px', borderRadius: '8px' }}>
                             <h4 style={{ color: 'var(--accent-secondary)', marginTop: 0 }}>Error Amplification</h4>
                             <p style={{ fontSize: '0.9em', color: 'var(--text-muted)' }}>
                                 If a prover tries to cheat in even one step, the resulting polynomial will be completely different almost everywhere.
@@ -166,13 +166,20 @@ export function EncodingPage() {
             </p>
 
             <div className="card" style={{ marginTop: '32px' }}>
-                <div style={{ display: 'flex', borderBottom: '1px solid var(--border-color)', marginBottom: '24px' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', borderBottom: '1px solid var(--border-color)', marginBottom: '24px' }}>
                     {steps.map((_, i) => (
-                        <div
+                        <button
                             key={i}
+                            type="button"
+                            aria-label={`Encoding step ${i + 1}`}
+                            aria-pressed={step === i}
                             onClick={() => setStep(i)}
                             style={{
-                                padding: '12px 24px',
+                                minWidth: '44px',
+                                minHeight: '44px',
+                                padding: '10px 16px',
+                                background: 'transparent',
+                                border: 0,
                                 cursor: 'pointer',
                                 borderBottom: step === i ? '2px solid var(--accent-primary)' : 'none',
                                 color: step === i ? 'var(--accent-primary)' : 'var(--text-muted)',
@@ -180,18 +187,18 @@ export function EncodingPage() {
                             }}
                         >
                             {i + 1}
-                        </div>
+                        </button>
                     ))}
                 </div>
 
                 <h3>{steps[step].title}</h3>
                 <p style={{ fontSize: '1.1em', marginBottom: '32px' }}>{steps[step].desc}</p>
 
-                <div style={{ minHeight: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.2)', borderRadius: '8px', padding: '32px' }}>
+                <div style={{ minHeight: '300px', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--bg-tertiary)', borderRadius: '8px', padding: 'clamp(12px, 3vw, 32px)', minWidth: 0 }}>
                     {steps[step].content}
                 </div>
 
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '32px' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', justifyContent: 'space-between', marginTop: '32px' }}>
                     <button
                         className="btn btn-ghost"
                         onClick={() => setStep(Math.max(0, step - 1))}
@@ -213,29 +220,30 @@ export function EncodingPage() {
                 <h3>Interactive Playground</h3>
                 <p>Try changing the trace values to see how the points move.</p>
 
-                <div style={{ display: 'flex', gap: '32px', alignItems: 'center', justifyContent: 'center', marginTop: '24px' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '32px', alignItems: 'center', justifyContent: 'center', marginTop: '24px' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                         {traceValues.map((val, i) => (
                             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
                                 <span style={{ fontFamily: 'monospace', color: 'var(--text-muted)' }}>Step {i}:</span>
                                 <input
                                     type="number"
+                                    aria-label={`Trace value at step ${i}`}
                                     value={val}
                                     onChange={(e) => handleTraceChange(i, e.target.value)}
                                     style={{
-                                        background: 'rgba(255,255,255,0.1)',
+                                        background: 'var(--bg-tertiary)',
                                         border: '1px solid var(--border-color)',
-                                        color: 'white',
+                                        color: 'var(--text-primary)',
                                         padding: '4px 8px',
                                         borderRadius: '4px',
-                                        width: '60px'
+                                        width: '76px', minHeight: '44px', fontSize: '16px'
                                     }}
                                 />
                             </div>
                         ))}
                     </div>
-                    <div style={{ width: '300px', height: '200px', border: '1px solid var(--border-color)', borderRadius: '8px', position: 'relative', background: 'rgba(0,0,0,0.2)' }}>
-                        <svg width="100%" height="100%" style={{ overflow: 'visible' }}>
+                    <div style={{ width: '100%', maxWidth: '300px', height: '220px', border: '1px solid var(--border-color)', borderRadius: '8px', position: 'relative', background: 'var(--bg-tertiary)' }}>
+                        <svg viewBox="0 0 300 220" width="100%" height="100%" style={{ display: 'block' }}>
                             {/* X-axis labels */}
                             {points.map((p, i) => (
                                 <text
@@ -252,7 +260,7 @@ export function EncodingPage() {
 
                             <path d={d} fill="none" stroke="var(--accent-secondary)" strokeWidth="3" />
                             {points.map((p, i) => (
-                                <circle key={i} cx={p.x} cy={p.y} r="4" fill="white" stroke="var(--accent-secondary)" strokeWidth="2" />
+                                <circle key={i} cx={p.x} cy={p.y} r="4" fill="var(--bg-secondary)" stroke="var(--accent-secondary)" strokeWidth="2" />
                             ))}
                         </svg>
                     </div>

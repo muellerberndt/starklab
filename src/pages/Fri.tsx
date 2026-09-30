@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { useStark } from '../contexts/StarkContext';
 import { Explainer } from '../components/Explainer';
 import { prove } from '../core/prover';
+import { Transcript } from '../core/transcript';
 import { Link } from 'react-router-dom';
 
 export function FriPage() {
@@ -20,42 +21,30 @@ export function FriPage() {
         }
     }, [trace, air, prime, regNames, failures]);
 
-    // FRI folding simulation on the quotient polynomial
+    // Replay the proof's stored layers and the same transcript used by its verifier.
     const { layers, betas } = useMemo(() => {
         if (!proofData) return { layers: [] as number[][], betas: [] as number[] };
 
-        // Use actual quotient LDE values from the proof
-        const quotientValues = proofData.quotientLDE;
+        const { prime: fieldPrime, ldeDomainSize, blowup, numQueries } = proofData.params;
+        const transcript = new Transcript();
+        transcript.absorb('trace_commitment', Object.values(proofData.ldeTrace).flat());
+        transcript.squeezeFieldMany(proofData.alphas.length, fieldPrime);
+        transcript.absorb('quotient_commitment', proofData.quotientLDE);
 
-        // Pad to power of 2 if needed
-        const layer0 = [...quotientValues];
-        while (layer0.length & (layer0.length - 1)) {
-            layer0.push(0);
-        }
+        // Query selection advances the transcript before the first FRI challenge.
+        const queryDomainSize = Array.from({ length: ldeDomainSize }, (_, i) => i)
+            .filter(i => i % blowup !== 0).length;
+        transcript.squeezeIndices(numQueries, queryDomainSize);
 
-        const allLayers = [layer0];
-        const allBetas: number[] = [];
-        let current = layer0;
-
-        // Use proof's FRI layers for consistent betas
-        for (let i = 0; i < proofData.friLayers.length && current.length > 1; i++) {
-            // Derive beta from layer commitment (simplified)
-            const beta = (proofData.friLayers[i].commitment.charCodeAt(0) * 7) % prime;
-            allBetas.push(beta);
-
-            const next: number[] = [];
-            for (let j = 0; j < current.length; j += 2) {
-                const a = current[j] ?? 0;
-                const b = current[j + 1] ?? 0;
-                next.push(((a + beta * b) % prime + prime) % prime);
-            }
-
-            allLayers.push(next);
-            current = next;
-        }
+        const allBetas = proofData.friLayers.map(layer => {
+            transcript.absorb('fri_layer', layer.values);
+            return transcript.squeezeField(fieldPrime);
+        });
+        const allLayers = proofData.friLayers.map(layer => [...layer.values]);
+        allLayers.push([proofData.friFinalValue]);
 
         return { layers: allLayers, betas: allBetas };
-    }, [proofData, prime]);
+    }, [proofData]);
 
     const layerIndex = Math.min(currentLayer, Math.max(0, layers.length - 1));
 
@@ -141,7 +130,7 @@ export function FriPage() {
                                 maxHeight: '120px',
                                 overflowY: 'auto',
                                 padding: '8px',
-                                background: 'rgba(0,0,0,0.2)',
+                                background: 'var(--bg-tertiary)',
                                 borderRadius: '8px',
                                 fontSize: '0.8em',
                                 fontFamily: 'monospace'
@@ -149,7 +138,7 @@ export function FriPage() {
                                 {proofData.quotientLDE.slice(0, 32).map((val, i) => (
                                     <span key={i} style={{
                                         padding: '2px 6px',
-                                        background: 'rgba(255,255,255,0.05)',
+                                        background: 'var(--bg-tertiary)',
                                         borderRadius: '4px'
                                     }}>
                                         Q[{i}]={val}
@@ -167,7 +156,7 @@ export function FriPage() {
                     <div style={{
                         marginTop: '16px',
                         padding: '12px',
-                        background: 'rgba(0, 255, 100, 0.05)',
+                        background: 'rgba(61, 101, 37, 0.08)',
                         borderRadius: '8px',
                         borderLeft: '4px solid var(--accent-success)'
                     }}>
@@ -212,7 +201,7 @@ export function FriPage() {
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                background: 'rgba(255,255,255,0.05)',
+                                background: 'var(--bg-tertiary)',
                                 border: '1px solid var(--border-color)',
                                 borderRadius: '4px',
                                 fontSize: '0.75em'
@@ -231,7 +220,7 @@ export function FriPage() {
                         <div style={{
                             marginBottom: '16px',
                             padding: '12px',
-                            background: 'rgba(0,0,0,0.2)',
+                            background: 'var(--bg-tertiary)',
                             borderRadius: '8px',
                             fontFamily: 'monospace',
                             fontSize: '0.9em'
@@ -290,7 +279,7 @@ export function FriPage() {
             </div>
 
             {/* Connection to the proof */}
-            <div className="card" style={{ marginTop: '32px', background: 'rgba(255,255,255,0.02)' }}>
+            <div className="card" style={{ marginTop: '32px', background: 'var(--bg-tertiary)' }}>
                 <h3>In Your Proof</h3>
                 {proofData ? (
                     <div>

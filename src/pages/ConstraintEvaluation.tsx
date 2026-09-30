@@ -38,9 +38,9 @@ function SimpleGraph({
     const zeroY = padding.top + graphHeight - ((0 - yMin) / range) * graphHeight;
 
     return (
-        <div style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: 'center', maxWidth: '100%', overflowX: 'auto' }}>
             <div style={{ color, fontWeight: 'bold', marginBottom: '8px', fontSize: '0.9em' }}>{label}</div>
-            <svg width={width} height={height} style={{ background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
+            <svg viewBox={`0 0 ${width} ${height}`} width={width} height={height} style={{ minWidth: width, display: 'block', margin: 'auto', background: 'var(--bg-tertiary)', borderRadius: '8px' }}>
                 {/* Grid */}
                 <line x1={padding.left} y1={padding.top} x2={padding.left} y2={height - padding.bottom} stroke="var(--border-color)" />
                 <line x1={padding.left} y1={height - padding.bottom} x2={width - padding.right} y2={height - padding.bottom} stroke="var(--border-color)" />
@@ -51,12 +51,12 @@ function SimpleGraph({
                 )}
 
                 {/* Y axis labels */}
-                <text x={padding.left - 5} y={padding.top + 5} fill="var(--text-muted)" fontSize="10" textAnchor="end">{yMax}</text>
-                <text x={padding.left - 5} y={height - padding.bottom} fill="var(--text-muted)" fontSize="10" textAnchor="end">{yMin}</text>
+                <text x={padding.left - 5} y={padding.top + 5} fill="var(--text-muted)" fontSize="12" textAnchor="end">{yMax}</text>
+                <text x={padding.left - 5} y={height - padding.bottom} fill="var(--text-muted)" fontSize="12" textAnchor="end">{yMin}</text>
 
                 {/* X axis labels */}
                 {points.map((p, i) => (
-                    <text key={i} x={p.x} y={height - 10} fill="var(--text-muted)" fontSize="10" textAnchor="middle">{i}</text>
+                    <text key={i} x={p.x} y={height - 10} fill="var(--text-muted)" fontSize="12" textAnchor="middle">{i}</text>
                 ))}
 
                 {/* Line */}
@@ -65,8 +65,8 @@ function SimpleGraph({
                 {/* Points with values */}
                 {showPoints && points.map((p, i) => (
                     <g key={i}>
-                        <circle cx={p.x} cy={p.y} r="5" fill="white" stroke={color} strokeWidth="2" />
-                        <text x={p.x} y={p.y - 10} fill={color} fontSize="11" textAnchor="middle" fontWeight="bold">{p.val}</text>
+                        <circle cx={p.x} cy={p.y} r="5" fill="var(--bg-secondary)" stroke={color} strokeWidth="2" />
+                        <text x={p.x} y={p.y - 10} fill={color} fontSize="12" textAnchor="middle" fontWeight="bold">{p.val}</text>
                     </g>
                 ))}
             </svg>
@@ -112,7 +112,7 @@ export function ConstraintEvaluationPage() {
                 <div style={{
                     margin: '16px 0',
                     padding: '16px',
-                    background: 'rgba(0,0,0,0.2)',
+                    background: 'var(--bg-tertiary)',
                     borderRadius: '8px',
                     textAlign: 'center'
                 }}>
@@ -129,7 +129,7 @@ export function ConstraintEvaluationPage() {
                 <div style={{
                     margin: '16px 0',
                     padding: '16px',
-                    background: 'rgba(100, 200, 255, 0.1)',
+                    background: 'var(--bg-tertiary)',
                     borderRadius: '8px',
                     fontFamily: 'monospace',
                     fontSize: '1.1em',
@@ -150,8 +150,8 @@ export function ConstraintEvaluationPage() {
                     To check constraints efficiently, we work with polynomials. We have:
                 </p>
 
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '24px', marginTop: '16px' }}>
-                    <div style={{ padding: '16px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '24px', marginTop: '16px' }}>
+                    <div style={{ padding: '16px', background: 'var(--bg-tertiary)', borderRadius: '8px' }}>
                         <h4 style={{ marginTop: 0, color: 'var(--accent-secondary)' }}>The Constraint Formula</h4>
                         <p style={{ fontSize: '0.9em', marginBottom: '12px' }}>
                             The rule from above, written as "= 0":
@@ -161,7 +161,7 @@ export function ConstraintEvaluationPage() {
                             fontSize: '1em',
                             textAlign: 'center',
                             padding: '12px',
-                            background: 'rgba(100, 200, 255, 0.1)',
+                            background: 'var(--bg-tertiary)',
                             borderRadius: '4px',
                             border: '1px solid var(--accent-secondary)'
                         }}>
@@ -169,7 +169,7 @@ export function ConstraintEvaluationPage() {
                         </div>
                     </div>
 
-                    <div style={{ padding: '16px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
+                    <div style={{ padding: '16px', background: 'var(--bg-tertiary)', borderRadius: '8px' }}>
                         <h4 style={{ marginTop: 0, color: 'var(--accent-primary)' }}>The Trace Polynomial P(x)</h4>
                         <p style={{ fontSize: '0.9em', marginBottom: '12px' }}>
                             The prover's trace encoded as a polynomial:
@@ -178,7 +178,7 @@ export function ConstraintEvaluationPage() {
                             fontFamily: 'monospace',
                             fontSize: '0.95em',
                             padding: '12px',
-                            background: 'rgba(100, 200, 255, 0.1)',
+                            background: 'var(--bg-tertiary)',
                             borderRadius: '4px',
                             border: '1px solid var(--accent-primary)'
                         }}>
@@ -195,7 +195,7 @@ export function ConstraintEvaluationPage() {
                 <div style={{
                     margin: '16px 0',
                     padding: '20px',
-                    background: 'rgba(100, 200, 255, 0.1)',
+                    background: 'var(--bg-tertiary)',
                     borderRadius: '8px',
                     border: '1px dashed var(--accent-secondary)'
                 }}>
@@ -215,7 +215,7 @@ export function ConstraintEvaluationPage() {
                         fontSize: '1.2em',
                         textAlign: 'center',
                         padding: '16px',
-                        background: 'rgba(0,0,0,0.3)',
+                        background: 'var(--bg-tertiary)',
                         borderRadius: '8px',
                         color: 'var(--accent-primary)'
                     }}>
@@ -250,7 +250,7 @@ export function ConstraintEvaluationPage() {
                                 <th style={{ padding: '12px', textAlign: 'center' }}>x</th>
                                 <th style={{ padding: '12px', textAlign: 'center', color: 'var(--accent-primary)' }}>P(x)</th>
                                 <th style={{ padding: '12px', textAlign: 'center', color: 'var(--accent-secondary)' }}>P(x+1)</th>
-                                <th style={{ padding: '12px', textAlign: 'center', color: '#bd93f9' }}>P(x) + 2</th>
+                                <th style={{ padding: '12px', textAlign: 'center', color: 'var(--accent-secondary)' }}>P(x) + 2</th>
                                 <th style={{ padding: '12px', textAlign: 'center' }}>C(x) = P(x+1) − (P(x)+2)</th>
                             </tr>
                         </thead>
@@ -264,7 +264,7 @@ export function ConstraintEvaluationPage() {
                                         <td style={{ padding: '12px', textAlign: 'center', color: 'var(--text-muted)' }}>{i}</td>
                                         <td style={{ padding: '12px', textAlign: 'center', color: 'var(--accent-primary)', fontWeight: 'bold' }}>{current}</td>
                                         <td style={{ padding: '12px', textAlign: 'center', color: 'var(--accent-secondary)', fontWeight: 'bold' }}>{next}</td>
-                                        <td style={{ padding: '12px', textAlign: 'center', color: '#bd93f9', fontWeight: 'bold' }}>{plusTwo}</td>
+                                        <td style={{ padding: '12px', textAlign: 'center', color: 'var(--accent-secondary)', fontWeight: 'bold' }}>{plusTwo}</td>
                                         <td style={{ padding: '12px', textAlign: 'center' }}>
                                             <span style={{ color: 'var(--text-muted)' }}>{next} − {plusTwo} = </span>
                                             <span style={{ color: 'var(--accent-success)', fontWeight: 'bold', fontSize: '1.1em' }}>
@@ -285,7 +285,7 @@ export function ConstraintEvaluationPage() {
                 <div style={{
                     marginTop: '24px',
                     padding: '16px',
-                    background: 'rgba(0, 255, 100, 0.1)',
+                    background: 'rgba(61, 101, 37, 0.08)',
                     borderRadius: '8px',
                     textAlign: 'center',
                     border: '1px solid var(--accent-success)'

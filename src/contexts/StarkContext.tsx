@@ -83,7 +83,7 @@ export function StarkProvider({ children }: { children: React.ReactNode }) {
     };
 
     const tamperTrace = () => {
-        if (trace.length === 0) return;
+        if (trace.length === 0 || regNames.length === 0) return;
 
         // Deep copy trace
         const newTrace = JSON.parse(JSON.stringify(trace));
@@ -94,7 +94,7 @@ export function StarkProvider({ children }: { children: React.ReactNode }) {
 
         // Corrupt value
         const oldVal = newTrace[rowIdx].regs[reg];
-        newTrace[rowIdx].regs[reg] = mod(oldVal + 1337, prime); // Ensure it changes
+        newTrace[rowIdx].regs[reg] = mod(oldVal + 1, prime);
 
         // Re-run AIR check on TAMPERED trace
         // We need to re-compile to get the steps for AIR building

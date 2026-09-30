@@ -1,6 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { WALKTHROUGH_STEPS } from '../routes/walkthrough';
+import './LessonPresentation.css';
 
 function normalizePathname(pathname: string): string {
     if (pathname.length > 1 && pathname.endsWith('/')) return pathname.replace(/\/+$/g, '');
@@ -22,7 +23,7 @@ export function WalkthroughNav() {
     if (!prev && !next) return null;
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '48px', gap: '16px' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', marginTop: '48px', gap: '16px' }}>
             <div>
                 {prev && (
                     <Link to={prev.to} className="btn btn-ghost">

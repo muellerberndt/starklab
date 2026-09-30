@@ -57,13 +57,13 @@ export function ProtocolPage() {
                 In practice, we use the Fiat-Shamir heuristic to make it non-interactive, but the logic below shows the underlying conversation.
             </p>
 
-            <div style={{ marginTop: '48px', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px' }}>
+            <div style={{ marginTop: '48px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '32px' }}>
                 <div>
                     <h3 style={{ borderBottom: '2px solid var(--accent-primary)', paddingBottom: '8px', marginBottom: '16px' }}>Phase 1: The Setup (Public)</h3>
                     <p style={{ fontSize: '0.9em', color: 'var(--text-muted)', marginBottom: '16px' }}>
                         Before any proving happens, everyone agrees on the <strong>Rules of the Game</strong> (the AIR).
                     </p>
-                    <div className="card" style={{ background: 'rgba(255,255,255,0.02)' }}>
+                    <div className="card" style={{ background: 'var(--bg-tertiary)' }}>
                         <h4>The Rules (AIR)</h4>
                         <p style={{ fontSize: '0.9em' }}>
                             We define the <strong>Algebraic Intermediate Representation</strong>. This is "stored" as:
@@ -87,12 +87,12 @@ export function ProtocolPage() {
                     <p style={{ fontSize: '0.9em', color: 'var(--text-muted)', marginBottom: '16px' }}>
                         Alice (the Prover) runs the program with her secret inputs.
                     </p>
-                    <div className="card" style={{ background: 'rgba(255,255,255,0.02)' }}>
+                    <div className="card" style={{ background: 'var(--bg-tertiary)' }}>
                         <h4>The Execution Trace</h4>
                         <p style={{ fontSize: '0.9em' }}>
                             Running the code generates a concrete list of numbers (the Trace).
                         </p>
-                        <div style={{ fontFamily: 'monospace', background: 'rgba(0,0,0,0.3)', padding: '8px', borderRadius: '4px', margin: '8px 0', fontSize: '0.9em' }}>
+                        <div style={{ fontFamily: 'monospace', background: 'var(--bg-tertiary)', padding: '8px', borderRadius: '4px', margin: '8px 0', fontSize: '0.9em' }}>
                             Step 0: 1, 1<br />
                             Step 1: 1, 2<br />
                             Step 2: 2, 3...
@@ -107,9 +107,9 @@ export function ProtocolPage() {
 
             <h3 style={{ marginTop: '48px', marginBottom: '24px' }}>The Interaction</h3>
 
-            <div style={{ position: 'relative', maxWidth: '800px', margin: '0 auto' }}>
+            <div className="protocol-timeline" style={{ position: 'relative', maxWidth: '800px', margin: '0 auto' }}>
                 {/* Vertical Line */}
-                <div style={{ position: 'absolute', left: '50%', top: 0, bottom: 0, width: '2px', background: 'var(--border-color)', transform: 'translateX(-50%)' }}></div>
+                <div className="protocol-timeline-line" style={{ position: 'absolute', left: '50%', top: 0, bottom: 0, width: '2px', background: 'var(--border-color)', transform: 'translateX(-50%)' }}></div>
 
                 {steps.map((step, i) => {
                     const isProver = step.actor === 'Prover';
@@ -121,7 +121,7 @@ export function ProtocolPage() {
                             position: 'relative'
                         }}>
                             {/* Dot on line */}
-                            <div style={{
+                            <div className="protocol-timeline-dot" style={{
                                 position: 'absolute',
                                 left: '50%',
                                 top: '24px',
@@ -134,7 +134,7 @@ export function ProtocolPage() {
                                 border: '2px solid var(--bg-primary)'
                             }}></div>
 
-                            <div style={{
+                            <div className="protocol-timeline-card" style={{
                                 width: '45%',
                                 background: 'var(--bg-secondary)',
                                 border: '1px solid var(--border-color)',
@@ -155,7 +155,7 @@ export function ProtocolPage() {
                                 </div>
                                 <p style={{ margin: 0, fontSize: '0.9em', marginBottom: '12px' }}>{step.desc}</p>
                                 <div style={{
-                                    background: 'rgba(255,255,255,0.05)',
+                                    background: 'var(--bg-tertiary)',
                                     padding: '8px',
                                     borderRadius: '4px',
                                     fontSize: '0.8em',
@@ -171,22 +171,22 @@ export function ProtocolPage() {
             </div>
 
             {/* STARK-Specific Components */}
-            <div className="card" style={{ marginTop: '48px', background: 'rgba(100, 200, 255, 0.05)', border: '1px solid rgba(100, 200, 255, 0.2)' }}>
+            <div className="card" style={{ marginTop: '48px', background: 'var(--bg-tertiary)', border: '1px solid var(--border-color)' }}>
                 <h3 style={{ marginTop: 0 }}>What Makes STARKs Special</h3>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '16px', marginTop: '16px' }}>
-                    <div style={{ padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: '16px', marginTop: '16px' }}>
+                    <div style={{ padding: '12px', background: 'var(--bg-tertiary)', borderRadius: '8px' }}>
                         <div style={{ fontWeight: 'bold', marginBottom: '8px', color: 'var(--accent-primary)' }}>Merkle Commitments</div>
                         <p style={{ margin: 0, fontSize: '0.85em', color: 'var(--text-muted)' }}>
                             The prover commits to polynomial evaluations using Merkle trees. This allows selective opening without revealing everything.
                         </p>
                     </div>
-                    <div style={{ padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
+                    <div style={{ padding: '12px', background: 'var(--bg-tertiary)', borderRadius: '8px' }}>
                         <div style={{ fontWeight: 'bold', marginBottom: '8px', color: 'var(--accent-secondary)' }}>FRI Protocol</div>
                         <p style={{ margin: 0, fontSize: '0.85em', color: 'var(--text-muted)' }}>
                             Fast Reed-Solomon IOP of Proximity — proves that committed values come from a low-degree polynomial, using only hashes.
                         </p>
                     </div>
-                    <div style={{ padding: '12px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px' }}>
+                    <div style={{ padding: '12px', background: 'var(--bg-tertiary)', borderRadius: '8px' }}>
                         <div style={{ fontWeight: 'bold', marginBottom: '8px', color: 'var(--accent-success)' }}>Quotient Polynomial</div>
                         <p style={{ margin: 0, fontSize: '0.85em', color: 'var(--text-muted)' }}>
                             Dividing by the vanishing polynomial converts "constraints hold at all trace points" into "this is a valid polynomial."

@@ -68,13 +68,13 @@ export function ZkPage() {
 
                     <div style={{
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))',
                         gap: '16px',
                         marginTop: '16px'
                     }}>
                         <div style={{
                             padding: '16px',
-                            background: 'rgba(255, 100, 100, 0.1)',
+                            background: 'rgba(169, 48, 45, 0.08)',
                             borderRadius: '8px',
                             borderLeft: '4px solid var(--accent-error)'
                         }}>
@@ -92,7 +92,7 @@ export function ZkPage() {
 
                         <div style={{
                             padding: '16px',
-                            background: 'rgba(255, 100, 100, 0.1)',
+                            background: 'rgba(169, 48, 45, 0.08)',
                             borderRadius: '8px',
                             borderLeft: '4px solid var(--accent-error)'
                         }}>
@@ -106,7 +106,7 @@ export function ZkPage() {
 
                         <div style={{
                             padding: '16px',
-                            background: 'rgba(255, 100, 100, 0.1)',
+                            background: 'rgba(169, 48, 45, 0.08)',
                             borderRadius: '8px',
                             borderLeft: '4px solid var(--accent-error)'
                         }}>
@@ -124,29 +124,20 @@ export function ZkPage() {
 
             {/* Interactive trace view */}
             <div className="card" style={{ marginTop: '32px' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '16px', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
                     <h3 style={{ margin: 0 }}>Trace Visibility</h3>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                    <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: '12px' }}>
                         <span className={!isZkMode ? '' : 'muted'}>Transparent</span>
-                        <label style={{ position: 'relative', display: 'inline-block', width: '48px', height: '24px' }}>
-                            <input
-                                type="checkbox"
-                                checked={isZkMode}
-                                onChange={(e) => setIsZkMode(e.target.checked)}
-                                style={{ opacity: 0, width: 0, height: 0 }}
-                            />
-                            <span style={{
-                                position: 'absolute', cursor: 'pointer', top: 0, left: 0, right: 0, bottom: 0,
-                                backgroundColor: isZkMode ? 'var(--accent-primary)' : 'rgba(255,255,255,0.1)',
-                                transition: '.4s', borderRadius: '24px'
-                            }}>
-                                <span style={{
-                                    position: 'absolute', height: '16px', width: '16px',
-                                    left: isZkMode ? '26px' : '4px', bottom: '4px', backgroundColor: 'white',
-                                    transition: '.4s', borderRadius: '50%'
-                                }}></span>
-                            </span>
-                        </label>
+                        <button
+                            type="button"
+                            role="switch"
+                            aria-label="Mask trace values"
+                            aria-checked={isZkMode}
+                            onClick={() => setIsZkMode(!isZkMode)}
+                            style={{ position: 'relative', flexShrink: 0, width: '64px', height: '44px', padding: 0, border: '1px solid var(--border-color)', borderRadius: '24px', background: isZkMode ? 'var(--lime)' : 'var(--bg-tertiary)' }}
+                        >
+                            <span aria-hidden="true" style={{ position: 'absolute', height: '28px', width: '28px', left: isZkMode ? '28px' : '6px', top: '7px', background: 'var(--text-primary)', borderRadius: '50%' }} />
+                        </button>
                         <span className={isZkMode ? '' : 'muted'} style={{
                             color: isZkMode ? 'var(--accent-primary)' : undefined,
                             fontWeight: isZkMode ? 'bold' : 'normal'
@@ -182,7 +173,7 @@ export function ZkPage() {
                 <div style={{ marginTop: '16px' }}>
                     <div style={{
                         padding: '16px',
-                        background: 'rgba(0,0,0,0.2)',
+                        background: 'var(--bg-tertiary)',
                         borderRadius: '8px',
                         marginBottom: '12px'
                     }}>
@@ -198,7 +189,7 @@ export function ZkPage() {
 
                     <div style={{
                         padding: '16px',
-                        background: 'rgba(0,0,0,0.2)',
+                        background: 'var(--bg-tertiary)',
                         borderRadius: '8px',
                         marginBottom: '12px'
                     }}>
@@ -214,7 +205,7 @@ export function ZkPage() {
 
                     <div style={{
                         padding: '16px',
-                        background: 'rgba(0,0,0,0.2)',
+                        background: 'var(--bg-tertiary)',
                         borderRadius: '8px'
                     }}>
                         <h4 style={{ margin: '0 0 8px 0', color: 'var(--accent-secondary)' }}>
@@ -230,9 +221,9 @@ export function ZkPage() {
             </div>
 
             {/* What this implementation does/doesn't do */}
-            <div className="card" style={{ marginTop: '32px', background: 'rgba(255, 180, 100, 0.05)' }}>
+            <div className="card" style={{ marginTop: '32px', background: 'rgba(121, 90, 8, 0.06)' }}>
                 <h3>This Implementation</h3>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '16px' }}>
                     <div>
                         <h4 style={{ color: 'var(--accent-error)', margin: '0 0 8px 0' }}>Not Implemented</h4>
                         <ul style={{ margin: 0, paddingLeft: '20px', fontSize: '0.9em' }}>
@@ -262,23 +253,23 @@ export function ZkPage() {
                 <h3>Why Zero-Knowledge Matters</h3>
                 <div style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))',
                     gap: '16px',
                     marginTop: '16px'
                 }}>
-                    <div style={{ padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px' }}>
+                    <div style={{ padding: '16px', background: 'var(--bg-tertiary)', borderRadius: '8px' }}>
                         <h4 style={{ margin: '0 0 8px 0' }}>Private Transactions</h4>
                         <p style={{ margin: 0, fontSize: '0.9em', color: 'var(--text-muted)' }}>
                             Prove you have enough funds without revealing your balance
                         </p>
                     </div>
-                    <div style={{ padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px' }}>
+                    <div style={{ padding: '16px', background: 'var(--bg-tertiary)', borderRadius: '8px' }}>
                         <h4 style={{ margin: '0 0 8px 0' }}>Identity Verification</h4>
                         <p style={{ margin: 0, fontSize: '0.9em', color: 'var(--text-muted)' }}>
                             Prove you're over 18 without revealing your birthdate
                         </p>
                     </div>
-                    <div style={{ padding: '16px', background: 'rgba(255,255,255,0.02)', borderRadius: '8px' }}>
+                    <div style={{ padding: '16px', background: 'var(--bg-tertiary)', borderRadius: '8px' }}>
                         <h4 style={{ margin: '0 0 8px 0' }}>Confidential Computing</h4>
                         <p style={{ margin: 0, fontSize: '0.9em', color: 'var(--text-muted)' }}>
                             Prove a computation was correct without revealing inputs

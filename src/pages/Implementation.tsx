@@ -168,7 +168,7 @@ export function ImplementationPage() {
                                 <td style={{ padding: '12px' }}>8 rows</td>
                                 <td style={{ padding: '12px' }}>Tiny demos</td>
                             </tr>
-                            <tr style={{ borderBottom: '1px solid var(--border-color)', background: 'rgba(0,255,100,0.05)' }}>
+                            <tr style={{ borderBottom: '1px solid var(--border-color)', background: 'rgba(61, 101, 37, 0.08)' }}>
                                 <td style={{ padding: '12px', fontFamily: 'var(--font-mono)' }}>257</td>
                                 <td style={{ padding: '12px', fontFamily: 'var(--font-mono)' }}>256 = 2⁸</td>
                                 <td style={{ padding: '12px', fontFamily: 'var(--font-mono)' }}>3</td>
@@ -254,7 +254,7 @@ export function ImplementationPage() {
                 <h2>Default Parameters</h2>
                 <div style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))',
                     gap: '16px',
                     marginTop: '16px'
                 }}>
@@ -281,7 +281,7 @@ function LifecyclePhase({ phase, who, when, creates, notes }: {
         <div style={{
             marginBottom: '24px',
             padding: '16px',
-            background: 'rgba(255,255,255,0.02)',
+            background: 'var(--bg-tertiary)',
             borderRadius: '8px',
             borderLeft: '4px solid var(--accent-primary)',
         }}>
@@ -343,11 +343,11 @@ function SimplificationItem({ feature, toy, production, why }: {
         <div style={{
             marginBottom: '16px',
             padding: '12px',
-            background: 'rgba(255,255,255,0.02)',
+            background: 'var(--bg-tertiary)',
             borderRadius: '8px',
         }}>
             <div style={{ fontWeight: 'bold', marginBottom: '8px' }}>{feature}</div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', fontSize: '0.9em' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))', gap: '16px', fontSize: '0.9em' }}>
                 <div>
                     <span className="muted">This Implementation:</span>
                     <div>{toy}</div>
@@ -368,7 +368,7 @@ function ParamCard({ name, value, desc }: { name: string; value: string; desc: s
     return (
         <div style={{
             padding: '16px',
-            background: 'rgba(255,255,255,0.02)',
+            background: 'var(--bg-tertiary)',
             borderRadius: '8px',
             textAlign: 'center',
         }}>

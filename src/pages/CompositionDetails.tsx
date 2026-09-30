@@ -158,7 +158,7 @@ export function CompositionDetailsPage() {
                             {trace.slice(0, 6).map((row, i) => (
                                 <tr key={i} style={{
                                     cursor: 'pointer',
-                                    background: selectedStep === i ? 'rgba(100, 200, 255, 0.1)' : undefined
+                                    background: selectedStep === i ? 'var(--bg-tertiary)' : undefined
                                 }} onClick={() => setSelectedStep(selectedStep === i ? null : i)}>
                                     <td style={{ fontWeight: 'bold' }}>{i}</td>
                                     <td>{row.pc}</td>
@@ -248,7 +248,7 @@ export function CompositionDetailsPage() {
                 <p>
                     The verifier sends random coefficients (via Fiat-Shamir). The prover combines all constraints:
                 </p>
-                <div style={{ margin: '16px 0', padding: '16px', background: 'rgba(0,0,0,0.2)', borderRadius: '8px', fontFamily: 'monospace', textAlign: 'center' }}>
+                <div style={{ margin: '16px 0', padding: '16px', background: 'var(--bg-tertiary)', borderRadius: '8px', fontFamily: 'monospace', textAlign: 'center' }}>
                     H(x) = α₀·C₀(x) + α₁·C₁(x) + α₂·C₂(x) + ...
                 </div>
 
@@ -278,7 +278,7 @@ export function CompositionDetailsPage() {
                                 const term = mod(val * alpha, prime);
                                 return (
                                     <tr key={i} style={{
-                                        background: val !== 0 ? 'rgba(255, 0, 85, 0.1)' : undefined
+                                        background: val !== 0 ? 'rgba(169, 48, 45, 0.08)' : undefined
                                     }}>
                                         <td className="muted">{c.type}</td>
                                         <td><code style={{ fontSize: '0.85em' }}>{c.expr}</code></td>
@@ -369,7 +369,7 @@ function ConstraintCard({ constraint }: { constraint: { expr: string; why: strin
     return (
         <div style={{
             padding: '12px',
-            background: isSatisfied ? 'rgba(0, 255, 100, 0.05)' : 'rgba(255, 0, 85, 0.1)',
+            background: isSatisfied ? 'rgba(61, 101, 37, 0.08)' : 'rgba(169, 48, 45, 0.08)',
             borderRadius: '8px',
             borderLeft: `4px solid ${isSatisfied ? 'var(--accent-success)' : 'var(--accent-error)'}`
         }}>

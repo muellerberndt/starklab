@@ -273,10 +273,10 @@ const CATEGORY_LABELS: Record<string, string> = {
 const CATEGORY_COLORS: Record<string, string> = {
     core: 'var(--accent-primary)',
     polynomial: 'var(--accent-secondary)',
-    crypto: '#f1c40f',
-    fri: '#e74c3c',
-    protocol: '#9b59b6',
-    math: '#1abc9c',
+    crypto: 'var(--accent-warning)',
+    fri: 'var(--accent-error)',
+    protocol: 'var(--accent-secondary)',
+    math: 'var(--accent-primary)',
     security: 'var(--accent-success)',
 };
 
@@ -318,15 +318,16 @@ export function GlossaryPage() {
                         <input
                             type="text"
                             placeholder="Search terms..."
+                            aria-label="Search glossary terms"
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                             style={{
                                 width: '100%',
                                 padding: '10px 12px 10px 40px',
-                                background: 'rgba(255,255,255,0.05)',
+                                background: 'var(--bg-tertiary)',
                                 border: '1px solid var(--border-color)',
                                 borderRadius: '8px',
-                                color: 'white',
+                                color: 'var(--text-primary)',
                                 fontSize: '1em',
                             }}
                         />
@@ -335,12 +336,13 @@ export function GlossaryPage() {
                     <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
                         <button
                             onClick={() => setSelectedCategory(null)}
+                            aria-pressed={selectedCategory === null}
                             style={{
-                                padding: '6px 12px',
-                                background: selectedCategory === null ? 'var(--accent-primary)' : 'rgba(255,255,255,0.05)',
+                                padding: '8px 12px', minHeight: '44px',
+                                background: selectedCategory === null ? 'var(--lime)' : 'var(--bg-tertiary)',
                                 border: 'none',
                                 borderRadius: '16px',
-                                color: 'white',
+                                color: 'var(--text-primary)',
                                 cursor: 'pointer',
                                 fontSize: '0.85em',
                             }}
@@ -351,12 +353,13 @@ export function GlossaryPage() {
                             <button
                                 key={cat}
                                 onClick={() => setSelectedCategory(cat)}
+                                aria-pressed={selectedCategory === cat}
                                 style={{
-                                    padding: '6px 12px',
-                                    background: selectedCategory === cat ? CATEGORY_COLORS[cat] : 'rgba(255,255,255,0.05)',
+                                    padding: '8px 12px', minHeight: '44px',
+                                    background: selectedCategory === cat ? 'var(--lime)' : 'var(--bg-tertiary)',
                                     border: 'none',
                                     borderRadius: '16px',
-                                    color: 'white',
+                                    color: 'var(--text-primary)',
                                     cursor: 'pointer',
                                     fontSize: '0.85em',
                                 }}
@@ -400,7 +403,7 @@ export function GlossaryPage() {
                                     rel="noopener noreferrer"
                                     style={{
                                         padding: '4px 12px',
-                                        background: 'rgba(255,255,255,0.05)',
+                                        background: 'var(--bg-tertiary)',
                                         borderRadius: '4px',
                                         color: 'var(--accent-primary)',
                                         fontSize: '0.85em',
