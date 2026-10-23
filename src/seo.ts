@@ -3,18 +3,18 @@ export type SeoMeta = {
   description: string;
 };
 
-export const DEFAULT_SEO: SeoMeta = {
-  title: 'STARK Lab | Interactive proof tutorial | Pragma Research',
+const DEFAULT_SEO: SeoMeta = {
+  title: 'STARK Lab - Interactive STARK Proof Tutorial',
   description:
-    'Explore STARK proof concepts through interactive lessons on execution traces, finite fields, commitments and FRI. An educational toy implementation.',
+    'Learn how STARK proofs work through interactive visualizations. Write programs, explore execution traces, polynomial encoding, FRI protocol, and zero-knowledge proofs step by step.',
 };
 
-export const ROUTE_SEO: Record<string, SeoMeta> = {
+const ROUTE_SEO: Record<string, SeoMeta> = {
   '/': DEFAULT_SEO,
   '/protocol': {
     title: 'STARK Lab | The STARK Protocol',
     description:
-      'Follow the stages of an educational toy prover, from an execution trace through commitments, folding and verification.',
+      'Follow the full STARK protocol end to end, from algebraic execution traces to commitments, FRI, and final proof verification.',
   },
   '/math': {
     title: 'STARK Lab | Basics I: Fields and Trees',
@@ -49,7 +49,7 @@ export const ROUTE_SEO: Record<string, SeoMeta> = {
   '/composition-details': {
     title: 'STARK Lab | Composition Details',
     description:
-      'Inspect how this educational model combines constraint evaluations, quotients and transcript challenges.',
+      'Dive deeper into the composition step, including quotient structure, randomization, and why the combined checks stay sound.',
   },
   '/constraint-eval': {
     title: 'STARK Lab | Constraint Evaluation',
@@ -64,22 +64,22 @@ export const ROUTE_SEO: Record<string, SeoMeta> = {
   '/fri': {
     title: 'STARK Lab | FRI',
     description:
-      'Explore FRI concepts and replay the folding steps used by this educational proof model.',
+      'Understand the FRI low-degree test that powers STARK scalability and keeps proof verification efficient.',
   },
   '/zk': {
     title: 'STARK Lab | Zero-Knowledge',
     description:
-      'Explore masking and randomization as zero-knowledge concepts, and the limits of this educational toy implementation.',
+      'Learn how STARK proofs achieve zero-knowledge and why masking and randomization matter for privacy.',
   },
   '/verify': {
     title: 'STARK Lab | Proof Verification',
     description:
-      'Inspect commitment openings, transcript challenges and verification checks in the educational proof model.',
+      'Step through STARK proof verification and see how the verifier checks commitments, queries, and low-degree guarantees.',
   },
   '/proof-security': {
     title: 'STARK Lab | Proof Security',
     description:
-      'Study proof-system assumptions and the limits of a toy implementation, including commitments, transcripts and constraint checks.',
+      'Review the security assumptions and failure modes behind STARK soundness, transparency, and proof integrity.',
   },
   '/glossary': {
     title: 'STARK Lab | Glossary',
@@ -94,65 +94,28 @@ export const ROUTE_SEO: Record<string, SeoMeta> = {
   '/implementation': {
     title: 'STARK Lab | Implementation Details',
     description:
-      'Inspect the toy implementation behind the lessons, including traces, commitments, transcript flow and engineering tradeoffs.',
+      'Inspect practical implementation details for STARK systems, including traces, commitments, transcript flow, and engineering tradeoffs.',
   },
 };
 
-export const SITE_ORIGIN = 'https://floatingpragma.io';
-export const SITE_URL = `${SITE_ORIGIN}/starklab/`;
-export const PREVIEW_IMAGE = `${SITE_ORIGIN}/assets/pragma-settling-networks-2026-09.png`;
-export const PREVIEW_ALT = 'Cadence. Brains that learn. Pragma Research caret and three connected patches with state, error and feedback on charcoal.';
-export const INDEX_ROBOTS = 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1';
-
 function normalizePathname(pathname: string): string {
-  const path = pathname.split(/[?#]/, 1)[0].replace(/^\/starklab(?=\/|$)/, '');
-  return path.replace(/\/+$/, '') || '/';
-}
+  if (!pathname || pathname === '/') {
+    return '/';
+  }
 
-export function isKnownRoute(pathname: string): boolean {
-  return Object.hasOwn(ROUTE_SEO, normalizePathname(pathname));
+  return pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
 }
 
 export function getSeoMeta(pathname: string): SeoMeta {
-  return ROUTE_SEO[normalizePathname(pathname)] ?? {
-    title: 'Lesson not found | STARK Lab',
-    description: 'Choose a lesson from the STARK Lab interactive proof tutorial.',
-  };
+  return ROUTE_SEO[normalizePathname(pathname)] ?? DEFAULT_SEO;
 }
 
 export function getCanonicalUrl(pathname: string): string {
   const normalized = normalizePathname(pathname);
-  return normalized === '/' || !isKnownRoute(normalized)
-    ? SITE_URL
-    : `${SITE_URL}${normalized.slice(1)}/`;
-}
 
-export function getStructuredData(pathname: string) {
-  if (!isKnownRoute(pathname)) return null;
-  const canonical = getCanonicalUrl(pathname);
-  const meta = getSeoMeta(pathname);
-  const organization = `${SITE_ORIGIN}/#organization`;
-  const website = `${SITE_URL}#website`;
-  const breadcrumb = `${canonical}#breadcrumb`;
-  const items = [
-    { '@type': 'ListItem', position: 1, name: 'Pragma Research', item: `${SITE_ORIGIN}/` },
-    { '@type': 'ListItem', position: 2, name: 'STARK Lab', item: SITE_URL },
-  ];
-  if (canonical !== SITE_URL) {
-    items.push({ '@type': 'ListItem', position: 3, name: meta.title.replace(/^STARK Lab \| /, ''), item: canonical });
+  if (normalized === '/') {
+    return 'https://floatingpragma.io/starklab/';
   }
-  return {
-    '@context': 'https://schema.org',
-    '@graph': [
-      { '@type': 'Organization', '@id': organization, name: 'Pragma Research', url: `${SITE_ORIGIN}/` },
-      { '@type': 'WebSite', '@id': website, name: 'STARK Lab', url: SITE_URL,
-        publisher: { '@id': organization }, inLanguage: 'en' },
-      { '@type': ['WebPage', 'LearningResource'], '@id': canonical, url: canonical,
-        name: meta.title, description: meta.description, inLanguage: 'en',
-        learningResourceType: 'Interactive tutorial', isAccessibleForFree: true,
-        isPartOf: { '@id': website }, publisher: { '@id': organization },
-        breadcrumb: { '@id': breadcrumb } },
-      { '@type': 'BreadcrumbList', '@id': breadcrumb, itemListElement: items },
-    ],
-  };
+
+  return `https://floatingpragma.io/starklab${normalized}/`;
 }

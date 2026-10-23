@@ -10,7 +10,7 @@ export function TraceTable({ trace, regNames, maskValues = false }: TraceTablePr
     if (trace.length === 0) return null;
 
     return (
-        <div className="trace-table-container" tabIndex={0} role="region" aria-label="Execution trace table">
+        <div className="trace-table-container">
             <table className="trace-table">
                 <thead>
                     <tr>

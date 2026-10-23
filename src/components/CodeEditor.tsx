@@ -43,7 +43,6 @@ export function CodeEditor({ value, onChange, error }: CodeEditorProps) {
             </div>
             <textarea
                 className="code-input"
-                aria-label="Program source code"
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 onKeyDown={handleKeyDown}
