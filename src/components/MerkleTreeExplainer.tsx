@@ -39,7 +39,7 @@ export function MerkleTreeExplainer() {
                                         minWidth: '80px',
                                         textAlign: 'center',
                                         position: 'relative',
-                                        color: levelIndex === 0 ? 'white' : 'var(--text-primary)'
+                                        color: levelIndex === 0 ? '#000' : 'var(--text-primary)'
                                     }}
                                 >
                                     <div style={{ fontSize: '0.8em', opacity: 0.7 }}>

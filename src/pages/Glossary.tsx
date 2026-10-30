@@ -340,7 +340,7 @@ export function GlossaryPage() {
                                 background: selectedCategory === null ? 'var(--accent-primary)' : 'rgba(255,255,255,0.05)',
                                 border: 'none',
                                 borderRadius: '16px',
-                                color: 'white',
+                                color: selectedCategory === null ? '#000' : 'white',
                                 cursor: 'pointer',
                                 fontSize: '0.85em',
                             }}

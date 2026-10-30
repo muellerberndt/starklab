@@ -142,12 +142,12 @@ export function CommitmentsPage() {
                     {/* Root */}
                     <div style={{
                         padding: '24px',
-                        background: 'linear-gradient(135deg, var(--accent-primary), #9d4eff)',
+                        background: 'var(--accent-primary)',
                         borderRadius: '12px',
-                        color: 'white',
+                        color: '#000',
                         fontWeight: 'bold',
                         fontSize: '1.5em',
-                        boxShadow: '0 8px 32px rgba(112, 0, 255, 0.3)'
+                        boxShadow: '0 8px 32px rgba(74, 241, 242, 0.3)'
                     }}>
                         {combinedRoot}
                     </div>
@@ -183,7 +183,7 @@ export function CommitmentsPage() {
                         </div>
                     </div>
 
-                    <div style={{ padding: '16px', background: 'rgba(112, 0, 255, 0.1)', borderRadius: '8px' }}>
+                    <div style={{ padding: '16px', background: 'rgba(74, 241, 242, 0.1)', borderRadius: '8px' }}>
                         <div style={{ fontWeight: 'bold', marginBottom: '8px', color: 'var(--accent-primary)' }}>
                             Combined Root (preferred)
                         </div>

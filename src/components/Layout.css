@@ -23,14 +23,33 @@
     justify-content: space-between;
     padding: 0 24px;
     border-bottom: 1px solid var(--border-color);
+    flex-shrink: 0;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-caret {
+    display: flex;
+    width: 22px;
+    color: var(--accent-primary);
+    filter: drop-shadow(0 0 6px rgba(74, 241, 242, 0.55));
+}
+
+.brand-caret svg {
+    width: 100%;
+    height: auto;
 }
 
 .logo {
     font-size: 1.25rem;
     font-weight: 700;
-    background: linear-gradient(to right, var(--accent-secondary), var(--accent-primary));
-    -webkit-background-clip: text;
-    color: transparent;
+    letter-spacing: 0.08em;
+    color: var(--accent-primary);
+    text-shadow: 0 0 8px rgba(74, 241, 242, 0.55);
 }
 
 .nav {
@@ -38,6 +57,7 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
+    overflow-y: auto;
 }
 
 .nav-item {
@@ -58,9 +78,9 @@
 }
 
 .nav-item.active {
-    background-color: rgba(112, 0, 255, 0.1);
+    background-color: rgba(74, 241, 242, 0.1);
     color: var(--accent-secondary);
-    border-color: rgba(112, 0, 255, 0.2);
+    border-color: rgba(74, 241, 242, 0.2);
 }
 
 .main-content {

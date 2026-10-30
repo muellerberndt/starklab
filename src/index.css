@@ -1,6 +1,6 @@
 :root {
   /* CTF / Hacker Theme */
-  --bg-primary: #0a0a0a;
+  --bg-primary: #000000;
   --bg-secondary: #111111;
   --bg-tertiary: #1a1a1a;
 
@@ -8,10 +8,10 @@
   --text-secondary: #d0d0d0;
   --text-muted: #a0a0a0;
 
-  --accent-primary: #00ff41;
-  /* Hacker Green */
-  --accent-secondary: #ff79c6;
-  /* Cyber Purple */
+  --accent-primary: #4af1f2;
+  /* Pragma Research cyan */
+  --accent-secondary: #ff2a6d;
+  --accent-secondary-rgb: 255, 42, 109;
   --accent-success: #00ff41;
   --accent-error: #ff003c;
   --accent-warning: #ffb300;
@@ -20,8 +20,8 @@
   --border-radius: 0px;
   /* Brutalist */
 
-  --font-mono: 'Courier New', Courier, monospace;
-  --font-sans: 'Courier New', Courier, monospace;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --font-sans: var(--font-mono);
   /* Force mono everywhere */
 }
 
@@ -106,9 +106,9 @@ code {
   gap: 8px;
   font-family: var(--font-mono);
   text-transform: uppercase;
-  background: linear-gradient(135deg, var(--accent-primary), #9d4eff);
-  color: white;
-  box-shadow: 0 4px 12px rgba(112, 0, 255, 0.3);
+  background: var(--accent-primary);
+  color: #000;
+  box-shadow: 0 0 14px rgba(74, 241, 242, 0.3);
   text-decoration: none;
   /* For Links */
 }
@@ -116,7 +116,7 @@ code {
 .btn:hover,
 .button:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(112, 0, 255, 0.4);
+  box-shadow: 0 0 20px rgba(74, 241, 242, 0.45);
 }
 
 button {
@@ -124,14 +124,14 @@ button {
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--accent-primary), #9d4eff);
-  color: white;
-  box-shadow: 0 4px 12px rgba(112, 0, 255, 0.3);
+  background: var(--accent-primary);
+  color: #000;
+  box-shadow: 0 0 14px rgba(74, 241, 242, 0.3);
 }
 
 .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(112, 0, 255, 0.4);
+  box-shadow: 0 0 20px rgba(74, 241, 242, 0.45);
 }
 
 .btn-ghost {
@@ -300,8 +300,8 @@ button {
 
 /* Explainer Component */
 .explainer-card {
-  background: rgba(112, 0, 255, 0.05);
-  border: 1px solid rgba(112, 0, 255, 0.2);
+  background: rgba(74, 241, 242, 0.05);
+  border: 1px solid rgba(74, 241, 242, 0.2);
   border-radius: 8px;
   margin-bottom: 24px;
   overflow: hidden;
@@ -324,7 +324,7 @@ button {
 }
 
 .explainer-header:hover {
-  background: rgba(112, 0, 255, 0.1);
+  background: rgba(74, 241, 242, 0.1);
 }
 
 .navbar {
@@ -359,7 +359,7 @@ button {
 
 .explainer-content {
   padding: 16px;
-  border-top: 1px solid rgba(112, 0, 255, 0.1);
+  border-top: 1px solid rgba(74, 241, 242, 0.1);
   color: var(--text-secondary);
   font-size: 14px;
   line-height: 1.6;

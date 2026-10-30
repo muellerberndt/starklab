@@ -63,7 +63,7 @@ export function FiniteFieldExplainer() {
                                     justifyContent: 'center',
                                     borderRadius: '50%',
                                     background: n === sum ? 'var(--accent-primary)' : 'rgba(255,255,255,0.15)',
-                                    color: n === sum ? 'white' : 'var(--text-secondary)',
+                                    color: n === sum ? '#000' : 'var(--text-secondary)',
                                     fontWeight: n === sum ? 'bold' : 'normal'
                                 }}
                             >

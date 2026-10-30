@@ -250,7 +250,7 @@ export function ConstraintEvaluationPage() {
                                 <th style={{ padding: '12px', textAlign: 'center' }}>x</th>
                                 <th style={{ padding: '12px', textAlign: 'center', color: 'var(--accent-primary)' }}>P(x)</th>
                                 <th style={{ padding: '12px', textAlign: 'center', color: 'var(--accent-secondary)' }}>P(x+1)</th>
-                                <th style={{ padding: '12px', textAlign: 'center', color: '#bd93f9' }}>P(x) + 2</th>
+                                <th style={{ padding: '12px', textAlign: 'center', color: 'var(--accent-secondary)' }}>P(x) + 2</th>
                                 <th style={{ padding: '12px', textAlign: 'center' }}>C(x) = P(x+1) − (P(x)+2)</th>
                             </tr>
                         </thead>
@@ -264,7 +264,7 @@ export function ConstraintEvaluationPage() {
                                         <td style={{ padding: '12px', textAlign: 'center', color: 'var(--text-muted)' }}>{i}</td>
                                         <td style={{ padding: '12px', textAlign: 'center', color: 'var(--accent-primary)', fontWeight: 'bold' }}>{current}</td>
                                         <td style={{ padding: '12px', textAlign: 'center', color: 'var(--accent-secondary)', fontWeight: 'bold' }}>{next}</td>
-                                        <td style={{ padding: '12px', textAlign: 'center', color: '#bd93f9', fontWeight: 'bold' }}>{plusTwo}</td>
+                                        <td style={{ padding: '12px', textAlign: 'center', color: 'var(--accent-secondary)', fontWeight: 'bold' }}>{plusTwo}</td>
                                         <td style={{ padding: '12px', textAlign: 'center' }}>
                                             <span style={{ color: 'var(--text-muted)' }}>{next} − {plusTwo} = </span>
                                             <span style={{ color: 'var(--accent-success)', fontWeight: 'bold', fontSize: '1.1em' }}>

@@ -8,6 +8,22 @@ import './Layout.css';
 import { WALKTHROUGH_STEPS } from '../routes/walkthrough';
 import { WalkthroughNav } from './WalkthroughNav';
 
+function Caret() {
+    return (
+        <a href="https://floatingpragma.io/" className="brand-caret" aria-label="Pragma Research">
+            <svg viewBox="-1 -1 17 16" aria-hidden="true" fill="currentColor" shapeRendering="crispEdges">
+                <rect x="6" y="0" width="3" height="2" />
+                <rect x="5" y="2" width="5" height="2" />
+                <rect x="4" y="4" width="3" height="2" /><rect x="8" y="4" width="3" height="2" />
+                <rect x="3" y="6" width="3" height="2" /><rect x="9" y="6" width="3" height="2" />
+                <rect x="2" y="8" width="3" height="2" /><rect x="10" y="8" width="3" height="2" />
+                <rect x="1" y="10" width="3" height="2" /><rect x="11" y="10" width="3" height="2" />
+                <rect x="0" y="12" width="3" height="2" /><rect x="12" y="12" width="3" height="2" />
+            </svg>
+        </a>
+    );
+}
+
 export function Layout() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -15,7 +31,7 @@ export function Layout() {
         <div className="layout">
             <aside className={`sidebar ${isMobileMenuOpen ? 'open' : ''} `}>
                 <div className="sidebar-header">
-                    <span className="logo">STARK Lab</span>
+                    <span className="brand"><Caret /><span className="logo">STARK Lab</span></span>
                     <button
                         className="close-btn"
                         onClick={() => setIsMobileMenuOpen(false)}
@@ -48,7 +64,7 @@ export function Layout() {
                     >
                         <Menu size={24} />
                     </button>
-                    <span className="logo" style={{ marginLeft: '16px' }}>STARK Lab</span>
+                    <span className="brand" style={{ marginLeft: '16px' }}><Caret /><span className="logo">STARK Lab</span></span>
                 </header>
 
                 <main className="content-scroll">
@@ -65,7 +81,7 @@ export function Layout() {
                             fontSize: '0.9em'
                         }}>
                             <p>
-                                <a href="https://floatingpragma.io/" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>Floating Pragma</a> • <a href="https://floatingpragma.io/awesome-zk-proofs/" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>ZK Proofs</a> • <a href="https://floatingpragma.io/awesome-ai-security/" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>AI Security</a> • <a href="https://floatingpragma.io/selected-works/" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>Selected Works</a>
+                                <a href="https://floatingpragma.io/" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>Pragma Research</a> • <a href="https://floatingpragma.io/awesome-zk-proofs/" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>ZK Proofs</a> • <a href="https://floatingpragma.io/awesome-ai-security/" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>AI Security</a> • <a href="https://floatingpragma.io/work/" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>Work</a>
                             </p>
                             <p style={{ marginTop: '8px' }}>
                                 (c) Bernhard Mueller • <a href="https://twitter.com/muellerberndt" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>@muellerberndt</a> • <a href="https://github.com/muellerberndt/starklab" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent-primary)', textDecoration: 'none' }}>GitHub</a>
