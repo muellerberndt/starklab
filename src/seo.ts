@@ -114,8 +114,8 @@ export function getCanonicalUrl(pathname: string): string {
   const normalized = normalizePathname(pathname);
 
   if (normalized === '/') {
-    return 'https://floatingpragma.io/starklab/';
+    return 'https://floatingpragma.ai/starklab/';
   }
 
-  return `https://floatingpragma.io/starklab${normalized}/`;
+  return `https://floatingpragma.ai/starklab${normalized}/`;
 }

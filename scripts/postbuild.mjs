@@ -126,7 +126,7 @@ function applyRouteMeta(html, canonicalUrl, meta) {
     .replace(/<meta property="twitter:url" content="[^"]*" \/>/, `<meta property="twitter:url" content="${canonicalUrl}" />`)
     .replace(/<meta property="twitter:title" content="[^"]*" \/>/, `<meta property="twitter:title" content="${meta.title}" />`)
     .replace(/<meta property="twitter:description" content="[^"]*" \/>/, `<meta property="twitter:description" content="${meta.description}" />`)
-    .replace('"url": "https://floatingpragma.io/starklab/"', `"url": "${canonicalUrl}"`);
+    .replace('"url": "https://floatingpragma.ai/starklab/"', `"url": "${canonicalUrl}"`);
 }
 
 const rootHtml = await readFile(indexHtml, 'utf8');
@@ -134,7 +134,7 @@ const rootHtml = await readFile(indexHtml, 'utf8');
 for (const route of routes) {
   const routeDir = path.join(distDir, route);
   const routeIndexHtml = path.join(routeDir, 'index.html');
-  const canonicalUrl = `https://floatingpragma.io/starklab/${route}/`;
+  const canonicalUrl = `https://floatingpragma.ai/starklab/${route}/`;
   const meta = routeMeta[route];
 
   await mkdir(routeDir, { recursive: true });

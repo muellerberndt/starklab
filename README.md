@@ -2,7 +2,7 @@
 
 An interactive, visual explorer for **STARK** (Scalable Transparent Argument of Knowledge) proofs.
 
-🚀 **The page is live at:** [https://floatingpragma.io/starklab](https://floatingpragma.io/starklab)
+🚀 **The page is live at:** [https://floatingpragma.ai/starklab](https://floatingpragma.ai/starklab)
 
 ## Overview
 
